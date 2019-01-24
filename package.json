@@ -1,0 +1,19 @@
+{
+  "name": "musicplayer",
+  "version": "1.0.0",
+  "description": "This project will focus on the creation of a music player desktop application using the ElectronJS Framework",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/cecs-327/MusicPlayer.git"
+  },
+  "author": "Lucas Davila",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/cecs-327/MusicPlayer/issues"
+  },
+  "homepage": "https://github.com/cecs-327/MusicPlayer#readme"
+}
