@@ -2,9 +2,9 @@
   "name": "musicplayer",
   "version": "1.0.0",
   "description": "This project will focus on the creation of a music player desktop application using the ElectronJS Framework",
-  "main": "app.js",
+  "main": "main.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "start": "electron ."
   },
   "repository": {
     "type": "git",
