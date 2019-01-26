@@ -1,2 +1,2 @@
 #Ignoring node_modules as module versions should not matter too much in the development and deployment of our application
-.node_modules/
+*node_modules/*
