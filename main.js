@@ -29,7 +29,7 @@ function createWindow() {
     });
 }
 
-//When app is ready run createWindow function
+//When app is re
 app.on('ready', createWindow);
 
 // Quit when all windows are closed unless they are on a MAC(darwin)
