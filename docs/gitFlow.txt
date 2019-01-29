@@ -17,7 +17,8 @@ git branch -D <branchName>
 #In order to create a new branch to the repository you must commit changes with a new branch, i.e.
 git checkout -b feature/Registration #new local branch created
 git add <someChanges>
-git commit -m "Added someChanges" #new repository branch created
+git commit -m "Added someChanges" 
+git push origin <branchName>#new repository branch created
 
 #How a branching flow will go
 git checkout -b feature/Registration #new local branch created
