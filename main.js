@@ -4,7 +4,7 @@ const path = require('path');
 const url = require('url');
 
 //If this window object is not created the browser window will be removed automatically by js garbage collector
-let win;
+let win ;
 
 function createWindow() {
     //Create Browser Window
@@ -29,7 +29,7 @@ function createWindow() {
     });
 }
 
-//When app is ready run createWindow function
+//When app is ready run createWindow function asd
 app.on('ready', createWindow);
 
 // Quit when all windows are closed unless they are on a MAC(darwin)
