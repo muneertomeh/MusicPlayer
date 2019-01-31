@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang='en'>
+    <head>
+        <meta charset="UTF-8">
+        <link rel="stylesheet" type="text/css" href="style.css">
+        <title>Playlist Title</title>
+    </head>
+    <body>
+        <h1 align=center>Playlist Title</h1>
+
+    <script>
+        function DeleteSongFunction() {
+          // event.target will be the input element.
+          var td = event.target.parentNode; 
+          var tr = td.parentNode; // the row to be removed
+          tr.parentNode.removeChild(tr);
+        }
+    </script>
+    
+    <table>
+    <tr>
+        <td><p>Song Title</p></td>
+        <td><p>Artist</p></td>
+        <td><input type="button" value="Remove Song" onclick="DeleteSongFunction()"></td>
+    </tr>     
+        <tr>
+        <td><p>Song Title</p></td>
+        <td><p>Artist</p></td>
+        <td><input type="button" value="Remove Song" onclick="DeleteSongFunction()"></td>
+    </tr> 
+
+    </table>   
+    <div class="search" align="center">
+          <input type="text" id="myInput" onkeyup="filterSongs()" placeholder="Search for songs.." title="Type in a song"
+          onkeypress="showSongs()">  
+    </div>    
+        
+          
+    <div class ="list" id="list" style="display: none;">   
+          <ul id="theList" align="center">
+                <li><a href="">Tyrone Schlecht</a> 
+                <input type="button" value="Add to Play List" id="add"/>
+              
+                </li>
+                <li><a href="">Javier Ress</a></li>
+                <li><a href="">Carlene Tomes</a></li>
+                <li><a href="">Neil Aigner</a></li>
+                <li><a href="">Nita Schreffler</a></li>
+                <li><a href="">Clinton Knuckles</a></li>
+                <li><a href="">Eve Kellett</a></li>
+                <li><a href="">Jamie Kaspar</a></li>
+                <li><a href="">Emilia Hooton</a></li>
+                <li><a href="">Kenya Sidney</a></li>
+          </ul>
+    </div>    
+<script>
+function showSongs()
+    {
+    var input;
+    input = document.getElementById('myInput');
+    var div = document.getElementById('list')
+    
+       input.addEventListener("keypress",function(){
+        div.style.display ="block";
+       });
+
+    input.addEventListener("focusout",function(){ div.style.display="none";});
+    
+           
+       
+    }
+</script>
+<script>
+function filterSongs() {
+    var input, filter, ul, li, a, i, txtValue;
+    input = document.getElementById("myInput");
+    filter = input.value.toUpperCase();
+    ul = document.getElementById("theList");
+    li = ul.getElementsByTagName("li");
+    for (i = 0; i < li.length; i++) {
+        a = li[i].getElementsByTagName("a")[0];
+        txtValue = a.textContent || a.innerText;
+        if (txtValue.toUpperCase().indexOf(filter) > -1) {
+            li[i].style.display = "";
+        } else {
+            li[i].style.display = "none";
+        }
+    }
+}
+</script>
+    
+    </body>
+</html>
