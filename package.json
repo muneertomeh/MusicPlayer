@@ -15,5 +15,8 @@
   "bugs": {
     "url": "https://github.com/cecs-327/MusicPlayer/issues"
   },
-  "homepage": "https://github.com/cecs-327/MusicPlayer#readme"
+  "homepage": "https://github.com/cecs-327/MusicPlayer#readme",
+  "dependencies": {
+    "electron": "^4.0.3"
+  }
 }
