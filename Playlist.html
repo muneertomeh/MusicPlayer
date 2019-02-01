@@ -17,15 +17,15 @@
         }
     </script>
 
-    <table class="songList" id="songList">
-    <tr>
-        <td><p>Song Title</p></td>
-        <td><p>Artist</p></td>
-        <td><input type="button" value="Remove Song" onclick="DeleteSongFunction()"></td>
-    </tr>
+          <table class="songList" id="songList">
+          <tr>
+              <td><p>Song Title</p></td>
+              <td><p>Artist</p></td>
+              <td><input type="button" value="Remove Song" onclick="DeleteSongFunction()"></td>
+          </tr>
+          <tbody></tbody>
+          </table>
 
-
-    </table>
     <div class="search" align="center">
           <input type="text" id="myInput" onkeyup="filterSongs()" placeholder="Search for songs.." title="Type in a song"
           onkeypress="showSongs()">
@@ -34,29 +34,29 @@
 
     <div class ="list" id="list" style="display: none;">
           <ul id="theList" align="center">
-                <li><a href="">Tyrone Schlecht</a>
-                <input type="button" value="Add to Play List" id="add"/>
+                <li><a href="" id="songArtist" class="songArtist">Tyrone Schlecht</a>
+                 <button id="inp1" onclick="inp()" value="Input">Input</button>
 
                 </li>
-                <li><a href="">Javier Ress</a>
-                <input type="button" value="Add to Play List" id="add"/>
+                <li><a href="" id="songArtist" class="songArtist">Javier Ress</a>
+                 <button id="inp1" onclick="inp()" value="Input">Input</button>
+                <li><a href="" id="songArtist" class="songArtist">Carlene Tomes</a>
+                 <button id="inp1" onclick="inp()" value="Input">Input</button>
                 </li>
-                <li><a href="">Carlene Tomes</a>
-                <input type="button" value="Add to Play List" id="add"/>
+
+                <li><a href="" id="songArtist" class="songArtist">Neil Aigner</a> <button id="inp1" onclick="inp()" value="Input">Input</button>
                 </li>
-                <li><a href="">Neil Aigner</a><input type="button" value="Add to Play List" id="add"/>
+                <li><a href="" id="songArtist" class="songArtist">Nita Schreffler</a> <button id="inp1" onclick="inp()" value="Input">Input</button>
                 </li>
-                <li><a href="">Nita Schreffler</a><input type="button" value="Add to Play List" id="add"/>
+                <li><a href="" id="songArtist" class="songArtist">Clinton Knuckles</a> <button id="inp1" onclick="inp()" value="Input">Input</button>
                 </li>
-                <li><a href="">Clinton Knuckles</a><input type="button" value="Add to Play List" id="add"/>
+                <li><a href="" id="songArtist" class="songArtist">Eve Kellett</a> <button id="inp1" onclick="inp()" value="Input">Input</button>
                 </li>
-                <li><a href="">Eve Kellett</a><input type="button" value="Add to Play List" id="add"/>
+                <li><a href="" id="songArtist" class="songArtist">Jamie Kaspar</a> <button id="inp1" onclick="inp()" value="Input">Input</button>
                 </li>
-                <li><a href="">Jamie Kaspar</a><input type="button" value="Add to Play List" id="add"/>
+                <li><a href="" id="songArtist" class="songArtist">Emilia Hooton</a> <button id="inp1" onclick="inp()" value="Input">Input</button>
                 </li>
-                <li><a href="">Emilia Hooton</a><input type="button" value="Add to Play List" id="add"/>
-                </li>
-                <li><a href="">Kenya Sidney</a><input type="button" value="Add to Play List" id="add"/>
+                <li><a href="" id="songArtist" class="songArtist">Kenya Sidney</a> <button id="inp1" onclick="inp()" value="Input">Input</button>
                 </li>
           </ul>
     </div>
@@ -74,9 +74,7 @@ function showSongs()
         div.style.display ="block";
        });
 
-    //input.addEventListener("focusout",function(){ div.style.display="none";});
-
-
+    // input.addEventListener("focusout",function(){ div.style.display="none";});
 
     }
 </script>
@@ -102,7 +100,7 @@ function filterSongs() {
 </script>
 
 <!--add song to list of songs in playlist-->
-<script>
+<!-- <script>
 document.getElementById("add").onclick=function(){
 
   var songList = document.getElementById("songList");
@@ -116,6 +114,27 @@ document.getElementById("add").onclick=function(){
 
 }
 
+</script> -->
+<script>
+function inp(){
+  var table = document.getElementById('songList');
+  var tbody = table.getElementsByTagName('tbody')[0];
+  var y = document.getElementById('inp1').value;
+  var ul = document.getElementById("theList");
+  var li = ul.getElementsByTagName("li");
+
+  var element = document.getElementById('songArtist');
+  element.innerHTML = element.innerText || element.textContent;
+
+  var text = document.createTextNode(element.innerHTML);
+  var col = document.createElement('td');
+  var row = document.createElement('tr');
+  col.appendChild(text);
+  row.appendChild(col);
+  tbody.appendChild(row);
+
+
+}
 </script>
 
     </body>
