@@ -11,65 +11,77 @@
     <script>
         function DeleteSongFunction() {
           // event.target will be the input element.
-          var td = event.target.parentNode; 
+          var td = event.target.parentNode;
           var tr = td.parentNode; // the row to be removed
           tr.parentNode.removeChild(tr);
         }
     </script>
-    
-    <table>
+
+    <table class="songList" id="songList">
     <tr>
         <td><p>Song Title</p></td>
         <td><p>Artist</p></td>
         <td><input type="button" value="Remove Song" onclick="DeleteSongFunction()"></td>
-    </tr>     
-        <tr>
-        <td><p>Song Title</p></td>
-        <td><p>Artist</p></td>
-        <td><input type="button" value="Remove Song" onclick="DeleteSongFunction()"></td>
-    </tr> 
+    </tr>
 
-    </table>   
+
+    </table>
     <div class="search" align="center">
           <input type="text" id="myInput" onkeyup="filterSongs()" placeholder="Search for songs.." title="Type in a song"
-          onkeypress="showSongs()">  
-    </div>    
-        
-          
-    <div class ="list" id="list" style="display: none;">   
+          onkeypress="showSongs()">
+    </div>
+
+
+    <div class ="list" id="list" style="display: none;">
           <ul id="theList" align="center">
-                <li><a href="">Tyrone Schlecht</a> 
+                <li><a href="">Tyrone Schlecht</a>
                 <input type="button" value="Add to Play List" id="add"/>
-              
+
                 </li>
-                <li><a href="">Javier Ress</a></li>
-                <li><a href="">Carlene Tomes</a></li>
-                <li><a href="">Neil Aigner</a></li>
-                <li><a href="">Nita Schreffler</a></li>
-                <li><a href="">Clinton Knuckles</a></li>
-                <li><a href="">Eve Kellett</a></li>
-                <li><a href="">Jamie Kaspar</a></li>
-                <li><a href="">Emilia Hooton</a></li>
-                <li><a href="">Kenya Sidney</a></li>
+                <li><a href="">Javier Ress</a>
+                <input type="button" value="Add to Play List" id="add"/>
+                </li>
+                <li><a href="">Carlene Tomes</a>
+                <input type="button" value="Add to Play List" id="add"/>
+                </li>
+                <li><a href="">Neil Aigner</a><input type="button" value="Add to Play List" id="add"/>
+                </li>
+                <li><a href="">Nita Schreffler</a><input type="button" value="Add to Play List" id="add"/>
+                </li>
+                <li><a href="">Clinton Knuckles</a><input type="button" value="Add to Play List" id="add"/>
+                </li>
+                <li><a href="">Eve Kellett</a><input type="button" value="Add to Play List" id="add"/>
+                </li>
+                <li><a href="">Jamie Kaspar</a><input type="button" value="Add to Play List" id="add"/>
+                </li>
+                <li><a href="">Emilia Hooton</a><input type="button" value="Add to Play List" id="add"/>
+                </li>
+                <li><a href="">Kenya Sidney</a><input type="button" value="Add to Play List" id="add"/>
+                </li>
           </ul>
-    </div>    
+    </div>
+
+<!--show the list of songs-->
 <script>
+
 function showSongs()
     {
     var input;
     input = document.getElementById('myInput');
     var div = document.getElementById('list')
-    
+
        input.addEventListener("keypress",function(){
         div.style.display ="block";
        });
 
-    input.addEventListener("focusout",function(){ div.style.display="none";});
-    
-           
-       
+    //input.addEventListener("focusout",function(){ div.style.display="none";});
+
+
+
     }
 </script>
+
+<!--filter songs when user searches-->
 <script>
 function filterSongs() {
     var input, filter, ul, li, a, i, txtValue;
@@ -88,6 +100,23 @@ function filterSongs() {
     }
 }
 </script>
-    
+
+<!--add song to list of songs in playlist-->
+<script>
+document.getElementById("add").onclick=function(){
+
+  var songList = document.getElementById("songList");
+  var currentIndex = songList.rows.length;
+  var currentRow = songList.insertRow(-1);
+
+  currentCell = currentRow.insertCell(-1);
+  var box = document.createElement('');
+  currentCell.appendChild(box);
+
+
+}
+
+</script>
+
     </body>
 </html>
