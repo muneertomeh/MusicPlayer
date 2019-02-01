@@ -29,10 +29,10 @@ function register() {
                     alert('UserName has already been taken');
                 }
                 else {
-                    // rawData['users'].push({
-                    //     'UserName': userName,
-                    //     'Password': password
-                    // });
+                    rawData['users'].push({
+                        'UserName': userName,
+                        'Password': password
+                    });
                     let json = JSON.stringify(rawData);
                     fs.writeFile(__dirname + '/../data/users.json', json, (err) => {
                         if(err) console.log(err);
