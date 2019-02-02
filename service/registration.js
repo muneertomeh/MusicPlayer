@@ -29,7 +29,7 @@ function register() {
                     alert('UserName has already been taken');
                 }
                 else {
-                    rawData['users'].push({
+                    rawData['users'].push({ 
                         'UserName': userName,
                         'Password': password
                     });
