@@ -1,6 +1,6 @@
 
-let currentPlaylist = "";
-let currentUser = "";
+//var currentPlaylist = "";
+//var currentUser = "";
 
 function createPlaylist() {
     //This is where the playlist is given a title and added to playlist.json
@@ -27,7 +27,7 @@ function createPlaylist() {
 function addSongToPlaylist() {
     //This is where you can add songs to the playlist
     //Songs will be added when "add song" is pressed on the search bar
-    var songToAdd = "";
+    //var songToAdd = "";
     var songTitleToAdd = songToAdd.SongTitle;
     var songArtistToAdd = songToAdd.SongArtist;
     if(Playlists.Title == currentPlaylist){
@@ -39,7 +39,7 @@ function addSongToPlaylist() {
 function deleteSongOnPlaylist() {
     //This is where you can delete songs from a playlist
     //Songs will be deleted when a button is pressed next to song info on playlist
-    var songToDelete = "";
+    //var songToDelete = "";
     var songTitleToDelete = songToDelete.SongTitle;
     var songArtistToDelete = songToDelete.SongArtist;
     if(Playlists.Title == currentPlaylist){
@@ -56,9 +56,40 @@ function deletePlaylist() {
 
 function displayPlaylist() {
     //This will show the playlist & its contents
-}
 
-function selectPlaylist() {
-    //This will allow the user to select which playlist to modify
-    var selectedPlaylist = currentPlaylist;
+    //Retrieve column headers
+    var col = [];
+    for(var i = 0; i < currentPlaylist.Songs.length; i++){
+        for(var key in  currentPlaylist.Songs[i]){
+            if(col.indexOf(key) === -1){
+                col.push(key);
+            }
+        }
+    }
+
+    //Set up table
+    var table = document.createElement("table");
+
+    //Create header row
+    var tableRow = table.insertRow(-1);
+
+    for(var i = 0; i < col.length; i++){
+        var tableHeader = document.createElement("th");
+        tableHeader.innerHTML = col[i];
+        tableHeader.appendChild(tableHeader);
+    }
+
+    //Add song data to table
+    for(var i = 0; i < currentPlaylist.Songs.length; i++){
+        tableRow = table.insertRow(-1);
+        for(var j = 0; j < col.length; j++){
+            var tableCell = tableRow.insertCell(-1);
+            tableCell.innerHTML = currentPlaylist.Songs[i][col[j]];
+        }
+    }
+
+    //Add table with song info to a container
+    var divContainer = document.getElementById("showData");
+        divContainer.innerHTML = "";
+        divContainer.appendChild(table);
 }
