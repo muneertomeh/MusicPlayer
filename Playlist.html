@@ -8,21 +8,13 @@
     <body>
         <h1 align=center>Playlist Title</h1>
 
-    <script>
-        function DeleteSongFunction() {
-          // event.target will be the input element.
-          var td = event.target.parentNode;
-          var tr = td.parentNode; // the row to be removed
-          tr.parentNode.removeChild(tr);
-        }
-    </script>
 
           <table class="songList" id="songList">
-          <tr>
+          <!-- <tr>
               <td><p>Song Title</p></td>
               <td><p>Artist</p></td>
               <td><input type="button" value="Remove Song" onclick="DeleteSongFunction()"></td>
-          </tr>
+          </tr> -->
           <tbody></tbody>
           </table>
 
@@ -44,7 +36,7 @@
                  <button id="inp1" onclick="inp()" value="Input">Input</button>
                 </li>
 
-                <li><a href="" id="songArtist" class="songArtist">Neil Aigner</a> <button id="inp1" onclick="inp()" value="Input">Input</button>
+                <li><a href="" id="songArtist" class="songArtist">Neil Aigner</a> <a href="" id="songName" class="songName">Brokeback Mountain</a> <button id="inp1" onclick="inp()" value="Input">Input</button>
                 </li>
                 <li><a href="" id="songArtist" class="songArtist">Nita Schreffler</a> <button id="inp1" onclick="inp()" value="Input">Input</button>
                 </li>
@@ -99,22 +91,10 @@ function filterSongs() {
 }
 </script>
 
+
 <!--add song to list of songs in playlist-->
-<!-- <script>
-document.getElementById("add").onclick=function(){
-
-  var songList = document.getElementById("songList");
-  var currentIndex = songList.rows.length;
-  var currentRow = songList.insertRow(-1);
-
-  currentCell = currentRow.insertCell(-1);
-  var box = document.createElement('');
-  currentCell.appendChild(box);
 
 
-}
-
-</script> -->
 <script>
 function inp(){
   var table = document.getElementById('songList');
@@ -123,15 +103,34 @@ function inp(){
   var ul = document.getElementById("theList");
   var li = ul.getElementsByTagName("li");
 
-  var element = document.getElementById('songArtist');
-  element.innerHTML = element.innerText || element.textContent;
+  var songArtist = document.getElementById('songArtist');
+  songArtist.innerHTML = songArtist.innerText || songArtist.textContent;
 
-  var text = document.createTextNode(element.innerHTML);
+  var songName = document.getElementById('songName');
+  songName.innerHTML = songName.innerText || songName.textContent;
+
+  var artistText = document.createTextNode(songArtist.innerHTML);
+  var songText = document.createTextNode(songName.innerHTML);
   var col = document.createElement('td');
   var row = document.createElement('tr');
-  col.appendChild(text);
+
+  var btn = document.createElement("BUTTON");
+  var t = document.createTextNode("Remove Song");
+  btn.appendChild(t);
+
+
+
+  col.appendChild(artistText);
+  col.appendChild(songText);
+  col.appendChild(btn);
   row.appendChild(col);
   tbody.appendChild(row);
+  btn.onclick = function DeleteSongFunction() {
+    // event.target will be the input element.
+    var td = event.target.parentNode;
+    var tr = td.parentNode; // the row to be removed
+    tr.parentNode.removeChild(tr);
+  }
 
 
 }
