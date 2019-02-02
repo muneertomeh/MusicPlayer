@@ -4,29 +4,48 @@
         <meta charset="utf-8">
         <title>MusicPlaya</title>
         <link rel="stylesheet" href="https://bootswatch.com/4/darkly/bootstrap.min.css">
-        <link rel="stylesheet" href="dashboard.css">
+        <link rel="stylesheet" href="../styles/dashboard.css">
     </head>
 
     <body>
-
         <div class="header">
             <h1>Welcome to MusicPlaya</h1>
-            <div class="search_type">
-                <h3 class="song_menu">Songs</h3>
-                <h3 class="playlist_menu">Playlists</h3>
+            <div class="dashboard_menu_type">
+                <p class="song_menu"><a href="./dashboard.html">Songs</a></p>
+                <p class="playlist_menu"><a href="./playlist.html">Playlists</a></p>
             </div> 
         </div>
         <div class="music_search">
+            <div class="search_type">
+               <input type="radio" id="search_song_title" value="songTitle" name="dashboard" checked>
+               <label for="songTitle">Song Title</label>
+               <input type="radio" id="search_song_artist" value="songArtist" name="dashboard">
+               <label for="songArtist">Artist</label>
+               <input type="radio" id="search_song_album" value="songAlbum" name="dashboard">
+               <label for="songAlbum">Album</label>
+            </div>
             <input type="search" id="search_song" placeholder="Search For Songs..."/>
-            <button type="submit" id="search_song_button">Search</button>
+            <button type="submit" id="search_song_button" onsubmit="searchForSongs()">Search</button>
         </div>
         <div class="music_playlist_results_player">
             <div class="music_playlist_results">
                 <ul>
-                    <li>Song1</li>
-                    <li>Song2</li>
-                    <li>Song3</li>
-                    <li>Song4</li>
+                    <li class="song_info">Song1</li>
+                    <li class="song_info">Song2</li>
+                    <li class="song_info">Song3</li>
+                    <li class="song_info">Song4</li>
+                    <li class="song_info">Song1</li>
+                    <li class="song_info">Song2</li>
+                    <li class="song_info">Song3</li>
+                    <li class="song_info">Song4</li>
+                    <li class="song_info">Song1</li>
+                    <li class="song_info">Song2</li>
+                    <li class="song_info">Song3</li>
+                    <li class="song_info">Song4</li>
+                    <li class="song_info">Song1</li>
+                    <li class="song_info">Song2</li>
+                    <li class="song_info">Song3</li>
+                    <li class="song_info">Song4</li>
                 </ul>
             </div>
             <div class="music_player">
@@ -35,13 +54,14 @@
                 <div class="album_name">Album1</div>
                 <div class="album_cover"></div>
                 <div class="player_buttons">
-
+                    <button type="button" class="play_button" id="play_button">Play</button>
+                    <button type="button" class="pause_button" id="pause_button">Pause</button>
+                    <button type="button" class="stop_button" id="stop_button">Stop</button>
+                    <button type="button" class="skip_button" id="skip_button">Skip</button>
+                    <button type="button" class="back_button" id="back_button">Back</button>
                 </div>
             </div>
         </div>
     </body>
-
-    <script>
-        require('./dashboard.js');
-    </script>
+    <script src="../service/dashboard.js"></script>
 </html>
