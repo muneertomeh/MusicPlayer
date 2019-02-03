@@ -4,11 +4,24 @@
   <meta charset="UTF-8">
   <link rel="stylesheet" href="https://bootswatch.com/4/darkly/bootstrap.min.css">
   <link rel="stylesheet" type="text/css" href="style.css">
-  <title>Playlist Title</title>
+  <title>Playlist</title>
 
 </head>
 <body>
-  <h1 align=center>Playlist Title</h1>
+  <script>
+  function selectName(){
+var x = document.getElementById("myText").value;
+document.getElementById("pTitle").innerHTML = x;
+
+  }
+  </script>
+
+
+  <input align=center  type="text" class="myText" id="myText" value="Enter Playlist Name...">
+  <p> Enter here to create or change the playlist name </p>
+  <button onclick="selectName()" id="saveP"> Save Playlist Name </button>
+
+  <h1 align=center class="pTitle" id="pTitle">Playlist Title</h1>
 
   <div id ="table">
     <table class="songList" id="songList">
@@ -20,7 +33,7 @@
     <tbody></tbody>
   </table>
 </div>
-<div class="search" align="center">
+<div class="search" id="search" align="center">
   <input type="text" id="myInput" onkeyup="filterSongs()" placeholder="Search for songs.." title="Type in a song"
   onkeypress="showSongs()">
 </div>
