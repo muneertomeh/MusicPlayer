@@ -3,25 +3,27 @@
 <head>
   <meta charset="UTF-8">
   <link rel="stylesheet" href="https://bootswatch.com/4/darkly/bootstrap.min.css">
-  <link rel="stylesheet" type="text/css" href="playlist.css">
+  <link rel="stylesheet" type="text/css" href="../styles/playlist.css">
   <title>Playlist</title>
 
 </head>
 <body>
-
-  <input align=center  type="text" class="myText" id="myText" value="Enter Playlist Name...">
+  <div class="create-playlist">
   <p> Enter here to create or change the playlist name </p>
+  </div>
+
+  <div class="create-playlist">
+  <input align=center  type="text" class="myText" id="myText" value="Enter Playlist Name...">
+  </div>
+
+  <div class="create-playlist">
   <button onclick="selectName()" id="saveP"> Save Playlist Name </button>
+  </div>
 
   <h1 align=center class="pTitle" id="pTitle">Playlist Title</h1>
 
   <div id ="table">
     <table class="songList" id="songList">
-      <!-- <tr>
-      <td><p>Song Title</p></td>
-      <td><p>Artist</p></td>
-      <td><input type="button" value="Remove Song" onclick="DeleteSongFunction()"></td>
-    </tr> -->
     <tbody></tbody>
   </table>
 </div>
@@ -42,25 +44,33 @@
         <button id="inp1" onclick="inp()" value="Input">Add Song</button>
       </li>
 
-      <li><a href="" id="songArtist" class="songArtist">Neil Aigner</a> <a href="" id="songName" class="songName"> Tomorrow</a> <button id="inp1" onclick="inp()" value="Input">Add Song</button>
+      <li><a href="" id="songArtist" class="songArtist">Neil Aigner</a> <a href="" id="songName" class="songName"> Tomorrow</a> <button class="inp1" id="inp1" onclick="inp()" value="Input">Add Song</button>
       </li>
-      <li><a href="" id="songArtist" class="songArtist">Nita Schreffler</a> <button id="inp1" onclick="inp()" value="Input">Add Song</button>
+      <li><a href="" id="songArtist" class="songArtist">Nita Schreffler</a> <button class="inp1" id="inp1" onclick="inp()" value="Input">Add Song</button>
       </li>
-      <li><a href="" id="songArtist" class="songArtist">Clinton Knuckles</a> <button id="inp1" onclick="inp()" value="Input">Add Song</button>
+      <li><a href="" id="songArtist" class="songArtist">Clinton Knuckles</a> <button class="inp1" id="inp1" onclick="inp()" value="Input">Add Song</button>
       </li>
-      <li><a href="" id="songArtist" class="songArtist">Eve Kellett</a> <button id="inp1" onclick="inp()" value="Input">Add Song</button>
+      <li><a href="" id="songArtist" class="songArtist">Eve Kellett</a> <button class="inp1" id="inp1" onclick="inp()" value="Input">Add Song</button>
       </li>
-      <li><a href="" id="songArtist" class="songArtist">Jamie Kaspar</a> <button id="inp1" onclick="inp()" value="Input">Add Song</button>
+      <li><a href="" id="songArtist" class="songArtist">Jamie Kaspar</a> <button class="inp1" id="inp1" onclick="inp()" value="Input">Add Song</button>
       </li>
-      <li><a href="" id="songArtist" class="songArtist">Emilia Hooton</a> <button id="inp1" onclick="inp()" value="Input">Add Song</button>
+      <li><a href="" id="songArtist" class="songArtist">Emilia Hooton</a> <button class="inp1" id="inp1" onclick="inp()" value="Input">Add Song</button>
       </li>
-      <li><a href="" id="songArtist" class="songArtist">Kenya Sidney</a> <button id="inp1" onclick="inp()" value="Input">Add Song</button>
+      <li><a href="" id="songArtist" class="songArtist">Kenya Sidney</a> <button class="inp1" id="inp1" onclick="inp()" value="Input">Add Song</button>
       </li>
     </ul>
   </div>
 
-  <div class ="savePlaylist" align="center">
-    <button id="save"> Save Playlist </button>
+  <div class ="fPlaylist" align="center">
+    <button onclick="savePlaylist()"> Save Playlist </button>
+  </div>
+
+  <div class ="fPlaylist" align="center">
+    <button onclick="deleteSongOnPlaylist()"> Delete Playlist </button>
+  </div>
+
+  <div class="fPlaylist">
+    <button onclick="displayPlaylist()">Display Contents of Playlist</button>
   </div>
 
 
