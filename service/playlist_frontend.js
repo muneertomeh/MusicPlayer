@@ -1,4 +1,8 @@
 let fs = require('fs');
+const electron = require('electron');
+const remote = electron.remote;
+const url = require('url');
+const path = require('path');
 <!--filter songs when user searches-->
 <script>
 function filterSongs() {
