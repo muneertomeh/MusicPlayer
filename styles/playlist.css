@@ -33,7 +33,6 @@ margin-right:auto;
   margin-left:auto;
   margin-right:auto;
   list-style-type: none;
-
 }
 
 #search{
@@ -42,6 +41,10 @@ margin-right:auto;
 
 .fPlaylist{
   padding:8px;
+}
+
+.pTitle{
+  color: MediumSeaGreen;
 }
 
 #theList li a:hover:not(.header)

@@ -1,9 +1,9 @@
-
-let fs = require("fs");
-const electron = require('electron');
-const remote = electron.remote;
-const url = require('url');
-const path = require('path');
+//
+// let fs = require("fs");
+// const electron = require('electron');
+// const remote = electron.remote;
+// const url = require('url');
+// const path = require('path');
 
 //Currently unsure of how to get current user still
 //let currentUser = document.getElementById("UserName").value;
@@ -60,8 +60,8 @@ function createPlaylist() {
 function addSongToPlaylist() {
     //This is where you can add songs to the playlist
     //Songs will be added when "add song" is pressed on the search bar
-    let songSelected = document.getElementById("Song").value;
-    fs.readFile(__dirname + '/../data/music.json', (err, data) => {
+    let songSelected = document.getElementById("song").value;
+    fs.readFile(__dirname + '/../data/exPlaylist.json', (err, data) => {
         if(err) console.log(err);
         else{
             let songData = JSON.parse(data);

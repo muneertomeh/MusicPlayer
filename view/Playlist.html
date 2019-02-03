@@ -17,7 +17,7 @@
   </div>
 
   <div class="create-playlist">
-  <button onclick="selectName()" id="saveP"> Save Playlist Name </button>
+  <button onclick="selectName()" id="saveP"> Create Playlist </button>
   </div>
 
   <h1 align=center class="pTitle" id="pTitle">Playlist Title</h1>
@@ -62,6 +62,11 @@
   </div>
 
   <div class ="fPlaylist" align="center">
+    <button onclick="addSongToPlaylist()"> Add </button>
+  </div>
+
+
+  <div class ="fPlaylist" align="center">
     <button onclick="savePlaylist()"> Save Playlist </button>
   </div>
 
@@ -77,5 +82,6 @@
 
 
 <script src="../service/playlist_frontend.js"></script>
+<script src="../service/playlist_backend.js"></script>
 </body>
 </html>
