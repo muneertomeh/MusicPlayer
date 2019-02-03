@@ -3,8 +3,10 @@ const electron = require('electron');
 const remote = electron.remote;
 const url = require('url');
 const path = require('path');
-<!--filter songs when user searches-->
-<script>
+
+
+// <!--filter songs when user searches-->
+
 function filterSongs() {
   var input, filter, ul, li, a, i, txtValue;
   input = document.getElementById("myInput");
@@ -21,13 +23,11 @@ function filterSongs() {
     }
   }
 }
-</script>
-
-let fs=require('fs');
-<!--add song to list of songs in playlist-->
 
 
-<script>
+
+// <!--add song to list of songs in playlist-->
+
 function inp(){
   var table = document.getElementById('songList');
   var tbody = table.getElementsByTagName('tbody')[0];
@@ -77,12 +77,9 @@ function inp(){
   }
 
 }
-</script>
 
-let fs=require('fs');
-<!--show the list of songs-->
-<script>
 
+// <!--show the list of songs-->
 function showSongs()
 {
   var input;
@@ -96,14 +93,8 @@ function showSongs()
   // input.addEventListener("focusout",function(){ div.style.display="none";});
 
 }
-</script>
 
-
-let fs=require('fs');
-<script>
 function selectName(){
 var x = document.getElementById("myText").value;
 document.getElementById("pTitle").innerHTML = x;
-
 }
-</script>
