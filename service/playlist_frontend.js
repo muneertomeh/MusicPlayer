@@ -133,26 +133,6 @@ function inp(){
 }
 
 
-function addSongToPlaylist() {
-    //This is where you can add songs to the playlist
-    //Songs will be added when "add song" is pressed on the search bar
-    let songSelected = document.getElementById("Song").value;
-    fs.readFile(__dirname + '/../data/music.json', (err, data) => {
-        if(err) console.log(err);
-        else{
-            let songData = JSON.parse(data);
-            songData['music'].forEach(element => {
-                if(songSelected == element["title"] && songSelected == element["name"]){
-                    songsToAdd.push({
-                        "SongTitle": element["title"],
-                        "SongArtist": element["name"]
-                    });
-                }
-            });
-        }
-    });
-}
-
 // <!--show the list of songs-->
 function showSongs()
 {
@@ -168,6 +148,112 @@ function showSongs()
 
 // input.addEventListener("focusout",function(){ div.style.display="none";});
 
+}
+
+function searchForSongs() {
+    let searchType = null;
+
+    if (document.getElementById('search_song_title').checked == true) {
+        searchType = document.getElementById('search_song_title').value;
+    }
+    if (document.getElementById('search_song_artist').checked == true) {
+        searchType = document.getElementById('search_song_artist').value;
+    }
+    if (document.getElementById('search_song_release').checked == true) {
+        searchType = document.getElementById('search_song_release').value;
+    }
+    let searchField = document.getElementById('search_song').value;
+
+    //console.log("search Type: " + searchType + "What's searched: " + searchField);
+    if(searchType == null || searchField == '' || searchField == null) {
+        alert('Please fill in all required fields');
+    } else {
+        fs.readFile(__dirname + '/../data/music.json', (err, rawData) => {
+            if(err) {
+                console.log(err);
+            } else {
+                let data = JSON.parse(rawData);
+                let list = document.querySelector('ul');
+                list.innerHTML = '';
+                let id = 'song_';
+                let idNum = 1;
+
+// ------
+                // var table = document.getElementById('songList');
+                // var tbody = table.getElementsByTagName('tbody')[0];
+
+//-----
+
+                data.forEach(element => {
+                    if(searchType == 'song') {
+                        if(searchField == element[searchType]['title']) {
+                            listItem = document.createElement('li');
+                            listItem.textContent = searchField + ' by: ' + element['artist']['name'];
+                            listItem.className = 'song_info';
+                            id += idNum.toString();
+                            listItem.id = id;
+                            listItem.innerHTML += '<button type="submit" class="play_song_button" id="play_song_button" onclick="addSongToPlaylist(' + id + ')">Add Song</button>';
+                            listItem.musicFile = element['file'];
+                            listItem.songTitle = element['song']['title'];
+                            listItem.artist = element['artist']['name'];
+                            list.appendChild(listItem);
+
+
+
+                            // var col = document.createElement('td');
+                            // var row = document.createElement('tr');
+                            // var btn = document.createElement("BUTTON");
+                            // var t = document.createTextNode("Remove Song");
+                            // btn.appendChild(t);
+                            // btn.setAttribute("style", "margin-left:20px; border: 1px solid green;");
+                            // // add columns of artist, song, and button
+                            // col.appendChild(listItem);
+                            // col.appendChild(btn);
+                            // row.appendChild(col);
+                            // tbody.appendChild(row);
+
+
+
+                            idNum += 1;
+                            id = 'song_';
+                        }
+                    }
+                    else if(searchType == 'artist') {
+                        if(searchField == element[searchType]['name']) {
+                            listItem = document.createElement('li');
+                            listItem.textContent = element['song']['title'] + ' by: ' + searchField;
+                            listItem.className = 'song_info';
+                            id += idNum.toString();
+                            listItem.id = id;
+                            listItem.innerHTML += '<button type="submit" class="play_song_button" id="play_song_button" onclick="addSongToPlaylist(' + id + ')">Add Song</button>';
+                            listItem.musicFile = element['file'];
+                            listItem.songTitle = element['song']['title'];
+                            listItem.artist = element['artist']['name'];
+                            list.appendChild(listItem);
+                            idNum += 1;
+                            id = 'song_';
+                        }
+                    }
+                    else if(searchType == 'release') {
+                        if(searchField == element[searchType]['name']) {
+                            listItem = document.createElement('li');
+                            listItem.textContent = element['song']['title'] + ' by: ' + element['artist']['name'];
+                            listItem.className = 'song_info';
+                            id += idNum.toString();
+                            listItem.id = id;
+                            listItem.innerHTML += '<button type="submit" class="play_song_button" id="play_song_button" onclick="addSongToPlaylist(' + id + ')">Add Song</button>';
+                            listItem.musicFile = element['file'];
+                            listItem.songTitle = element['song']['title'];
+                            listItem.artist = element['artist']['name'];
+                            list.appendChild(listItem);
+                            idNum += 1;
+                            id = 'song_';
+                        }
+                    }
+                })
+            }
+        })
+    }
 }
 
 function selectName(){

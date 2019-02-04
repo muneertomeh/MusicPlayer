@@ -27,13 +27,33 @@
     <tbody></tbody>
   </table>
 </div>
-<div class="search" id="search" align="center">
+<!-- <div class="search" id="search" align="center">
   <input type="text" id="myInput" onkeyup="filterSongs()" placeholder="Search for songs.." title="Type in a song"
   onkeypress="showSongs()">
-</div>
+</div> -->
+
+<div class="music_search">
+            <div class="search_type">
+               <input type="radio" id="search_song_title" value="song" name="dashboard" checked>
+               <label for="song">Song Title</label>
+               <input type="radio" id="search_song_artist" value="artist" name="dashboard">
+               <label for="artist">Artist</label>
+               <input type="radio" id="search_song_release" value="release" name="dashboard">
+               <label for="release">Release</label>
+            </div>
+            <input type="search" id="search_song" placeholder="Search For Songs..."/>
+            <button type="submit" id="search_song_button" onclick="searchForSongs()">Search</button>
+        </div>
+        <div class="music_playlist_results_player">
+            <div class="music_playlist_results">
+                <ul>
+                    <!-- dynamically created li goes here -->
+                </ul>
+            </div>
+          </div>
 
 
-<div class ="list" id="list" style="display: none;">
+<!-- <div class ="list" id="list" style="display: none;">
   <ul id="theList" align="center">
     <li><a href="" id="songArtist" class="songArtist">Tyrone Schlecht</a> <a href="" id="songName" class="songName">Sweet Home Alabama</a> <button id="inp1" onclick="inp()" value="Input">Add Song</button>
 
@@ -59,7 +79,7 @@
       <li><a href="" id="songArtist" class="songArtist">Kenya Sidney</a> <button class="inp1" id="inp1" onclick="inp()" value="Input">Add Song</button>
       </li>
     </ul>
-  </div>
+  </div> -->
 
   <div class ="fPlaylist" align="center">
     <button onclick="addSong()"> Add </button>
