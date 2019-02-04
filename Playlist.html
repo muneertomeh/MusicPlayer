@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang='en'>
+<head>
+  <meta charset="UTF-8">
+  <link rel="stylesheet" href="https://bootswatch.com/4/darkly/bootstrap.min.css">
+  <link rel="stylesheet" type="text/css" href="style.css">
+  <title>Playlist Title</title>
+
+</head>
+<body>
+  <h1 align=center>Playlist Title</h1>
+
+  <div id ="table">
+    <table class="songList" id="songList">
+      <!-- <tr>
+      <td><p>Song Title</p></td>
+      <td><p>Artist</p></td>
+      <td><input type="button" value="Remove Song" onclick="DeleteSongFunction()"></td>
+    </tr> -->
+    <tbody></tbody>
+  </table>
+</div>
+<div class="search" align="center">
+  <input type="text" id="myInput" onkeyup="filterSongs()" placeholder="Search for songs.." title="Type in a song"
+  onkeypress="showSongs()">
+</div>
+
+
+<div class ="list" id="list" style="display: none;">
+  <ul id="theList" align="center">
+    <li><a href="" id="songArtist" class="songArtist">Tyrone Schlecht</a> <a href="" id="songName" class="songName">Sweet Home Alabama</a> <button id="inp1" onclick="inp()" value="Input">Add Song</button>
+
+    </li>
+    <li><a href="" id="songArtist" class="songArtist">Javier Ress</a>  <a href="" id="songName" class="songName">Splash Mountain</a>
+      <button id="inp1" onclick="inp()" value="Input">Add Song</button>
+      <li><a href="" id="songArtist" class="songArtist">Carlene Tomes</a>
+        <button id="inp1" onclick="inp()" value="Input">Add Song</button>
+      </li>
+
+      <li><a href="" id="songArtist" class="songArtist">Neil Aigner</a> <a href="" id="songName" class="songName"> Tomorrow</a> <button id="inp1" onclick="inp()" value="Input">Add Song</button>
+      </li>
+      <li><a href="" id="songArtist" class="songArtist">Nita Schreffler</a> <button id="inp1" onclick="inp()" value="Input">Add Song</button>
+      </li>
+      <li><a href="" id="songArtist" class="songArtist">Clinton Knuckles</a> <button id="inp1" onclick="inp()" value="Input">Add Song</button>
+      </li>
+      <li><a href="" id="songArtist" class="songArtist">Eve Kellett</a> <button id="inp1" onclick="inp()" value="Input">Add Song</button>
+      </li>
+      <li><a href="" id="songArtist" class="songArtist">Jamie Kaspar</a> <button id="inp1" onclick="inp()" value="Input">Add Song</button>
+      </li>
+      <li><a href="" id="songArtist" class="songArtist">Emilia Hooton</a> <button id="inp1" onclick="inp()" value="Input">Add Song</button>
+      </li>
+      <li><a href="" id="songArtist" class="songArtist">Kenya Sidney</a> <button id="inp1" onclick="inp()" value="Input">Add Song</button>
+      </li>
+    </ul>
+  </div>
+
+  <div class ="savePlaylist" align="center">
+    <button id="save"> Save Playlist </button>
+  </div>
+
+  <!--show the list of songs-->
+  <script>
+
+  function showSongs()
+  {
+    var input;
+    input = document.getElementById('myInput');
+    var div = document.getElementById('list')
+
+    input.addEventListener("keypress",function(){
+      div.style.display ="block";
+    });
+
+    // input.addEventListener("focusout",function(){ div.style.display="none";});
+
+  }
+</script>
+
+<!--filter songs when user searches-->
+<script>
+function filterSongs() {
+  var input, filter, ul, li, a, i, txtValue;
+  input = document.getElementById("myInput");
+  filter = input.value.toUpperCase();
+  ul = document.getElementById("theList");
+  li = ul.getElementsByTagName("li");
+  for (i = 0; i < li.length; i++) {
+    a = li[i].getElementsByTagName("a")[0];
+    txtValue = a.textContent || a.innerText;
+    if (txtValue.toUpperCase().indexOf(filter) > -1) {
+      li[i].style.display = "";
+    } else {
+      li[i].style.display = "none";
+    }
+  }
+}
+</script>
+
+
+<!--add song to list of songs in playlist-->
+
+
+<script>
+function inp(){
+  var table = document.getElementById('songList');
+  var tbody = table.getElementsByTagName('tbody')[0];
+  var y = document.getElementById('inp1').value;
+  var ul = document.getElementById("theList");
+  var li = ul.getElementsByTagName("li");
+
+  var songArtist = document.getElementById('songArtist');
+  songArtist.innerHTML = songArtist.innerText || songArtist.textContent;
+
+  var songName = document.getElementById('songName');
+  songName.innerHTML = songName.innerText || songName.textContent;
+
+  // assign each new row a unique id
+  var id= songArtist.getAttribute('id');
+  var id= songName.getAttribute('id');
+  var rowCount = table.rows.length;
+  var new_id = id+"_"+rowCount;
+  //assign unique id for song artist and song name
+  songArtist.setAttribute('id',new_id);
+  songName.setAttribute('id',new_id);
+
+  var artistText = document.createTextNode(songArtist.innerHTML);
+  var songText = document.createTextNode(songName.innerHTML);
+  var col = document.createElement('td');
+  var row = document.createElement('tr');
+
+  var btn = document.createElement("BUTTON");
+  var t = document.createTextNode("Remove Song");
+  btn.appendChild(t);
+
+
+  // add columns of artist, song, and button
+  col.appendChild(artistText);
+  col.appendChild(songText);
+  col.appendChild(btn);
+  row.appendChild(col);
+  // add row to list
+  tbody.appendChild(row);
+
+
+
+
+
+  btn.onclick = function DeleteSongFunction() {
+    // event.target will be the input element.
+    var td = event.target.parentNode;
+    var tr = td.parentNode; // the row to be removed
+    tr.parentNode.removeChild(tr);
+  }
+
+
+}
+</script>
+
+</body>
+</html>
