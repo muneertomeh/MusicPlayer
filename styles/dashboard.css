@@ -46,3 +46,6 @@
 .play_song_button {
     margin: .5em;
 }
+.player_buttons {
+    padding-top: 2em;
+}

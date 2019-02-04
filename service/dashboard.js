@@ -53,12 +53,15 @@ function searchForSongs() {
                             listItem = document.createElement('li');
                             listItem.textContent = searchField + ' by: ' + element['artist']['name'];
                             listItem.className = 'song_info';
-                            listItem.innerHTML += '<button type="submit" class="play_song_button" id="play_song_button" onclick="playSong()">Play Song</button>';
                             id += idNum.toString();
                             listItem.id = id;
-                            listItem.datatype = element['song']['file'];
+                            listItem.innerHTML += '<button type="submit" class="play_song_button" id="play_song_button" onclick="playSong(' + id + ')">Play Song</button>';
+                            listItem.musicFile = element['file'];
+                            listItem.songTitle = element['song']['title'];
+                            listItem.artist = element['artist']['name'];
                             list.appendChild(listItem);
                             idNum += 1;
+                            id = 'song_';
                         }
                     }
                     else if(searchType == 'artist') {
@@ -66,12 +69,15 @@ function searchForSongs() {
                             listItem = document.createElement('li');
                             listItem.textContent = element['song']['title'] + ' by: ' + searchField;
                             listItem.className = 'song_info';
-                            listItem.innerHTML += '<button type="submit" class="play_song_button" id="play_song_button" onclick="playSong()">Play Song</button>';
                             id += idNum.toString();
                             listItem.id = id;
-                            listItem.datatype = element['song']['file'];
+                            listItem.innerHTML += '<button type="submit" class="play_song_button" id="play_song_button" onclick="playSong(' + id + ')">Play Song</button>';
+                            listItem.musicFile = element['file'];
+                            listItem.songTitle = element['song']['title'];
+                            listItem.artist = element['artist']['name'];
                             list.appendChild(listItem);
                             idNum += 1;
+                            id = 'song_';
                         }
                     }
                     else if(searchType == 'release') {
@@ -79,12 +85,15 @@ function searchForSongs() {
                             listItem = document.createElement('li');
                             listItem.textContent = element['song']['title'] + ' by: ' + element['artist']['name'];
                             listItem.className = 'song_info';
-                            listItem.innerHTML += '<button type="submit" class="play_song_button" id="play_song_button" onclick="playSong()">Play Song</button>';
                             id += idNum.toString();
                             listItem.id = id;
-                            listItem.datatype = element['song']['file'];
+                            listItem.innerHTML += '<button type="submit" class="play_song_button" id="play_song_button" onclick="playSong(' + id + ')">Play Song</button>';
+                            listItem.musicFile = element['file'];
+                            listItem.songTitle = element['song']['title'];
+                            listItem.artist = element['artist']['name'];
                             list.appendChild(listItem);
                             idNum += 1;
+                            id = 'song_';
                         }
                     }
                 })
@@ -93,10 +102,19 @@ function searchForSongs() {
     }
 }
 
-function playSong(id) {
-    let musicPlayer = document.getElementsByClassName('player_buttons');
-    musicPlayer.innerHTML = '';
+function playSong(li) {
+    let src = li.musicFile;
+    let songTitle = li.songTitle;
+    let artist = li.artist;
 
-    let currentSong = document.getElementById('music');
-    currentSong.play();
+    let currentSong = document.getElementById('song_title');
+    currentSong.innerHTML = songTitle;
+    currentSong = document.getElementById('artist_name');
+    currentSong.innerHTML = artist;
+
+
+    let musicPlayer = document.getElementById('music');
+    musicPlayer.innerHTML = '';
+    musicPlayer.src = src;
+    musicPlayer.play();
 }
