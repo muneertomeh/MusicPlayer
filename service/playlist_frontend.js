@@ -24,11 +24,41 @@ function filterSongs() {
   }
 }
 
+function addSong(){
+  //Init column headers
+  let col = ["Song Title", "Song Artist"];
 
+  //Set up table
+  var table = document.createElement("table");
+
+  //Create header row
+  var tableRow = table.insertRow(-1);
+
+  for(var i = 0; i < col.length; i++){
+      var tableHeader = document.createElement("th");
+      tableHeader.innerHTML = col[i];
+      tableText= document.createTextNode(tableHeader.innerHTML);
+      tableHeader.appendChild(tableText);
+  }
+
+
+  fs.readFile(__dirname + '/../data/exPlaylist.json', (err, data) => {
+  if (err) throw err;
+  let playlistData = JSON.parse(data);
+  for(var i = 0; i < playlistData.length; i++){
+      tableRow = table.insertRow(-1);
+      var tableCell = tableRow.insertCell(-1);
+      tableCell.innerHTML = playlistData["SongTitle"][col[0]];
+      tableCell.innerHTML = playlistData["SongArtist"][col[1]];
+  }
+});
+}
 
 // <!--add song to list of songs in playlist-->
 
 function inp(){
+
+
 
   var table = document.getElementById('songList');
   var tbody = table.getElementsByTagName('tbody')[0];
@@ -106,7 +136,7 @@ function addSongToPlaylist() {
 function showSongs()
 {
 
-  
+
   var input;
   input = document.getElementById('myInput');
   var div = document.getElementById('list')

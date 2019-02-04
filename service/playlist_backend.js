@@ -60,7 +60,7 @@ function createPlaylist() {
 function addSongToPlaylist() {
     //This is where you can add songs to the playlist
     //Songs will be added when "add song" is pressed on the search bar
-    let songSelected = document.getElementById("song").value;
+    let songSelected = document.getElementById("Song").value;
     fs.readFile(__dirname + '/../data/exPlaylist.json', (err, data) => {
         if(err) console.log(err);
         else{
