@@ -23,7 +23,6 @@
 .search_type {
     width: 100%;
 }
-
 .music_playlist_results_player {
     height: 30em;
     padding: 1.5em;
@@ -43,4 +42,7 @@
     width: 50%;
     float: right;
     text-align: center;
+}
+.play_song_button {
+    margin: .5em;
 }

@@ -17,35 +17,20 @@
         </div>
         <div class="music_search">
             <div class="search_type">
-               <input type="radio" id="search_song_title" value="songTitle" name="dashboard" checked>
-               <label for="songTitle">Song Title</label>
-               <input type="radio" id="search_song_artist" value="songArtist" name="dashboard">
-               <label for="songArtist">Artist</label>
-               <input type="radio" id="search_song_album" value="songAlbum" name="dashboard">
-               <label for="songAlbum">Album</label>
+               <input type="radio" id="search_song_title" value="song" name="dashboard" checked>
+               <label for="song">Song Title</label>
+               <input type="radio" id="search_song_artist" value="artist" name="dashboard">
+               <label for="artist">Artist</label>
+               <input type="radio" id="search_song_release" value="release" name="dashboard">
+               <label for="release">Release</label>
             </div>
             <input type="search" id="search_song" placeholder="Search For Songs..."/>
-            <button type="submit" id="search_song_button" onsubmit="searchForSongs()">Search</button>
+            <button type="submit" id="search_song_button" onclick="searchForSongs()">Search</button>
         </div>
         <div class="music_playlist_results_player">
             <div class="music_playlist_results">
                 <ul>
-                    <li class="song_info">Song1</li>
-                    <li class="song_info">Song2</li>
-                    <li class="song_info">Song3</li>
-                    <li class="song_info">Song4</li>
-                    <li class="song_info">Song1</li>
-                    <li class="song_info">Song2</li>
-                    <li class="song_info">Song3</li>
-                    <li class="song_info">Song4</li>
-                    <li class="song_info">Song1</li>
-                    <li class="song_info">Song2</li>
-                    <li class="song_info">Song3</li>
-                    <li class="song_info">Song4</li>
-                    <li class="song_info">Song1</li>
-                    <li class="song_info">Song2</li>
-                    <li class="song_info">Song3</li>
-                    <li class="song_info">Song4</li>
+                    <!-- dyamically created li goes here -->
                 </ul>
             </div>
             <div class="music_player">
@@ -54,11 +39,9 @@
                 <div class="album_name">Album1</div>
                 <div class="album_cover"></div>
                 <div class="player_buttons">
-                    <button type="button" class="play_button" id="play_button">Play</button>
-                    <button type="button" class="pause_button" id="pause_button">Pause</button>
-                    <button type="button" class="stop_button" id="stop_button">Stop</button>
-                    <button type="button" class="skip_button" id="skip_button">Skip</button>
-                    <button type="button" class="back_button" id="back_button">Back</button>
+                    <audio controls id="music">
+                        <source src="../mp3/bensound-betterdays.mp3">
+                    </audio>
                 </div>
             </div>
         </div>
