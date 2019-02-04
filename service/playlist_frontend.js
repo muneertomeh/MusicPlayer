@@ -26,30 +26,51 @@ function filterSongs() {
 
 function addSong(){
   //Init column headers
-  let col = ["Song Title", "Song Artist"];
-
-  //Set up table
-  var table = document.createElement("table");
-
-  //Create header row
-  var tableRow = table.insertRow(-1);
-
-  for(var i = 0; i < col.length; i++){
-      var tableHeader = document.createElement("th");
-      tableHeader.innerHTML = col[i];
-      tableText= document.createTextNode(tableHeader.innerHTML);
-      tableHeader.appendChild(tableText);
-  }
+  // let col = ["Song Title", "Song Artist"];
+  //
+  // //Set up table
+  // var table = document.createElement("table");
+  //
+  // //Create header row
+  // var tableRow = table.insertRow(-1);
+  //
+  // for(var i = 0; i < col.length; i++){
+  //     var tableHeader = document.createElement("th");
+  //     tableHeader.innerHTML = col[i];
+  //     tableText= document.createTextNode(tableHeader.innerHTML);
+  //     tableHeader.appendChild(tableText);
+  // }
 
 
   fs.readFile(__dirname + '/../data/exPlaylist.json', (err, data) => {
   if (err) throw err;
   let playlistData = JSON.parse(data);
+
   for(var i = 0; i < playlistData.length; i++){
-      tableRow = table.insertRow(-1);
-      var tableCell = tableRow.insertCell(-1);
-      tableCell.innerHTML = playlistData["SongTitle"][col[0]];
-      tableCell.innerHTML = playlistData["SongArtist"][col[1]];
+    var myH2= document.createElement('h1');
+    var myList= document.createElement('ul');
+    var list = document.getElementById('theList');
+    myH2.textcontent = playlistData[i].song;
+    console.log(myH2.textContent);
+
+    var songShit = playlistData[i].song;
+    for (var j =0;j< songShit.length; j++)
+    {
+      var listItem = document.createElement(j);
+      listItem.textContent = songShit[j];
+      myList.appendChild(listItem);
+    }
+    list.appendChild(myList);
+
+
+      // tableRow = table.insertRow(-1);
+      // var tableCell = tableRow.insertCell(-1);
+      // tableCell.innerHTML = playlistData['artist'][2];
+      // tableCell.innerHTML = playlistData['song'][10];
+
+
+
+
   }
 });
 }

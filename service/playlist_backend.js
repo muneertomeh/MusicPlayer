@@ -180,8 +180,8 @@ function displayPlaylist() {
             for(var i = 0; i < playlistData.length; i++){
                 tableRow = table.insertRow(-1);
                 var tableCell = tableRow.insertCell(-1);
-                tableCell.innerHTML = playlistData["Song Title"][col[0]];
-                tableCell.innerHTML = playlistData["Song Artist"][col[1]];
+                tableCell.innerHTML = playlistData['artist'][col[0]];
+                tableCell.innerHTML = playlistData['song'][col[1]];
             }
         }
     });
