@@ -4,44 +4,37 @@
         <meta charset="utf-8">
         <title>MusicPlaya</title>
         <link rel="stylesheet" href="https://bootswatch.com/4/darkly/bootstrap.min.css">
-        <link rel="stylesheet" href="dashboard.css">
+        <link rel="stylesheet" href="../styles/dashboard.css">
     </head>
 
     <body>
-
         <div class="header">
             <h1>Welcome to MusicPlaya</h1>
-            <div class="search_type">
-                <h3 class="song_menu">Songs</h3>
-                <h3 class="playlist_menu">Playlists</h3>
+            <div class="dashboard_menu_type">
+                <p class="song_menu"><a href="./dashboard.html">Songs</a></p>
+                <p class="playlist_menu"><a href="./playlistDisplay.html">Playlists</a></p>
             </div> 
         </div>
         <div class="music_search">
-            <input type="search" id="search_song" placeholder="Search For Songs..."/>
-            <button type="submit" id="search_song_button">Search</button>
+            <input type="search" id="search_song" placeholder="Search For Songs..." onkeydown="search()">
+            <!-- <button type="submit" id="search_song_button" onclick="searchForSongs()">Search</button> -->
         </div>
         <div class="music_playlist_results_player">
             <div class="music_playlist_results">
                 <ul>
-                    <li>Song1</li>
-                    <li>Song2</li>
-                    <li>Song3</li>
-                    <li>Song4</li>
+                    <!-- dynamically created li goes here -->
                 </ul>
             </div>
             <div class="music_player">
-                <div class="song_title">SongTitle1</div>
-                <div class="artist_name">Artist1</div>
-                <div class="album_name">Album1</div>
-                <div class="album_cover"></div>
-                <div class="player_buttons">
-
+                <div class="song_title" id="song_title"></div>
+                <div class="artist_name" id="artist_name"></div>
+                <div class="player_buttons" id="player_buttons">
+                    <audio controls id="music">
+                        <!-- dynamically created src for each song file -->
+                    </audio>
                 </div>
             </div>
         </div>
     </body>
-
-    <script>
-        require('./dashboard.js');
-    </script>
+    <script src="../service/searchAllSongs.js"></script>
 </html>
