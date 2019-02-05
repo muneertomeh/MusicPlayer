@@ -44,6 +44,8 @@ function createPlaylist() {
                         if(err) console.log(err);
                         else{
                             alert("Playlist created");
+                            var x = document.getElementById("myText").value;
+                            document.getElementById("pTitle").innerHTML = x;
                         }
                     });
                 }
@@ -103,7 +105,7 @@ function deleteSongOnPlaylist() {
 function deletePlaylist() {
     //This is where the playlist is deleted and removed from playlist.json
     //Delete current playlist and redirect back to the dashboard
-    let currentPlaylist = document.getElementById("Playlist Title").value;
+    let currentPlaylist = document.getElementById("pTitle").value;
     fs.readFile(__dirname + '/../data/playlist.json', (err, data) => {
         if(err) console.log(err);
         else{

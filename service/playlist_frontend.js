@@ -242,7 +242,7 @@ function searchForSongs() {
                             listItem.className = 'song_info';
                             id += idNum.toString();
                             listItem.id = id;
-                            listItem.innerHTML += '<button type="submit" class="play_song_button" id="play_song_button" onclick="addSongToPlaylist(' + id + ')">Add Song</button>';
+                            listItem.innerHTML += '<button type="submit" class="play_song_button" id="play_song_button" onclick="addSongToPlaylist()">Add Song</button>';
                             listItem.musicFile = element['file'];
                             listItem.songTitle = element['song']['title'];
                             listItem.artist = element['artist']['name'];
