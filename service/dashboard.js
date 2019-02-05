@@ -33,8 +33,6 @@ function searchForSongs() {
         searchType = document.getElementById('search_song_release').value;
     }
     let searchField = document.getElementById('search_song').value;
-
-    //console.log("search Type: " + searchType + "What's searched: " + searchField);
     if(searchType == null || searchField == '' || searchField == null) {
         alert('Please fill in all required fields');
     } else {
