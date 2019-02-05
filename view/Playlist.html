@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang='en'>
+<head>
+  <meta charset="UTF-8">
+  <link rel="stylesheet" href="https://bootswatch.com/4/darkly/bootstrap.min.css">
+  <link rel="stylesheet" type="text/css" href="../styles/playlist.css">
+  <title>Playlist</title>
+
+</head>
+<body>
+  <div class="return">
+  <button type="submit" id="return_button" onclick="returnToDash()">return</button>
+  </div>
+  <div class="create-playlist">
+  <p> Enter here to create or change the playlist name </p>
+  </div>
+
+  <div class="create-playlist">
+  <input align=center  type="text" class="myText" id="myText" placeholder="Enter Playlist Name...">
+  </div>
+
+  <h1 align=center class="pTitle" id="pTitle">Playlist Title</h1>
+
+  <div id ="table">
+    <table class="songList" id="songList">
+    <tbody></tbody>
+  </table>
+</div>
+
+
+<div class ="list" id="list">
+  <ul id="theList">
+    <li>Song Title & Artist</li>
+    </ul>
+</div>
+
+<div class="music_search">
+            <div class="search_type">
+               <input type="radio" id="search_song_title" value="song" name="dashboard" checked>
+               <label for="song">Song Title</label>
+               <input type="radio" id="search_song_artist" value="artist" name="dashboard">
+               <label for="artist">Artist</label>
+               <input type="radio" id="search_song_release" value="release" name="dashboard">
+               <label for="release">Release</label>
+            </div>
+            <input type="search" id="search_song" placeholder="Search For Songs..." onkeydown="search()"/>
+
+        </div>
+        <div class="music_playlist_results_player">
+            <div class="music_playlist_results">
+                <ul id="resultList">
+                    <!-- dynamically created li goes here -->
+                </ul>
+            </div>
+          </div>
+
+
+  <div class ="fPlaylist" align="center">
+    <button onclick="savePlaylist()"> Save Playlist </button>
+  </div>
+
+  <div class ="fPlaylist" align="center">
+    <button onclick="deleteSongOnPlaylist()"> Delete Playlist </button>
+  </div>
+
+  <div class="fPlaylist">
+    <button onclick="displayPlaylist()">Display Contents of Playlist</button>
+  </div>
+
+
+
+
+<script src="../service/playlist_frontend.js"></script>
+<script src="../service/playlist_backend.js"></script>
+</body>
+</html>
