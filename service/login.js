@@ -28,11 +28,11 @@ function login() {
                 else {
                     localStorage.setItem('UserName', username);
                     let win = remote.getCurrentWindow();
-                            win.loadURL(url.format({
-                                pathname: path.join(__dirname, '/../view/dashboard.html'),
-                                protocol: 'file',
-                                slashes: true
-                            }));
+                    win.loadURL(url.format({
+                        pathname: path.join(__dirname, '/../view/dashboard.html'),
+                        protocol: 'file',
+                        slashes: true
+                    }));
                 }
             }
         })

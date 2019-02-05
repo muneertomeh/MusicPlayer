@@ -219,3 +219,13 @@ function playSong(li) {
     musicPlayer.src = src;
     musicPlayer.play();
 }
+
+
+function createNewPlaylist(){
+    let win = remote.getCurrentWindow();
+    win.loadURL(url.format({
+        pathname: path.join(__dirname, '/../view/Playlist.html'),
+        protocol: 'file',
+        slashes: true
+    }));
+}

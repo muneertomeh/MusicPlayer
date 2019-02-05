@@ -32,3 +32,12 @@
     width: 50%;
     float: right;
 }
+
+.btn-newPlaylist{
+    text-align: right;
+    margin: 50%;
+    width: 30px;
+    height: 20px;
+    background-color: black;
+    color: white;
+}
