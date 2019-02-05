@@ -4,6 +4,7 @@ const electron = require('electron');
 const remote = electron.remote;
 const url = require('url');
 const path = require('path');
+let playListFrontEnd = require('./playlist_frontend.js');
 
 //Fetches user currently logged into the session
 let userLoggedIn = localStorage.getItem("UserName");
@@ -12,41 +13,65 @@ let userLoggedIn = localStorage.getItem("UserName");
 let songsToAdd = [];
 
 //TODO: Connect this with dashboard
-let currentPlaylistName;
+let currentPlaylistName = null;
 
-function checkPlaylistName() {
+let prevPlaylistName = null;
+
+function isUniquePlayListName(playlistData) {
     //This is where playlist title will be checked if it is filled/unique
     //Playlist title will come from text box/dashboard if editing existing playlist
+    playlistData['UserPlaylists'].forEach(element => {
+        if(userLoggedIn == element['UserName'])
+            return false;
+    })
+    
+    
     let newPlaylistName = document.getElementById("myText").value;
-    let isUniquePlaylist = true;
+    let isValidName = true;
+    let usersPlaylists;
+
+    
+    //If user attempts to save new playlist w/o title
     if(newPlaylistName == null && currentPlaylistName == null){
-        alert("Must specify playlist title");
+        isValidName = false;
+    }
+    //If this is the user's first playlist so whatever name they type is unique
+    else if(usersPlaylists == null){
+        currentPlaylistName = newPlaylistName;
+    }
+    //If user is updating existing playlist
+    else if(currentPlaylistName != null){
+        //If user is changing name of existing playlist
+        if(newPlaylistName != null){
+            usersPlaylists.forEach(element => {
+                if(newPlaylistName == element['PlaylistTitle']){
+                    isValidName = false;
+                }
+                else{
+                    prevPlaylistName = currentPlaylistName;
+                    currentPlaylistName = newPlaylistName;
+                    return true;
+                }
+            });
+        }
+        //If user is keeping name of existing playlist
+        else{
+            return true;
+        }
+        }
+        else{
+            usersPlaylists.forEach(element => {
+                if(newPlaylistName == element['PlaylistTitle']){
+                    isValidName = false;
+                }
+            });
+        }
+    if(isValidName == false){
         return false;
     }
     else{
-        fs.readFile(__dirname + '/../data/playlist.json', (err, data) => {
-            if(err) console.log(err);
-            else{
-                let usersPlaylists;
-                data.forEach(element =>{
-                    if(userLoggedIn == element['Username']){
-                        usersPlaylists = element['Playlists'];
-                    }
-                });
-                usersPlaylists.forEach(element => {
-                    if(newPlaylistName == element['Title']){
-                        isUniquePlaylist = false;
-                    }
-                });
-            }
-        });
-        if(!isUniquePlaylist){
-            return false;
-        }
-        else{
-            currentPlaylistName = newPlaylistName;
-            return true;
-        }
+        currentPlaylistName = newPlaylistName;
+        return true;
     }
 }
 
@@ -57,8 +82,7 @@ function addSongToPlaylist() {
     fs.readFile(__dirname + '/../data/music.json', (err, data) => {
         if(err) console.log(err);
         else{
-            let songData = JSON.parse(data);
-            songData.forEach(element => {
+            data.forEach(element => {
                 if(songSelected == element["title"] && songSelected == element["name"]){
                     songsToAdd.push({
                         "SongTitle": element["title"],
@@ -77,11 +101,10 @@ function deleteSongOnPlaylist() {
     fs.readFile(__dirname + '/../data/playlist.json', (err, data) => {
         if(err) console.log(err);
         else{
-            let playlistData = JSON.parse(data);
             let usersPlaylists;
             let playlistsSongs;
-            playlistData.forEach(element => {
-                if(userLoggedIn == element['Username']){
+            data.forEach(element => {
+                if(userLoggedIn == element['UserName']){
                     usersPlaylists = element['Playlists'];
                 }
             });
@@ -98,7 +121,7 @@ function deleteSongOnPlaylist() {
                     });
                 }
             });
-            let json = JSON.stringify(playlistData);
+            let json = JSON.stringify(playlistsSongs);
             fs.writeFile(__dirname + '/../data/playlist.json', json, (err) => {
                 if(err) console.log(err);
                 else{
@@ -118,14 +141,14 @@ function deletePlaylist() {
         else{
             let playlistData = JSON.parse(data);
             let usersPlaylists;
-            playlistData.forEach(element =>{
-                if(userLoggedIn == element['Username']){
+            data.forEach(element =>{
+                if(userLoggedIn == element['UserName']){
                     usersPlaylists = element['Playlists'];
                 }
             });
             usersPlaylists.forEach(element => {
                 if(currentPlaylist == element['Title']){
-                    playlistData.remove(currentPlaylist);
+                    usersPlaylists.remove(currentPlaylist);
                 }
             });
             let json = JSON.stringify(playlistData);
@@ -142,37 +165,105 @@ function deletePlaylist() {
 
 function savePlaylist() {
     //This is where a playlist gets saved based regardless if new or existing
-    fs.readFile(__dirname + '/../data/playlist.json', (err, data) => {
+    let usersPlaylists;
+    let playlistsSongs;
+    fs.readFile(__dirname + '/../data/playlist.json', (err, rawdata) => {
         if(err) console.log(err);
         else{
-            let isUnique = checkPlaylistName();
-            if(!isUnique){
-                alert("You already have a playlist with this name");
-            }
-            else{
-                let usersPlaylists;
-                data.forEach(element => {
-                    if(userLoggedIn == element['Username']){
+            let data = JSON.parse(rawdata);
+            let startTitle = playListFrontEnd.existingTitle;
+            console.log(startTitle == null);
+            let currentTitle = document.getElementById('myText').value;
+            let isValidName = true;
+            
+            if(currentTitle == null) 
+                isValidName = false;
+            else if(startTitle == null || startTitle != currentTitle)  {
+                data['UserPlaylists'].forEach(element => {
+                    if(userLoggedIn == element['UserName']){
                         usersPlaylists = element['Playlists'];
                     }
                 });
                 usersPlaylists.forEach(element => {
-                usersPlaylists.push({"PlaylistTitle": currentPlaylistName,
-                "Songs": songsToAdd});
+                    if(element['PlaylistTitle'] == currentTitle)
+                        isValidName = false;
                 });
-                let json = JSON.stringify(playlistData);
-                fs.writeFile(__dirname + '/../data/playlist.json', json, (err) => {
-                    if(err) console.log(err);
-                    else{
-                        alert("Playlist created");
-                        //clear list of songs to add
-                        songsToAdd.length = 0;
+            }
+
+            if(isValidName) {
+                usersPlaylists.forEach(playlist => {
+                    if(playlist['PlaylistTitle'] == currentTitle) {
+                        songsToAdd.forEach(song => {
+                            element['Songs'].push(song);
+                        });
                     }
                 });
+
+                fs.writeFile(__dirname + '/../data/playlist.json', JSON.stringify(data), (err) => {
+                    if(err) console.log(err);
+                    else{
+                        returnToDash();
+                    }
+                })
+            } else {
+                document.getElementById('myText').style.borderColor = 'red';
             }
         }
     });
 }
+        //     let isNewPlaylist = true;
+        //     if(isUnique == false){
+        //         alert("You either already have a playlist with this name \nor did not specify a playlist name!");
+        //     }
+        //     else{
+        //         playlistData['UserPlaylists'].forEach(element => {
+        //             if(userLoggedIn == element['UserName']){
+        //                 usersPlaylists = element['Playlists'];
+        //             }
+        //         });
+        //         usersPlaylists.forEach(element => {
+        //             if(currentPlaylistName == element['PlaylistTitle']){
+        //                 isNewPlaylist = false;
+        //             }
+        //         });
+                
+        //         //Playlist does not exist
+        //         if(prevPlaylistName == null && isNewPlaylist == true){
+        //             usersPlaylists.push({"PlaylistTitle": currentPlaylistName,
+        //             "Songs": songsToAdd});
+        //         }
+        //         //Playlist exists and name was changed
+        //         else if(prevPlaylistName != null){
+        //             usersPlaylists.forEach(element => {
+        //                 if(prevPlaylistName == element['PlaylistTitle']){
+        //                     playlistsSongs = element['Songs'];
+        //                     element['PlaylistTitle'] = currentPlaylistName;
+        //                 }
+        //             });
+        //             playlistsSongs.push({"Songs": songsToAdd});
+        //         }
+        //         //Playlist exists but name unchanged
+        //         else{
+        //             usersPlaylists.forEach(element => {
+        //                 if(currentPlaylistName == element['PlaylistTitle']){
+        //                     playlistsSongs = element['Songs'];
+        //                 }
+        //             });
+        //             playlistsSongs.push({"Songs": songsToAdd});
+        //         }
+        //         let json = JSON.stringify(playlistData);
+        //         fs.writeFile(__dirname + '/../data/playlist.json', json, (err) => {
+        //             if(err) console.log(err);
+        //             else{
+        //                 alert("Playlist saved");
+        //                 //clear list of songs to add
+        //                 songsToAdd.length = 0;
+        //             }
+        //         });
+        //     }
+//         // }
+//     });
+// }
 
 function returnToDash() {
     //This function will return the user back to the dashboard
