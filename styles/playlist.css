@@ -1,0 +1,16 @@
+.header {
+    text-align: center;
+    width: 100%;
+}
+
+.search_type {
+    width: 100%;
+}
+.song_menu {
+    width: 50%;
+    float: left;
+}
+.playlist_menu {
+    width: 50%;
+    float: right;
+}

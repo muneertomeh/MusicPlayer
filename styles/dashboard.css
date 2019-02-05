@@ -3,8 +3,9 @@
     width: 100%;
 }
 
-.search_type {
+.dashboard_menu_type {
     width: 100%;
+    font-size: x-large;
 }
 .song_menu {
     width: 50%;
@@ -19,16 +20,32 @@
     text-align: center;
     width: 100%;
 }
-
+.search_type {
+    width: 100%;
+}
 .music_playlist_results_player {
     height: 30em;
     padding: 1.5em;
 }
 .music_playlist_results {
     width: 50%;
+    height: -webkit-fill-available;
     float: left;
+    overflow: auto;
+}
+.song_info {
+    border: white solid .5px;
+    margin: .5em;
+
 }
 .music_player {
     width: 50%;
     float: right;
+    text-align: center;
+}
+.play_song_button {
+    margin: .5em;
+}
+.player_buttons {
+    padding-top: 2em;
 }
