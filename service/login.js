@@ -1,4 +1,9 @@
 let fs = require('fs');
+const electron = require('electron');
+const remote = electron.remote;
+const url = require('url');
+const path = require('path');
+
 
 function login() {
     let username = document.getElementById('UserName').value;
@@ -21,7 +26,13 @@ function login() {
                 });
                 if(!isValidCredentials) alert('UserName or Password Does Not Exist');
                 else {
-                    alert('Logging you in');
+                    localStorage.setItem('UserName', username);
+                    let win = remote.getCurrentWindow();
+                            win.loadURL(url.format({
+                                pathname: path.join(__dirname, '/../view/dashboard.html'),
+                                protocol: 'file',
+                                slashes: true
+                            }));
                 }
             }
         })
