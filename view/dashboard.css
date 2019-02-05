@@ -1,0 +1,34 @@
+.header {
+    text-align: center;
+    width: 100%;
+}
+
+.search_type {
+    width: 100%;
+}
+.song_menu {
+    width: 50%;
+    float: left;
+}
+.playlist_menu {
+    width: 50%;
+    float: right;
+}
+
+.music_search {
+    text-align: center;
+    width: 100%;
+}
+
+.music_playlist_results_player {
+    height: 30em;
+    padding: 1.5em;
+}
+.music_playlist_results {
+    width: 50%;
+    float: left;
+}
+.music_player {
+    width: 50%;
+    float: right;
+}
