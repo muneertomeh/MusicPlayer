@@ -1,9 +1,4 @@
 
-let fs = require("fs");
-const electron = require('electron');
-const remote = electron.remote;
-const url = require('url');
-const path = require('path');
 
 //Fetches user currently logged into the session
 let userLoggedIn = localStorage.getItem("UserName");
@@ -55,20 +50,22 @@ function createPlaylist() {
 
 }
 
-function addSongToPlaylist() {
+function addSongToPlaylist(li) {
     //This is where you can add songs to the playlist
     //Songs will be added when "add song" is pressed on the search bar
-    let songSelected = document.getElementById("Song").value;
+    let artistSelected = li.artist;
+    let songSelected = li.song;
     fs.readFile(__dirname + '/../data/music.json', (err, data) => {
         if(err) console.log(err);
         else{
             let songData = JSON.parse(data);
-            songData['music'].forEach(element => {
-                if(songSelected == element["title"] && songSelected == element["name"]){
+            songData.forEach(element => {
+                if(songSelected == element["title"] || songSelected == element["name"]){
                     songsToAdd.push({
                         "SongTitle": element["title"],
                         "SongArtist": element["name"]
                     });
+
                 }
             });
         }
