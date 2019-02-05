@@ -177,12 +177,33 @@ function searchForSongs() {
                 list.innerHTML = '';
                 let id = 'song_';
                 let idNum = 1;
+                let listItem = '';
 
 // ------
                 // var table = document.getElementById('songList');
                 // var tbody = table.getElementsByTagName('tbody')[0];
 
 //-----
+
+                var tableCell;
+                var divContainer;
+                let col = ["Song Title", "Song Artist"];
+
+                //Set up table
+                var table = document.getElementById('songList');
+                var tbody = table.getElementsByTagName('tbody')[0];
+
+                //Create header row
+                var tableRow = table.insertRow(-1);
+
+                for(var i = 0; i < col.length; i++){
+                    var tableHeader = document.createElement("th");
+                    tableHeader.innerHTML = col[i];
+                    console.log(tableHeader.innerHTML);
+                    var tabletext= document.createTextNode(tableHeader.innerHTML)
+                    tableHeader.appendChild(tabletext);
+                }
+
 
                 data.forEach(element => {
                     if(searchType == 'song') {
@@ -196,6 +217,18 @@ function searchForSongs() {
                             listItem.musicFile = element['file'];
                             listItem.songTitle = element['song']['title'];
                             listItem.artist = element['artist']['name'];
+
+
+
+                            tableRow = table.insertRow(-1);
+                            tableCell = tableRow.insertCell(-1);
+                            tableCell.innerHTML = listItem.artist;
+                            tableCell.innerHTML = listItem.songTitle;
+                            var tablet= document.createTextNode(tableHeader.innerHTML)
+
+                          //  tbody.appendChild(tablet);
+
+
                             list.appendChild(listItem);
 
 
@@ -229,6 +262,15 @@ function searchForSongs() {
                             listItem.musicFile = element['file'];
                             listItem.songTitle = element['song']['title'];
                             listItem.artist = element['artist']['name'];
+
+                            tableRow = table.insertRow(-1);
+                            tableCell = tableRow.insertCell(-1);
+                            tableCell.innerHTML = listItem.artist;
+                            tableCell.innerHTML = listItem.songTitle;
+                            var tablet= document.createTextNode(tableHeader.innerHTML)
+
+
+
                             list.appendChild(listItem);
                             idNum += 1;
                             id = 'song_';
@@ -241,7 +283,7 @@ function searchForSongs() {
                             listItem.className = 'song_info';
                             id += idNum.toString();
                             listItem.id = id;
-                            listItem.innerHTML += '<button type="submit" class="play_song_button" id="play_song_button" onclick="addSongToPlaylist(' + id + ')">Add Song</button>';
+                            listItem.innerHTML += '<button type="submit" class="play_song_button" id="play_song_button" onclick="addSongToPlaylist('+id+')">Add Song</button>';
                             listItem.musicFile = element['file'];
                             listItem.songTitle = element['song']['title'];
                             listItem.artist = element['artist']['name'];

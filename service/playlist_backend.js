@@ -11,57 +11,54 @@ let userLoggedIn = localStorage.getItem("UserName");
 //array to hold songs that will be added into the playlist
 let songsToAdd = [];
 
-function createPlaylist() {
-    //This is where the playlist is created and added to playlist.json
-    //Playlist title will come from text box
-    let newPlaylistName = document.getElementById("PlaylistTitle").value;
-    if(newPlaylistName == '' || newPlaylistName == null){
+//TODO: Connect this with dashboard
+let currentPlaylistName;
+
+function checkPlaylistName() {
+    //This is where playlist title will be checked if it is filled/unique
+    //Playlist title will come from text box/dashboard if editing existing playlist
+    let newPlaylistName = document.getElementById("myText").value;
+    let isUniquePlaylist = true;
+    if(newPlaylistName == null && currentPlaylistName == null){
         alert("Must specify playlist title");
+        return false;
     }
     else{
         fs.readFile(__dirname + '/../data/playlist.json', (err, data) => {
             if(err) console.log(err);
             else{
-                let playlistData = JSON.parse(data);
-                let isUniquePlaylist = true;
-                playlistData['playlist'].forEach(element => {
-                    if(newPlaylistName == element['PlaylistTitle'] && userLoggedIn == element['Username']){
+                let usersPlaylists;
+                data.forEach(element =>{
+                    if(userLoggedIn == element['Username']){
+                        usersPlaylists = element['Playlists'];
+                    }
+                });
+                usersPlaylists.forEach(element => {
+                    if(newPlaylistName == element['Title']){
                         isUniquePlaylist = false;
                     }
                 });
-                if(!isUniquePlaylist){
-                    alert("You already have a playlist with this name");
-                }
-                else{
-                    playlistData['playlist'].push({"Username": userLoggedIn,
-                    "Playlists": [{
-                        "PlaylistTitle": newPlaylistName,
-                        "Songs" : songsToAdd
-                        }]   
-                    });
-                    let json = JSON.stringify(playlistData);
-                    fs.writeFile(__dirname + '/../data/playlist.json', json, (err) => {
-                        if(err) console.log(err);
-                        else{
-                            alert("Playlist created");
-                        }
-                    });
-                }
             }
         });
+        if(!isUniquePlaylist){
+            return false;
+        }
+        else{
+            currentPlaylistName = newPlaylistName;
+            return true;
+        }
     }
-
 }
 
 function addSongToPlaylist() {
     //This is where you can add songs to the playlist
     //Songs will be added when "add song" is pressed on the search bar
-    let songSelected = document.getElementById("Song").value;
+    let songSelected = document.getElementById("addsong").value;
     fs.readFile(__dirname + '/../data/music.json', (err, data) => {
         if(err) console.log(err);
         else{
             let songData = JSON.parse(data);
-            songData['music'].forEach(element => {
+            songData.forEach(element => {
                 if(songSelected == element["title"] && songSelected == element["name"]){
                     songsToAdd.push({
                         "SongTitle": element["title"],
@@ -76,24 +73,36 @@ function addSongToPlaylist() {
 function deleteSongOnPlaylist() {
     //This is where you can delete songs from a playlist
     //Songs will be deleted when a button is pressed next to song info on playlist
-    let songSelected = document.getElementById("Song").value;
+    let songSelected = document.getElementById("deletesong").value;
     fs.readFile(__dirname + '/../data/playlist.json', (err, data) => {
         if(err) console.log(err);
         else{
             let playlistData = JSON.parse(data);
-            playlistData['Songs'].forEach(element => {
-            if(songSelected == element["SongTitle"] && songSelected == element["SongArtist"]){
-                playlistData.remove({
-                    "SongTitle": element["SongTitle"],
-                    "SongArtist": element["SongArtist"]
-                });
-                let json = JSON.stringify(playlistData);
-                fs.writeFile(__dirname + '/../data/playlist.json', json, (err) => {
-                    if(err) console.log(err);
-                    else{
-                        alert("Song removed from playlist");
-                        }
+            let usersPlaylists;
+            let playlistsSongs;
+            playlistData.forEach(element => {
+                if(userLoggedIn == element['Username']){
+                    usersPlaylists = element['Playlists'];
+                }
+            });
+            usersPlaylists.forEach(element => {
+                if(currentPlaylist == element['Title']){
+                    playlistsSongs = element['Songs'];
+                }
+            });
+            playlistsSongs.forEach(element => {
+                if(songSelected == element["SongTitle"] && songSelected == element["SongArtist"]){
+                    playlistsSongs.remove({
+                        "SongTitle": element["SongTitle"],
+                        "SongArtist": element["SongArtist"]
                     });
+                }
+            });
+            let json = JSON.stringify(playlistData);
+            fs.writeFile(__dirname + '/../data/playlist.json', json, (err) => {
+                if(err) console.log(err);
+                else{
+                    alert("Song removed from playlist");
                 }
             });
         }
@@ -103,24 +112,28 @@ function deleteSongOnPlaylist() {
 function deletePlaylist() {
     //This is where the playlist is deleted and removed from playlist.json
     //Delete current playlist and redirect back to the dashboard
-    let currentPlaylist = document.getElementById("Playlist Title").value;
+    let currentPlaylist = document.getElementById("pTitle").value;
     fs.readFile(__dirname + '/../data/playlist.json', (err, data) => {
         if(err) console.log(err);
         else{
             let playlistData = JSON.parse(data);
-            //TODO: Get name value for playlist for removal
-            playlistData['Playlists'].remove();
+            let usersPlaylists;
+            playlistData.forEach(element =>{
+                if(userLoggedIn == element['Username']){
+                    usersPlaylists = element['Playlists'];
+                }
+            });
+            usersPlaylists.forEach(element => {
+                if(currentPlaylist == element['Title']){
+                    playlistData.remove(currentPlaylist);
+                }
+            });
             let json = JSON.stringify(playlistData);
             fs.writeFile(__dirname + '/../data/playlist.json', json, (err) => {
                 if(err) console.log(err);
                 else{
                     alert("Playlist deleted");
-                    let window = remote.getCurrentWindow();
-                    window.loadURL(url.format({
-                        pathname: path.join(__dirname, '/../view/dashboard.html'),
-                        protocol: 'file',
-                        slashes: true
-                    }));
+                    returnToDash();
                 }
             });
         }
@@ -128,25 +141,37 @@ function deletePlaylist() {
 }
 
 function savePlaylist() {
-    //This is where a playlist that has already been made gets updated based on songs they want to
-    //add or delete
+    //This is where a playlist gets saved based regardless if new or existing
     fs.readFile(__dirname + '/../data/playlist.json', (err, data) => {
         if(err) console.log(err);
         else{
-            let playlistData = JSON.parse(data);
-            playlistData['Songs'].push(songsToAdd);
-
-            let json = JSON.stringify(playlistData);
-            fs.writeFile(__dirname + '/../data/playlist.json', json, (err) => {
-                if(err) console.log(err);
-                else{
-                    alert("Playlist saved");
-                }
-            });
+            let isUnique = checkPlaylistName();
+            if(!isUnique){
+                alert("You already have a playlist with this name");
+            }
+            else{
+                let usersPlaylists;
+                data.forEach(element => {
+                    if(userLoggedIn == element['Username']){
+                        usersPlaylists = element['Playlists'];
+                    }
+                });
+                usersPlaylists.forEach(element => {
+                usersPlaylists.push({"PlaylistTitle": currentPlaylistName,
+                "Songs": songsToAdd});
+                });
+                let json = JSON.stringify(playlistData);
+                fs.writeFile(__dirname + '/../data/playlist.json', json, (err) => {
+                    if(err) console.log(err);
+                    else{
+                        alert("Playlist created");
+                        //clear list of songs to add
+                        songsToAdd.length = 0;
+                    }
+                });
+            }
         }
     });
-    //clear list of songs to add
-    songsToAdd.length = 0;
 }
 
 function returnToDash() {
@@ -183,12 +208,26 @@ function displayPlaylist() {
         if(err) console.log(err);
         else{
             let playlistData = JSON.parse(data);
-            for(var i = 0; i < playlistData.length; i++){
+            let usersPlaylists;
+            let playlistsSongs;
+
+            playlistData.forEach(element => {
+                if(userLoggedIn == element['Username']){
+                    usersPlaylists = element['Playlists'];
+                }
+            });
+            usersPlaylists.forEach(element => {
+                if(currentPlaylist == element['Title']){
+                    playlistsSongs = element['Songs'];
+                }
+            });
+            playlistsSongs.forEach(element => {
                 tableRow = table.insertRow(-1);
                 var tableCell = tableRow.insertCell(-1);
-                tableCell.innerHTML = playlistData["SongTitle"][col[0]];
-                tableCell.innerHTML = playlistData["SongArtist"][col[1]];
-            }
+                tableCell.innerHTML = element["SongTitle"][col[0]];
+                tableCell.innerHTML = element["SongArtist"][col[1]];
+            });
+
         }
     });
 
