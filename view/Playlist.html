@@ -19,10 +19,6 @@
   <input align=center  type="text" class="myText" id="myText" placeholder="Enter Playlist Name...">
   </div>
 
-  <!-- <div class="create-playlist">
-  <button onclick="createPlaylist()" id="saveP"> Create Playlist </button>
-  </div> -->
-
   <h1 align=center class="pTitle" id="pTitle">Playlist Title</h1>
 
   <div id ="table">
@@ -30,10 +26,13 @@
     <tbody></tbody>
   </table>
 </div>
-<!-- <div class="search" id="search" align="center">
-  <input type="text" id="myInput" onkeyup="filterSongs()" placeholder="Search for songs.." title="Type in a song"
-  onkeypress="showSongs()">
-</div> -->
+
+
+<div class ="list" id="list">
+  <ul id="theList">
+    <li>Song Title & Artist</li>
+    </ul>
+</div>
 
 <div class="music_search">
             <div class="search_type">
@@ -49,49 +48,11 @@
         </div>
         <div class="music_playlist_results_player">
             <div class="music_playlist_results">
-                <ul>
+                <ul id="resultList">
                     <!-- dynamically created li goes here -->
                 </ul>
             </div>
           </div>
-
-
-<!-- <div class ="list" id="list" style="display: none;">
-  <ul id="theList" align="center">
-    <li><a href="" id="songArtist" class="songArtist">Tyrone Schlecht</a> <a href="" id="songName" class="songName">Sweet Home Alabama</a> <button id="inp1" onclick="inp()" value="Input">Add Song</button>
-
-    </li>
-    <li><a href="" id="songArtist" class="songArtist">Javier Ress</a>  <a href="" id="songName" class="songName">Splash Mountain</a>
-      <button id="inp1" onclick="inp()" value="Input">Add Song</button>
-      <li><a href="" id="songArtist" class="songArtist">Carlene Tomes</a>
-        <button id="inp1" onclick="inp()" value="Input">Add Song</button>
-      </li>
-
-      <li><a href="" id="songArtist" class="songArtist">Neil Aigner</a> <a href="" id="songName" class="songName"> Tomorrow</a> <button class="inp1" id="inp1" onclick="inp()" value="Input">Add Song</button>
-      </li>
-      <li><a href="" id="songArtist" class="songArtist">Nita Schreffler</a> <button class="inp1" id="inp1" onclick="inp()" value="Input">Add Song</button>
-      </li>
-      <li><a href="" id="songArtist" class="songArtist">Clinton Knuckles</a> <button class="inp1" id="inp1" onclick="inp()" value="Input">Add Song</button>
-      </li>
-      <li><a href="" id="songArtist" class="songArtist">Eve Kellett</a> <button class="inp1" id="inp1" onclick="inp()" value="Input">Add Song</button>
-      </li>
-      <li><a href="" id="songArtist" class="songArtist">Jamie Kaspar</a> <button class="inp1" id="inp1" onclick="inp()" value="Input">Add Song</button>
-      </li>
-      <li><a href="" id="songArtist" class="songArtist">Emilia Hooton</a> <button class="inp1" id="inp1" onclick="inp()" value="Input">Add Song</button>
-      </li>
-      <li><a href="" id="songArtist" class="songArtist">Kenya Sidney</a> <button class="inp1" id="inp1" onclick="inp()" value="Input">Add Song</button>
-      </li>
-    </ul>
-  </div> -->
-
-  <div class ="fPlaylist" align="center">
-    <button onclick="addSong()"> Add </button>
-  </div>
-
-  <!-- <div class ="fPlaylist" align="center">
-    <button onclick="addSongToPlaylist()"> Add </button>
-  </div> -->
-
 
 
   <div class ="fPlaylist" align="center">

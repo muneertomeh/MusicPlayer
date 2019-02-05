@@ -54,51 +54,44 @@ function addSongToPlaylist(li) {
     //This is where you can add songs to the playlist
     //Songs will be added when "add song" is pressed on the search bar
     let artistSelected = li.artist;
-    let songSelected = li.song;
-
+    let songSelected = li.songTitle;
+    var myList= document.createElement('ul');
+    var list = document.getElementById('theList')
+    let listItem = ' ';
+    // var isExist = false;
     fs.readFile(__dirname + '/../data/music.json', (err, data) => {
         if(err) console.log(err);
         else{
             let songData = JSON.parse(data);
-
-
-            let col = ["Song Title", "Song Artist"];
-            var table = document.getElementById('songList');
-            var tbody = table.getElementsByTagName('tbody')[0];
-            var tableCell;
-            var divContainer;
-            //Create header row
-            var tableRow = table.insertRow(-1);
-
-                var tableHeader = document.createElement("th");
-                tableHeader.innerHTML = col[0];
-                var sArtist= col[1];
-                tableHeader.appendChild(sTitle);
-                tableHeader.appendChild(sArtist);
-
-                tbody.appendChild(tableHeader);
-
-                for(var i = 0; i < col.length; i++){
-                    var tableHeader = document.createElement("th");
-                    tableHeader.innerHTML = col[i];
-                    tableHeader.appendChild(tableHeader);
-                }
-
-
             songData.forEach(element => {
-                if(songSelected == element["title"] || songSelected == element["name"]){
+                if(songSelected == element['song']['title'] || artistSelected == element['artist']['name']){
                     songsToAdd.push({
-                        "SongTitle": element["title"],
-                        "SongArtist": element["name"]
+                        "SongTitle": element['song']["title"],
+                        "SongArtist": element['artist']["name"]
                     });
 
-
-                
                 }
             });
+            listItem= document.createElement('li');
+            listItem.textContent=artistSelected + ' '+songSelected;
+            list.appendChild(listItem);
         }
     });
-}
+    //display added songs
+    // let column = ["Song Title", "Song Artist"];
+// if(isExist==true){
+//     var art=document.createTextNode(artistSelected);
+//     var so=document.createTextNode(songSelected);
+//     col.appendChild(art);
+//     col.appendChild(so);
+//     // col.textContent = art+ '  '+so;
+//     row.appendChild(col);
+//     tbody.appendChild(row);
+// }
+
+
+  }
+
 
 function deleteSongOnPlaylist() {
     //This is where you can delete songs from a playlist
@@ -192,6 +185,7 @@ function displayPlaylist() {
 
     //Init column headers
     let col = ["Song Title", "Song Artist"];
+
     //Set up table
     var table = document.createElement("table");
 
