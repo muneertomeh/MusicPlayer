@@ -16,16 +16,8 @@
             </div> 
         </div>
         <div class="music_search">
-            <div class="search_type">
-               <input type="radio" id="search_song_title" value="song" name="dashboard" checked>
-               <label for="song">Song Title</label>
-               <input type="radio" id="search_song_artist" value="artist" name="dashboard">
-               <label for="artist">Artist</label>
-               <input type="radio" id="search_song_release" value="release" name="dashboard">
-               <label for="release">Release</label>
-            </div>
-            <input type="search" id="search_song" placeholder="Search For Songs..."/>
-            <button type="submit" id="search_song_button" onclick="searchForSongs()">Search</button>
+            <input type="search" id="search_song" placeholder="Search For Songs..." onkeydown="search()">
+            <!-- <button type="submit" id="search_song_button" onclick="searchForSongs()">Search</button> -->
         </div>
         <div class="music_playlist_results_player">
             <div class="music_playlist_results">
@@ -44,5 +36,5 @@
             </div>
         </div>
     </body>
-    <script src="../service/dashboard.js"></script>
+    <script src="../service/searchAllSongs.js"></script>
 </html>

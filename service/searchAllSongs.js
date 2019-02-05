@@ -1,10 +1,12 @@
 let fs = require('fs');
+const electron = require('electron');
+const remote = electron.remote;
+const url = require('url');
+const path = require('path');
 
-let input = "mr"
-search(input);
-function search(search)
+function search()
 {
-    let userInput = search;
+    let userInput = document.getElementById('search_song').value;
     var firstWordMatch = [];
     var someWordsMatch = [];
     var substringMatch = [];
@@ -107,7 +109,7 @@ function search(search)
     */
     // for some reson this didn't work for me  __dirname + '/../data/music.1.json'
     //MAKE SURE TO CHANGE THE DIRECTORY BELOW!!!!!!!!!!!!!!!!!!!
-    fs.readFile('D:\\CSULB\\presemt\\327\\SearchCode\\data\\music.json', (err, rawData) =>
+    fs.readFile(__dirname + '/../data/music.json', (err, rawData) =>
     {
 
         if(err) console.log(err);
@@ -177,18 +179,43 @@ function search(search)
                  makeListBigger(finalResults);
             }
 
-
-
-        /*
-        console.log("-------------------------------------------------------------------");
-        console.log("songID -------------Artist--------------------Song Title---------------Hotttnesss Rate------");
-
+        let list = document.querySelector('ul');
+        list.innerHTML = '';
+        let id = 'song_';
+        let idNum = 1;
         for(let i = 0; i < finalResults.length; i++)
         {
-            console.log(finalResults[i].song.id + "          " + finalResults[i].artist.name + "                      " + finalResults[i].song.title + "              " + finalResults[i].song.hotttnesss);
+            listItem = document.createElement('li');
+            listItem.textContent = finalResults[i].song.title; + ' by: ' + finalResults[i].artist.name;
+            listItem.className = 'song_info';
+            id += idNum.toString();
+            listItem.id = id;
+            listItem.innerHTML += '<button type="submit" class="play_song_button" id="play_song_button" onclick="playSong(' + id + ')">Play Song</button>';
+            listItem.musicFile = finalResults[i].file;
+            listItem.songTitle = finalResults[i].song.title;
+            listItem.artist = finalResults[i].artist.name;
+            list.appendChild(listItem);
+            idNum += 1;
+            id = 'song_';
         }
-        */
 
     });
 
+}
+
+function playSong(li) {
+    let src = li.musicFile;
+    let songTitle = li.songTitle;
+    let artist = li.artist;
+
+    let currentSong = document.getElementById('song_title');
+    currentSong.innerHTML = songTitle;
+    currentSong = document.getElementById('artist_name');
+    currentSong.innerHTML = artist;
+
+
+    let musicPlayer = document.getElementById('music');
+    musicPlayer.innerHTML = '';
+    musicPlayer.src = src;
+    musicPlayer.play();
 }
