@@ -55,10 +55,36 @@ function addSongToPlaylist(li) {
     //Songs will be added when "add song" is pressed on the search bar
     let artistSelected = li.artist;
     let songSelected = li.song;
+
     fs.readFile(__dirname + '/../data/music.json', (err, data) => {
         if(err) console.log(err);
         else{
             let songData = JSON.parse(data);
+
+
+            let col = ["Song Title", "Song Artist"];
+            var table = document.getElementById('songList');
+            var tbody = table.getElementsByTagName('tbody')[0];
+            var tableCell;
+            var divContainer;
+            //Create header row
+            var tableRow = table.insertRow(-1);
+
+                var tableHeader = document.createElement("th");
+                tableHeader.innerHTML = col[0];
+                var sArtist= col[1];
+                tableHeader.appendChild(sTitle);
+                tableHeader.appendChild(sArtist);
+
+                tbody.appendChild(tableHeader);
+
+                for(var i = 0; i < col.length; i++){
+                    var tableHeader = document.createElement("th");
+                    tableHeader.innerHTML = col[i];
+                    tableHeader.appendChild(tableHeader);
+                }
+
+
             songData.forEach(element => {
                 if(songSelected == element["title"] || songSelected == element["name"]){
                     songsToAdd.push({
@@ -66,6 +92,8 @@ function addSongToPlaylist(li) {
                         "SongArtist": element["name"]
                     });
 
+
+                
                 }
             });
         }
@@ -164,7 +192,6 @@ function displayPlaylist() {
 
     //Init column headers
     let col = ["Song Title", "Song Artist"];
-
     //Set up table
     var table = document.createElement("table");
 
