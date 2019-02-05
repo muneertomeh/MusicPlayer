@@ -5,41 +5,6 @@ const url = require('url');
 const path = require('path');
 
 
-// <!--filter songs when user searches-->
-
-// function filterSongs() {
-//   var input, filter, ul, li, a, i, txtValue;
-//   input = document.getElementById("myInput");
-//   filter = input.value.toUpperCase();
-//   ul = document.getElementById("theList");
-//   li = ul.getElementsByTagName("li");
-//   for (i = 0; i < li.length; i++) {
-//     a = li[i].getElementsByTagName("a")[0];
-//     txtValue = a.textContent || a.innerText;
-//     if (txtValue.toUpperCase().indexOf(filter) > -1) {
-//       li[i].style.display = "";
-//     } else {
-//       li[i].style.display = "none";
-//     }
-//   }
-// }
-
-
-
-// <!--show the list of songs-->
-function showSongs()
-{
-  var input;
-  input = document.getElementById('myInput');
-  var div = document.getElementById('list')
-
-  input.addEventListener("keypress",function(){
-    div.style.display ="block";
-  });
-
-// input.addEventListener("focusout",function(){ div.style.display="none";});
-
-}
 
 function search()
 {
