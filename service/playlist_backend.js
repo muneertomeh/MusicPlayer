@@ -1,12 +1,12 @@
-//
-// let fs = require("fs");
-// const electron = require('electron');
-// const remote = electron.remote;
-// const url = require('url');
-// const path = require('path');
 
-//Currently unsure of how to get current user still
-//let currentUser = document.getElementById("UserName").value;
+let fs = require("fs");
+const electron = require('electron');
+const remote = electron.remote;
+const url = require('url');
+const path = require('path');
+
+//Fetches user currently logged into the session
+let userLoggedIn = localStorage.getItem("UserName");
 
 //array to hold songs that will be added into the playlist
 let songsToAdd = [];
@@ -24,8 +24,8 @@ function createPlaylist() {
             else{
                 let playlistData = JSON.parse(data);
                 let isUniquePlaylist = true;
-                playlistData['Playlists'].forEach(element => {
-                    if(newPlaylistName == element['PlaylistTitle']){
+                playlistData['playlist'].forEach(element => {
+                    if(newPlaylistName == element['PlaylistTitle'] && userLoggedIn == element['Username']){
                         isUniquePlaylist = false;
                     }
                 });
@@ -33,21 +33,17 @@ function createPlaylist() {
                     alert("You already have a playlist with this name");
                 }
                 else{
-                    playlistData['Playlists'].push({
+                    playlistData['playlist'].push({"Username": userLoggedIn,
+                    "Playlists": [{
                         "PlaylistTitle": newPlaylistName,
                         "Songs" : songsToAdd
+                        }]
                     });
                     let json = JSON.stringify(playlistData);
                     fs.writeFile(__dirname + '/../data/playlist.json', json, (err) => {
                         if(err) console.log(err);
                         else{
                             alert("Playlist created");
-                            let window = remote.getCurrentWindow();
-                            window.loadURL(url.format({
-                                pathname: path.join(__dirname, '/../view/dashboard.html'),
-                                protocol: 'file',
-                                slashes: true
-                            }));
                         }
                     });
                 }
@@ -61,7 +57,7 @@ function addSongToPlaylist() {
     //This is where you can add songs to the playlist
     //Songs will be added when "add song" is pressed on the search bar
     let songSelected = document.getElementById("Song").value;
-    fs.readFile(__dirname + '/../data/exPlaylist.json', (err, data) => {
+    fs.readFile(__dirname + '/../data/music.json', (err, data) => {
         if(err) console.log(err);
         else{
             let songData = JSON.parse(data);
@@ -80,7 +76,6 @@ function addSongToPlaylist() {
 function deleteSongOnPlaylist() {
     //This is where you can delete songs from a playlist
     //Songs will be deleted when a button is pressed next to song info on playlist
-    //var songToDelete = "";
     let songSelected = document.getElementById("Song").value;
     fs.readFile(__dirname + '/../data/playlist.json', (err, data) => {
         if(err) console.log(err);
@@ -108,6 +103,7 @@ function deleteSongOnPlaylist() {
 function deletePlaylist() {
     //This is where the playlist is deleted and removed from playlist.json
     //Delete current playlist and redirect back to the dashboard
+    let currentPlaylist = document.getElementById("Playlist Title").value;
     fs.readFile(__dirname + '/../data/playlist.json', (err, data) => {
         if(err) console.log(err);
         else{
@@ -153,6 +149,16 @@ function savePlaylist() {
     songsToAdd.length = 0;
 }
 
+function returnToDash() {
+    //This function will return the user back to the dashboard
+    let window = remote.getCurrentWindow();
+    window.loadURL(url.format({
+        pathname: path.join(__dirname, '/../view/dashboard.html'),
+        protocol: 'file',
+        slashes: true
+    }));
+}
+
 //REVIEW: Unsure, needs testing from frontend side
 function displayPlaylist() {
     //This will show the playlist & its contents
@@ -180,8 +186,8 @@ function displayPlaylist() {
             for(var i = 0; i < playlistData.length; i++){
                 tableRow = table.insertRow(-1);
                 var tableCell = tableRow.insertCell(-1);
-                tableCell.innerHTML = playlistData['artist'][col[0]];
-                tableCell.innerHTML = playlistData['song'][col[1]];
+                tableCell.innerHTML = playlistData["SongTitle"][col[0]];
+                tableCell.innerHTML = playlistData["SongArtist"][col[1]];
             }
         }
     });

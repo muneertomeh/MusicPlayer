@@ -177,6 +177,7 @@ function searchForSongs() {
                 list.innerHTML = '';
                 let id = 'song_';
                 let idNum = 1;
+                let listItem = '';
 
 // ------
                 // var table = document.getElementById('songList');
