@@ -77,19 +77,6 @@ function addSongToPlaylist(li) {
             list.appendChild(listItem);
         }
     });
-    //display added songs
-    // let column = ["Song Title", "Song Artist"];
-// if(isExist==true){
-//     var art=document.createTextNode(artistSelected);
-//     var so=document.createTextNode(songSelected);
-//     col.appendChild(art);
-//     col.appendChild(so);
-//     // col.textContent = art+ '  '+so;
-//     row.appendChild(col);
-//     tbody.appendChild(row);
-// }
-
-
   }
 
 
