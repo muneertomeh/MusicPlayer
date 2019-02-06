@@ -45,7 +45,7 @@ let currentPlaylistName = null;
 
 let prevPlaylistName = null;
 
-// 
+//
 
 
 function removeSong(songArtist, songTitle) {
@@ -149,7 +149,7 @@ function savePlaylist() {
             });
 
 
-            if(currentTitle == '') 
+            if(currentTitle == '')
                 isValidName = false;
             else if(startTitle == '') {
                 console.log('made it here 2');
@@ -208,11 +208,12 @@ function savePlaylist() {
 function displayPlaylist(isFirstDisplay) {
     //This will show the playlist & its contents
     //Init column headers
-    let col = ["Song Title", "Song Artist", 'Remove Song'];
-
     //Set up table
-    var table = document.createElement("table");
-
+    var body = document.getElementsByTagName("body")[0];
+    var table = document.getElementById("songList");
+    let col = ["Song Title", "Song Artist", 'Remove Song'];
+    var header = '<tr><th>Song title</th><th>Song Artist</th><th>Remove Song</th></tr>';
+    var tblBody = document.createElement("tbody");
     //Create header row
     // var tableRow = table.insertRow(-1);
 
@@ -242,23 +243,40 @@ function displayPlaylist(isFirstDisplay) {
                 });
             }
             songsToAdd.forEach(song => {
-                var tr = table.insertRow();
+
+                var row= document.createElement("tr");
+
                 for(var col = 0; col < 3; col++){
-                    let cell = tr.insertCell();
+
+                    var cell = document.createElement("td");
+                    // let cell = tr.insertCell();
                     if(col == 0)
-                        cell.innerHTML = song["SongTitle"];
+                      var cellText = document.createTextNode(song["SongTitle"]);
                     else if(col == 1)
-                        cell.innerHTML = song["SongArtist"];
+                      var cellText = document.createTextNode(song["SongArtist"]);
                     else   {
-                        cell.innerHTML += '<button type="submit" class="play_song_button" id="play_song_button" onclick="removeSong(' + song['SongTitle'] + ','+ song['SongArtist'] + ')">Remove Song</button>';
+                      var cellText = document.createTextNode("Hello World");
+                      // var cellText = '';
+                      // cell.innerHTML += '<button type="submit" class="play_song_button" id="play_song_button" onclick="removeSong(' + song['SongTitle'] + ','+ song['SongArtist'] + ')">Remove Song</button>';
                     }
+                    console.log(cellText);
+                    cell.appendChild(cellText);
+                    row.appendChild(cell);
                 }
+                tblBody.appendChild(row);
+
+
+
                 // var tableCell = tableRow.insertCell(-1);
                 // tableCell.innerHTML = element["SongTitle"][col[0]];
                 // tableCell.innerHTML = element["SongArtist"][col[1]];
                 // tableCell.innerHTML += '<button type="submit" class="play_song_button" id="play_song_button" onclick="removeSong(' + element['SongTitle'] + ','+ element['SongArtist'] + ')">Remove Song</button>';
             });
+            table.innerHTML = header;
+            table.appendChild(tblBody);
+            body.appendChild(table);
             localStorage.setItem('songsToAdd', songsToAdd);
+
         }
     });
 
