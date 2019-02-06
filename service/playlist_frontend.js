@@ -14,6 +14,7 @@ let songsToAdd = [];
 function addSongToPlaylist(li) {
     //This is where you can add songs to the playlist
     //Songs will be added when "add song" is pressed on the search bar
+    songsToAdd = JSON.parse(localStorage.getItem("songsToAdd") || "[]");
     let artistSelected = li.artist;
     let songSelected = li.songTitle;
     var myList= document.createElement('ul');
@@ -30,12 +31,10 @@ function addSongToPlaylist(li) {
                         "SongTitle": element['song']["title"],
                         "SongArtist": element['artist']["name"]
                     });
-                    localStorage.setItem('songsToAdd', songsToAdd);
+                    localStorage.setItem("songsToAdd", JSON.stringify(songsToAdd));
                 }
             });
-            listItem= document.createElement('li');
-            listItem.textContent=artistSelected + ' '+songSelected;
-            list.appendChild(listItem);
+            displayPlaylist(false);
         }
     });
   }
@@ -48,50 +47,22 @@ let prevPlaylistName = null;
 // 
 
 
-function removeSong(songArtist, songTitle) {
+function removeSong(songArtist, songTitle, id) {
     //This is where you can delete songs from a playlist
     //Songs will be deleted when a button is pressed next to song info on playlist
     // let songSelected = document.getElementById("deletesong").value;
-
+    
     songsToAdd.forEach(songObject => {
         if(songObject['SongTitle'] == songTitle && songObject['SongArtist'] == songArtist)
-            songsToAdd.remove(songObject);
-            localStorage.setItem('songsToAdd', songsToAdd);
-    });
+            songsToAdd = songsToAdd.filter(function(value, index, arr) {
+                if(songObject['SongTitle'] != songTitle || songObject['SongArtist'] != songArtist)
+                    return value;
+            });
 
-    displayPlaylist(false);
-    // fs.readFile(__dirname + '/../data/playlist.json', (err, data) => {
-    //     if(err) console.log(err);
-    //     else{
-    //         let usersPlaylists;
-    //         let playlistsSongs;
-    //         data.forEach(element => {
-    //             if(userLoggedIn == element['UserName']){
-    //                 usersPlaylists = element['Playlists'];
-    //             }
-    //         });
-    //         usersPlaylists.forEach(element => {
-    //             if(currentPlaylist == element['Title']){
-    //                 playlistsSongs = element['Songs'];
-    //             }
-    //         });
-    //         playlistsSongs.forEach(element => {
-    //             if(songSelected == element["SongTitle"] && songSelected == element["SongArtist"]){
-    //                 playlistsSongs.remove({
-    //                     "SongTitle": element["SongTitle"],
-    //                     "SongArtist": element["SongArtist"]
-    //                 });
-    //             }
-    //         });
-    //         let json = JSON.stringify(playlistsSongs);
-    //         fs.writeFile(__dirname + '/../data/playlist.json', json, (err) => {
-    //             if(err) console.log(err);
-    //             else{
-    //                 alert("Song removed from playlist");
-    //             }
-    //         });
-    //     }
-    // });
+            localStorage.setItem("songsToAdd", JSON.stringify(songsToAdd));
+        });
+    //document.getElementById(id).remove();
+
 }
 
 function deletePlaylist() {
@@ -130,7 +101,6 @@ function savePlaylist() {
     let usersPlaylists;
     let playlistsSongs;
     let activePlaylist = {};
-    console.log(existingTitle);
     fs.readFile(__dirname + '/../data/playlist.json', (err, rawdata) => {
         if(err) console.log(err);
         else{
@@ -139,11 +109,9 @@ function savePlaylist() {
             let currentTitle = document.getElementById('myText').value;
             let isValidName = true;
             let isNewPlaylist = true;
-            console.log('made it here 0');
 
             data['UserPlaylists'].forEach(element => {
                 if(userLoggedIn == element['UserName']){
-                    console.log('made it here 1');
                     usersPlaylists = element['Playlists'];
                 }
             });
@@ -152,7 +120,6 @@ function savePlaylist() {
             if(currentTitle == '') 
                 isValidName = false;
             else if(startTitle == '') {
-                console.log('made it here 2');
                 usersPlaylists.forEach(element => {
                     if(element['PlaylistTitle'] == currentTitle){
                         isValidName = false;
@@ -165,11 +132,9 @@ function savePlaylist() {
                 });
             }
             else if(currentTitle == startTitle) {
-                console.log('made it here 3');
                 usersPlaylists.forEach(playlist => {
                     if(playlist['PlaylistTitle'] == currentTitle)
                         activePlaylist = playlist;
-                        console.log('made it here 4');
 
                 });
                 activePlaylist['Songs'] = songsToAdd;
@@ -191,9 +156,8 @@ function savePlaylist() {
                 fs.writeFile(__dirname + '/../data/playlist.json', JSON.stringify(data), (err) => {
                     if(err) console.log(err);
                     else{
-                        //returnToDash();
-                        localStorage.setItem('existingTitle', currentTitle);
-                        alert('Saved');
+                        list.innerHTML = '';
+                        returnToDash();
                     }
                 });
             } else {
@@ -204,30 +168,14 @@ function savePlaylist() {
     });
 }
 
-//REVIEW: Unsure, needs testing from frontend side
 function displayPlaylist(isFirstDisplay) {
-    //This will show the playlist & its contents
-    //Init column headers
-    let col = ["Song Title", "Song Artist", 'Remove Song'];
-
-    //Set up table
-    var table = document.createElement("table");
-
-    //Create header row
-    // var tableRow = table.insertRow(-1);
-
-    // for(var i = 0; i < col.length; i++){
-    //     var tableHeader = document.createElement("th");
-    //     tableHeader.innerHTML = col[i];
-    //     tableHeader.appendChild(tableHeader);
-    // }
-
-    //Add song data to table
-    fs.readFile(__dirname + '/../data/playlist.json', (err, rawdata) => {
-        if(err) console.log(err);
-        else{
-            if(isFirstDisplay){
+    if(isFirstDisplay){
+        fs.readFile(__dirname + '/../data/playlist.json', (err, rawdata) => {
+            if(err) console.log(err);
+            else{
                 localStorage.setItem('existingTitle', document.getElementById('myText').value);
+                songsToAdd = [];
+                localStorage.setItem("songsToAdd", JSON.stringify(songsToAdd));
                 let data = JSON.parse(rawdata);
                 let usersPlaylists;
                 data['UserPlaylists'].forEach(user => {
@@ -237,35 +185,53 @@ function displayPlaylist(isFirstDisplay) {
                 });
                 usersPlaylists.forEach(playlist => {
                     if(localStorage.getItem('existingTitle') == playlist['PlaylistTitle']){
+                        console.log('Attempting this');
                         songsToAdd = playlist['Songs'];
+                        localStorage.setItem("songsToAdd", JSON.stringify(songsToAdd));
                     }
                 });
             }
-            songsToAdd.forEach(song => {
-                var tr = table.insertRow();
-                for(var col = 0; col < 3; col++){
-                    let cell = tr.insertCell();
-                    if(col == 0)
-                        cell.innerHTML = song["SongTitle"];
-                    else if(col == 1)
-                        cell.innerHTML = song["SongArtist"];
-                    else   {
-                        cell.innerHTML += '<button type="submit" class="play_song_button" id="play_song_button" onclick="removeSong(' + song['SongTitle'] + ','+ song['SongArtist'] + ')">Remove Song</button>';
-                    }
-                }
-                // var tableCell = tableRow.insertCell(-1);
-                // tableCell.innerHTML = element["SongTitle"][col[0]];
-                // tableCell.innerHTML = element["SongArtist"][col[1]];
-                // tableCell.innerHTML += '<button type="submit" class="play_song_button" id="play_song_button" onclick="removeSong(' + element['SongTitle'] + ','+ element['SongArtist'] + ')">Remove Song</button>';
-            });
-            localStorage.setItem('songsToAdd', songsToAdd);
-        }
-    });
+        });
+    }
+    list = document.getElementById('theList');
+    list.innerHTML = '';
+    let id = 0;
+    let songID = id + 'btn';
+    songsToAdd = JSON.parse(localStorage.getItem("songsToAdd") || "[]");
 
-    //Add table with song info to a container
-    // var divContainer = document.getElementById("showData");
-    //     divContainer.innerHTML = "";
-    //     divContainer.appendChild(table);
+    songsToAdd.forEach(song => {
+        var btn = document.createElement('BUTTON');
+        var text = document.createTextNode('Remove Song');
+        btn.style.height = '30px';
+        btn.style.width = '150px';
+        btn.style.backgroundColor = 'black';
+        btn.style.color = 'white';
+        btn.style.margin = '8px';
+        btn.appendChild(text);
+        listItem= document.createElement('li');
+        listItem.textContent= song['SongTitle'] + ' '+ song['SongArtist'];
+        listItem.id = songID;
+
+        btn.onclick = function(){
+            let temp = []
+            let deletedOne = false;
+            songsToAdd.forEach(songObject => {
+                console.log(song['SongTitle'] , ' ', song['SongArtist'], ' ', deletedOne)
+                if(songObject['SongTitle'] != song['SongTitle'] || songObject['SongArtist'] != song['SongArtist'] || deletedOne == true) {
+                    temp.push(songObject);
+                } else deletedOne = true;
+            });
+                localStorage.setItem("songsToAdd", JSON.stringify(temp));
+                displayPlaylist(false);
+        }
+
+
+        listItem.appendChild(btn);
+        list.appendChild(listItem);
+        id += 1;
+        songID = id + 'btn';
+    });
+    localStorage.setItem("songsToAdd", JSON.stringify(songsToAdd));
 }
 
 
