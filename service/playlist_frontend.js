@@ -209,8 +209,8 @@ function displayPlaylist(isFirstDisplay) {
     //This will show the playlist & its contents
     //Init column headers
     //Set up table
-    var body = document.getElementsByTagName("body")[0];
-    var table = document.getElementById("songList");
+    var body = document.getElementById("tableL");
+    var table = document.createElement("table");
     let col = ["Song Title", "Song Artist", 'Remove Song'];
     var header = '<tr><th>Song title</th><th>Song Artist</th><th>Remove Song</th></tr>';
     var tblBody = document.createElement("tbody");
@@ -255,8 +255,14 @@ function displayPlaylist(isFirstDisplay) {
                     else if(col == 1)
                       var cellText = document.createTextNode(song["SongArtist"]);
                     else   {
-                      var cellText = document.createTextNode("Hello World");
-                      // var cellText = '';
+                      // var cellText = document.createTextNode("Hello World");
+                      var cellText = document.createElement("BUTTON");
+                      var t = document.createTextNode("Remove Song");
+                      cellText.appendChild(t);
+                      cellText.setAttribute("style", "border: 1px solid green;");
+                      cellText.onclick = function DeleteSongFunction() {
+                        songsToAdd.remove(song);
+                      }
                       // cell.innerHTML += '<button type="submit" class="play_song_button" id="play_song_button" onclick="removeSong(' + song['SongTitle'] + ','+ song['SongArtist'] + ')">Remove Song</button>';
                     }
                     console.log(cellText);
