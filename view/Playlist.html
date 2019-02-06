@@ -7,7 +7,7 @@
   <title>Playlist</title>
 
 </head>
-<body>
+<body onload="displayPlaylist(true)">
   <div class="return">
   <button type="submit" id="return_button" onclick="returnToDash()">return</button>
   </div>
@@ -63,14 +63,7 @@
     <button onclick="deleteSongOnPlaylist()"> Delete Playlist </button>
   </div>
 
-  <div class="fPlaylist">
-    <button onclick="displayPlaylist()">Display Contents of Playlist</button>
-  </div>
-
-
-
 
 <script src="../service/playlist_frontend.js"></script>
-<script src="../service/playlist_backend.js"></script>
 </body>
 </html>

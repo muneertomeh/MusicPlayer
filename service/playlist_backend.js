@@ -1,7 +1,3 @@
-
-
-let playListFrontEnd = require('./playlist_frontend.js');
-
 //Fetches user currently logged into the session
 let userLoggedIn = localStorage.getItem("UserName");
 
@@ -42,63 +38,7 @@ let currentPlaylistName = null;
 
 let prevPlaylistName = null;
 
-function isUniquePlayListName(playlistData) {
-    //This is where playlist title will be checked if it is filled/unique
-    //Playlist title will come from text box/dashboard if editing existing playlist
-    playlistData['UserPlaylists'].forEach(element => {
-        if(userLoggedIn == element['UserName'])
-            return false;
-    })
-    
-    
-    let newPlaylistName = document.getElementById("myText").value;
-    let isValidName = true;
-    let usersPlaylists;
-
-    
-    //If user attempts to save new playlist w/o title
-    if(newPlaylistName == null && currentPlaylistName == null){
-        isValidName = false;
-    }
-    //If this is the user's first playlist so whatever name they type is unique
-    else if(usersPlaylists == null){
-        currentPlaylistName = newPlaylistName;
-    }
-    //If user is updating existing playlist
-    else if(currentPlaylistName != null){
-        //If user is changing name of existing playlist
-        if(newPlaylistName != null){
-            usersPlaylists.forEach(element => {
-                if(newPlaylistName == element['PlaylistTitle']){
-                    isValidName = false;
-                }
-                else{
-                    prevPlaylistName = currentPlaylistName;
-                    currentPlaylistName = newPlaylistName;
-                    return true;
-                }
-            });
-        }
-        //If user is keeping name of existing playlist
-        else{
-            return true;
-        }
-        }
-        else{
-            usersPlaylists.forEach(element => {
-                if(newPlaylistName == element['PlaylistTitle']){
-                    isValidName = false;
-                }
-            });
-        }
-    if(isValidName == false){
-        return false;
-    }
-    else{
-        currentPlaylistName = newPlaylistName;
-        return true;
-    }
-}
+// 
 
 
 function deleteSongOnPlaylist() {
@@ -163,7 +103,7 @@ function deletePlaylist() {
                 if(err) console.log(err);
                 else{
                     alert("Playlist deleted");
-                    returnToDash();
+                    playListFrontEnd.returnToDash();
                 }
             });
         }
@@ -209,7 +149,7 @@ function savePlaylist() {
                 fs.writeFile(__dirname + '/../data/playlist.json', JSON.stringify(data), (err) => {
                     if(err) console.log(err);
                     else{
-                        returnToDash();
+                        playListFrontEnd.returnToDash();
                     }
                 })
             } else {
@@ -272,16 +212,6 @@ function savePlaylist() {
 //     });
 // }
 
-function returnToDash() {
-    //This function will return the user back to the dashboard
-    let window = remote.getCurrentWindow();
-    window.loadURL(url.format({
-        pathname: path.join(__dirname, '/../view/dashboard.html'),
-        protocol: 'file',
-        slashes: true
-    }));
-}
-
 //REVIEW: Unsure, needs testing from frontend side
 function displayPlaylist() {
     //This will show the playlist & its contents
@@ -334,3 +264,63 @@ function displayPlaylist() {
         divContainer.innerHTML = "";
         divContainer.appendChild(table);
 }
+
+
+
+function isUniquePlayListName(playlistData) {
+    //     //This is where playlist title will be checked if it is filled/unique
+    //     //Playlist title will come from text box/dashboard if editing existing playlist
+    //     playlistData['UserPlaylists'].forEach(element => {
+    //         if(userLoggedIn == element['UserName'])
+    //             return false;
+    //     })
+        
+        
+    //     let newPlaylistName = document.getElementById("myText").value;
+    //     let isValidName = true;
+    //     let usersPlaylists;
+    
+        
+    //     //If user attempts to save new playlist w/o title
+    //     if(newPlaylistName == null && currentPlaylistName == null){
+    //         isValidName = false;
+    //     }
+    //     //If this is the user's first playlist so whatever name they type is unique
+    //     else if(usersPlaylists == null){
+    //         currentPlaylistName = newPlaylistName;
+    //     }
+    //     //If user is updating existing playlist
+    //     else if(currentPlaylistName != null){
+    //         //If user is changing name of existing playlist
+    //         if(newPlaylistName != null){
+    //             usersPlaylists.forEach(element => {
+    //                 if(newPlaylistName == element['PlaylistTitle']){
+    //                     isValidName = false;
+    //                 }
+    //                 else{
+    //                     prevPlaylistName = currentPlaylistName;
+    //                     currentPlaylistName = newPlaylistName;
+    //                     return true;
+    //                 }
+    //             });
+    //         }
+    //         //If user is keeping name of existing playlist
+    //         else{
+    //             return true;
+    //         }
+    //         }
+    //         else{
+    //             usersPlaylists.forEach(element => {
+    //                 if(newPlaylistName == element['PlaylistTitle']){
+    //                     isValidName = false;
+    //                 }
+    //             });
+    //         }
+    //     if(isValidName == false){
+    //         return false;
+    //     }
+    //     else{
+    //         currentPlaylistName = newPlaylistName;
+    //         return true;
+    //     }
+    // }
