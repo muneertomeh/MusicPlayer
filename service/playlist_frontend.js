@@ -210,10 +210,10 @@ function displayPlaylist(isFirstDisplay) {
     //Init column headers
     //Set up table
     var body = document.getElementById("tableL");
-    var table = document.createElement("table");
+    var table = document.getElementById("songList");
     let col = ["Song Title", "Song Artist", 'Remove Song'];
     var header = '<tr><th>Song title</th><th>Song Artist</th><th>Remove Song</th></tr>';
-    var tblBody = document.createElement("tbody");
+    var tblBody = document.getElementById("tBod");
     //Create header row
     // var tableRow = table.insertRow(-1);
 
@@ -261,11 +261,20 @@ function displayPlaylist(isFirstDisplay) {
                       cellText.appendChild(t);
                       cellText.setAttribute("style", "border: 1px solid green;");
                       cellText.onclick = function DeleteSongFunction() {
-                        songsToAdd.remove(song);
+                      console.log(song["SongTitle"]);
+                      console.log(song);
+                      var index = songsToAdd.indexOf(song["SongTitle"]);
+                      =
+                      // if(index !=-1)
+                      // {
+                      //   songsToAdd.splice(song["SongTitle"],index);
+                      // }
+                      row.innerHTML= '';
+                      localStorage.setItem('songsToAdd', songsToAdd);
+
                       }
                       // cell.innerHTML += '<button type="submit" class="play_song_button" id="play_song_button" onclick="removeSong(' + song['SongTitle'] + ','+ song['SongArtist'] + ')">Remove Song</button>';
                     }
-                    console.log(cellText);
                     cell.appendChild(cellText);
                     row.appendChild(cell);
                 }
