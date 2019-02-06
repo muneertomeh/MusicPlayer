@@ -44,7 +44,7 @@ let currentPlaylistName = null;
 
 let prevPlaylistName = null;
 
-// 
+//
 
 
 function removeSong(songArtist, songTitle, id) {
@@ -117,7 +117,7 @@ function savePlaylist() {
             });
 
 
-            if(currentTitle == '') 
+            if(currentTitle == '')
                 isValidName = false;
             else if(startTitle == '') {
                 usersPlaylists.forEach(element => {
