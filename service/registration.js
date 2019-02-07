@@ -36,17 +36,34 @@ function register() {
                     let json = JSON.stringify(rawData);
                     fs.writeFile(__dirname + '/../data/users.json', json, (err) => {
                         if(err) console.log(err);
-                        else {
-                            let win = remote.getCurrentWindow();
-                            win.loadURL(url.format({
-                                pathname: path.join(__dirname, '/../view/login.html'),
-                                protocol: 'file',
-                                slashes: true
-                            }));
+
+                    });
+                    let playlistInit = [];
+                    fs.readFile(__dirname + '/../data/playlist.json', (err, data) => {
+                        if(err) console.log(err);
+                        else{
+                            let pData = JSON.parse(data);
+                            pData["UserPlaylists"].push({
+                                "UserName": userName,
+                                "Playlists": playlistInit
+                            });
+                            let json = JSON.stringify(pData);
+                            fs.writeFile(__dirname + '/../data/playlist.json', json, (err) => {
+                                if(err) console.log(err);
+                                else{
+                                    let win = remote.getCurrentWindow();
+                                        win.loadURL(url.format({
+                                            pathname: path.join(__dirname, '/../view/login.html'),
+                                            protocol: 'file',
+                                            slashes: true
+                                        }));
+                                }
+                            });
                         }
                     });
                 }
             }
         });
+        
     }
 }
