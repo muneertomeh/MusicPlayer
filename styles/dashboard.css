@@ -51,8 +51,7 @@
 }
 
 .btn-newPlaylist{
-    width:27.5%;
+    width: 50%;
     float: right;
-
-
+    text-align: center;
 }

@@ -4,6 +4,9 @@ const remote = electron.remote;
 const url = require('url');
 const path = require('path');
 
+//Fetches user currently logged into the session
+let userLoggedIn = localStorage.getItem("UserName");
+
 function search()
 {
     let userInput = document.getElementById('search_song').value;
@@ -228,4 +231,36 @@ function createNewPlaylist(){
         protocol: 'file',
         slashes: true
     }));
+}
+
+function searchPlaylist(){
+    let playlistSearch = document.getElementById('playlist_search').value;
+
+    fs.readFile(__dirname + '/../data/playlist.json', (err, rawData) => {
+        if(err) {
+            console.log(err);
+        }
+        else {
+            let data = JSON.parse(rawData);
+            data['UserPlaylists'].forEach(element => {
+                if(userLoggedIn == element['UserName']) {
+                    element['Playlists'].forEach(playlist => {
+                        if(playlistSearch == playlist['PlaylistTitle']) {
+                            localStorage.setItem('existingTitle', playlistSearch);
+                            let win = remote.getCurrentWindow();
+                            win.loadURL(url.format({
+                                pathname: path.join(__dirname, '/../view/Playlist.html'),
+                                protocol: 'file',
+                                slashes: true
+                            }));
+                        }
+                        else {
+                            let searchField = document.getElementById('playlist_search');
+                            searchField.value = 'Incorrect Playlist Title';
+                        }
+                    });
+                }
+            });
+        }
+    })
 }
