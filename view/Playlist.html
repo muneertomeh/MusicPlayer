@@ -63,11 +63,17 @@
     <button onclick="deleteSongOnPlaylist()"> Delete Playlist </button>
   </div>
 
-  <div class ="fPlaylist" align="center">
-    <button onclick="displayPlaylist(true)"> display Playlist </button>
+  <div class="music_player">
+    <div><button onclick="playSongs()">Play playlist</button></div>
+    <div class="song_title" id="song_title"></div>
+    <div class="artist_name" id="artist_name"></div>
+    <div class="player_buttons" id="player_buttons">
+        <audio controls id="music">
+        </audio>
+    </div>
   </div>
 
 
-<script src="../service/playlist_frontend.js"></script>
+  <script src="../service/playlist_frontend.js"></script>
 </body>
 </html>
