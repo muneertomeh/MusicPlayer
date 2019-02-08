@@ -10,18 +10,40 @@ let userLoggedIn = localStorage.getItem("UserName");
 
 //array to hold songs that will be added into the playlist
 let songsToAdd = [];
+let playlistIndex = 0;
 
 function playSongs() {
+    console.log(playlistIndex);
     let musicPlay = document.getElementById('music');
     musicPlay.innerHTML = '';
     songsToAdd = JSON.parse(localStorage.getItem("songsToAdd") || "[]");
-    
-    songsToAdd.forEach(song => {
-        let src = document.createElement('source');
-        src.src = song['MusicFile'];
-        musicPlay.appendChild(src);
-    });
+
+    let src = document.createElement('source');
+    src.src = songsToAdd[playlistIndex]['MusicFile'];
+    console.log(src);
+    musicPlay.appendChild(src);
+    musicPlay.load();
     musicPlay.play();
+    musicPlay.onended = function() {
+        console.log("r1");
+        
+        nextTrackToPlay();
+    }
+}
+
+function nextTrackToPlay(){
+    //If song index has reached the end of playlist, return to first song
+    //Or if only one song in playlist, play that song over again
+    if(playlistIndex == (songsToAdd.length - 1)){
+        playlistIndex = 0;
+        console.log("r3");
+        playSongs();
+    }
+    else{
+        playlistIndex++;
+        console.log("r2");
+        playSongs();
+    }
 }
 
 function addSongToPlaylist(li) {
