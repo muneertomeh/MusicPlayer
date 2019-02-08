@@ -13,20 +13,16 @@ let songsToAdd = [];
 let playlistIndex = 0;
 
 function playSongs() {
-    console.log(playlistIndex);
     let musicPlay = document.getElementById('music');
     musicPlay.innerHTML = '';
     songsToAdd = JSON.parse(localStorage.getItem("songsToAdd") || "[]");
 
     let src = document.createElement('source');
     src.src = songsToAdd[playlistIndex]['MusicFile'];
-    console.log(src);
     musicPlay.appendChild(src);
     musicPlay.load();
     musicPlay.play();
-    musicPlay.onended = function() {
-        console.log("r1");
-        
+    musicPlay.onended = function() {        
         nextTrackToPlay();
     }
 }
@@ -36,12 +32,10 @@ function nextTrackToPlay(){
     //Or if only one song in playlist, play that song over again
     if(playlistIndex == (songsToAdd.length - 1)){
         playlistIndex = 0;
-        console.log("r3");
         playSongs();
     }
     else{
         playlistIndex++;
-        console.log("r2");
         playSongs();
     }
 }
