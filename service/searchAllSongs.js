@@ -7,37 +7,50 @@ const path = require('path');
 //Fetches user currently logged into the session
 let userLoggedIn = localStorage.getItem("UserName");
 
-// function showPlaylists() {
-//     let pHeader = document.getElementById('p-playlistHeader');
+function showPlaylists() {
+    let pHeader = document.getElementById('p-playlistHeader');
+    let playlists = []
+    fs.readFile(__dirname + '/../data/playlist.json', (err, rawData) => {
+        let data = JSON.parse(rawData);
+        data['UserPlaylists'].forEach(user => {
+            if(user['UserName'] == userLoggedIn)
+                playlists = user['Playlists'];
+        });
+    
 
-//     fs.readFile(__dirname + '/../data/playlist.json', (err, rawData) => {
-//         let data = JSON.parse(rawData);
-
-//         data['UserPlaylists'].forEach(user => {
-//             if(user['UserName'] == userLoggedIn)
-//                 let playlists = user['Playlists'];
-//         });
-//     });
-
-//     let i = 0
-//     playlists.forEach(playlist => {
-//         let p = document.createElement('p');
-//         p.id = i + '_playlist';
-//         let text = document.createTextNode(playlist['PlaylistTitle']);
-//         p.appendChild(text)
-//         p.onclick = function(){
-//             localStorage.setItem('existingTitle', p.value);
-//             let win = remote.getCurrentWindow();
-//             win.loadURL(url.format({
-//                 pathname: path.join(__dirname, '/../view/Playlist.html'),
-//                 protocol: 'file',
-//                 slashes: true
-//             }));
-//         };
-//         pHeader.appendChild(p);
-//         i++;
-//     });
-// }
+        let i = 0
+        playlists.forEach(playlist => {
+            let p = document.createElement('p');
+            p.id = i + '_playlist';
+            p.value = playlist['PlaylistTitle'];
+            let text = document.createTextNode(playlist['PlaylistTitle']);
+            p.appendChild(text)
+            p.onclick = function(){
+                localStorage.setItem('existingTitle', p.value);
+                let win = remote.getCurrentWindow();
+                win.loadURL(url.format({
+                    pathname: path.join(__dirname, '/../view/Playlist.html'),
+                    protocol: 'file',
+                    slashes: true
+                }));
+            };
+            p.style.fontSize = '15px'
+            p.style.color = 'red';
+            pHeader.appendChild(p);
+            i++;
+        });
+        let btn = document.createElement('button');
+        let text = document.createTextNode('Create Playlist');
+        btn.style.height = '2em';
+        btn.style.width = '130px'
+        btn.onclick = function() {
+            createNewPlaylist();
+        };
+        btn.style.fontSize = '15px';
+        btn.appendChild(text);
+        pHeader.appendChild(btn);
+    });
+}
 
 function search()
 {

@@ -10,32 +10,34 @@ let userLoggedIn = localStorage.getItem("UserName");
 
 //array to hold songs that will be added into the playlist
 let songsToAdd = [];
+let playlistIndex = 0;
 
 function playSongs() {
     let musicPlay = document.getElementById('music');
     musicPlay.innerHTML = '';
     songsToAdd = JSON.parse(localStorage.getItem("songsToAdd") || "[]");
-    // if(songsToAdd[index] == null)
-    //     return;
-    // musicPlay.src = songsToAdd[index]['MusicFile'];
-    // musicPlay.onended = function(){
-    //     if(songsToAdd[index+1] != null) {
-    //         playSongs(index + 1);
-    //     }
-    // }
-    // musicPlay.play();
 
-    if(songsToAdd[0] == null)
-        return;
-    musicPlay.src = songsToAdd[0]['MusicFile'];
-    musicPlay.onended = function() {
-        songsToAdd = JSON.parse(localStorage.getItem("songsToAdd") || "[]");
-        for(let i = 1; i < songsToAdd.length; i++) {
-            console.log('Playing ', songsToAdd['MusicFile']);
-            musicPlay.src = songsToAdd['MusicFile'];
-        }
-    }
+    let src = document.createElement('source');
+    src.src = songsToAdd[playlistIndex]['MusicFile'];
+    musicPlay.appendChild(src);
+    musicPlay.load();
     musicPlay.play();
+    musicPlay.onended = function() {        
+        nextTrackToPlay();
+    }
+}
+
+function nextTrackToPlay(){
+    //If song index has reached the end of playlist, return to first song
+    //Or if only one song in playlist, play that song over again
+    if(playlistIndex == (songsToAdd.length - 1)){
+        playlistIndex = 0;
+        playSongs();
+    }
+    else{
+        playlistIndex++;
+        playSongs();
+    }
 }
 
 function addSongToPlaylist(li) {
@@ -50,30 +52,34 @@ function addSongToPlaylist(li) {
     displayPlaylist(false);
   }
 
-let currentPlaylistName = null;
-
-let prevPlaylistName = null;
-
 function deletePlaylist() {
     //This is where the playlist is deleted and removed from playlist.json
     //Delete current playlist and redirect back to the dashboard
-    let currentPlaylist = document.getElementById("pTitle").value;
-    fs.readFile(__dirname + '/../data/playlist.json', (err, data) => {
+    let currentPlaylist = document.getElementById("myText").value;
+    fs.readFile(__dirname + '/../data/playlist.json', (err, rawdata) => {
         if(err) console.log(err);
         else{
-            let playlistData = JSON.parse(data);
+            let data = JSON.parse(rawdata);
             let usersPlaylists;
-            data.forEach(element =>{
+            let temp = [];
+            data['UserPlaylists'].forEach(element =>{
                 if(userLoggedIn == element['UserName']){
                     usersPlaylists = element['Playlists'];
                 }
             });
             usersPlaylists.forEach(element => {
-                if(currentPlaylist == element['Title']){
-                    usersPlaylists.remove(currentPlaylist);
+                if(currentPlaylist != element['PlaylistTitle']){
+                    temp.push(element);
                 }
             });
-            let json = JSON.stringify(playlistData);
+            
+            data['UserPlaylists'].forEach(element =>{
+                if(userLoggedIn == element['UserName']){
+                    element['Playlists'] = temp;
+                }
+            });
+
+            let json = JSON.stringify(data);
             fs.writeFile(__dirname + '/../data/playlist.json', json, (err) => {
                 if(err) console.log(err);
                 else{
@@ -133,7 +139,7 @@ function savePlaylist() {
                     if(playlist['PlaylistTitle'] == currentTitle){
                         isValidName = false;
                     } else if(startTitle == playlist['PlaylistTitle']) {
-                        playlist['PlayListTitle'] = currentTitle;
+                        playlist['PlaylistTitle'] = currentTitle;
                         activePlaylist = playlist;
                     }
                 });
@@ -162,8 +168,8 @@ function savePlaylist() {
 function displayPlaylist(isFirstDisplay) {
     list = document.getElementById('theList');
     list.innerHTML = '';
-
     if(isFirstDisplay){
+        document.getElementById('myText').value = localStorage.getItem('existingTitle');
         fs.readFile(__dirname + '/../data/playlist.json', (err, rawdata) => {
             if(err) console.log(err);
             else{
@@ -178,15 +184,20 @@ function displayPlaylist(isFirstDisplay) {
                 });
                 usersPlaylists.forEach(playlist => {
                     if(localStorage.getItem('existingTitle') == playlist['PlaylistTitle']){
+                        localStorage.setItem("songsToAdd", JSON.stringify(playlist['Songs']));
                         songsToAdd = playlist['Songs'];
-                        localStorage.setItem("songsToAdd", JSON.stringify(songsToAdd));
                     }
                 });
             }
+            createElements();
         });
     } else {
         songsToAdd = JSON.parse(localStorage.getItem("songsToAdd") || "[]");
+        createElements();
     }
+}
+
+function createElements() {
     let id = 0;
     let songID = id + 'btn';
 
@@ -431,6 +442,7 @@ document.getElementById("pTitle").innerHTML = x;
 
 function returnToDash(){
     let window = remote.getCurrentWindow();
+    localStorage.setItem('existingTitle', '');
     window.loadURL(url.format({
         pathname: path.join(__dirname, '/../view/dashboard.html'),
         protocol: 'file',
