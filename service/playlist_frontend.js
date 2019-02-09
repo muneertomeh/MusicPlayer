@@ -15,12 +15,26 @@ function playSongs() {
     let musicPlay = document.getElementById('music');
     musicPlay.innerHTML = '';
     songsToAdd = JSON.parse(localStorage.getItem("songsToAdd") || "[]");
-    
-    songsToAdd.forEach(song => {
-        let src = document.createElement('source');
-        src.src = song['MusicFile'];
-        musicPlay.appendChild(src);
-    });
+    // if(songsToAdd[index] == null)
+    //     return;
+    // musicPlay.src = songsToAdd[index]['MusicFile'];
+    // musicPlay.onended = function(){
+    //     if(songsToAdd[index+1] != null) {
+    //         playSongs(index + 1);
+    //     }
+    // }
+    // musicPlay.play();
+
+    if(songsToAdd[0] == null)
+        return;
+    musicPlay.src = songsToAdd[0]['MusicFile'];
+    musicPlay.onended = function() {
+        songsToAdd = JSON.parse(localStorage.getItem("songsToAdd") || "[]");
+        for(let i = 1; i < songsToAdd.length; i++) {
+            console.log('Playing ', songsToAdd['MusicFile']);
+            musicPlay.src = songsToAdd['MusicFile'];
+        }
+    }
     musicPlay.play();
 }
 
@@ -133,6 +147,7 @@ function savePlaylist() {
                     if(err) console.log(err);
                     else{
                         list.innerHTML = '';
+                        localStorage.setItem('existingTitle', '');
                         returnToDash();
                     }
                 });
@@ -152,7 +167,6 @@ function displayPlaylist(isFirstDisplay) {
         fs.readFile(__dirname + '/../data/playlist.json', (err, rawdata) => {
             if(err) console.log(err);
             else{
-                localStorage.setItem('existingTitle', document.getElementById('myText').value);
                 songsToAdd = [];
                 localStorage.setItem("songsToAdd", JSON.stringify(songsToAdd));
                 let data = JSON.parse(rawdata);
@@ -177,7 +191,6 @@ function displayPlaylist(isFirstDisplay) {
     let songID = id + 'btn';
 
     songsToAdd.forEach(song => {
-        console.log('Running here');
         var btn = document.createElement('BUTTON');
         var text = document.createTextNode('Remove Song');
         btn.style.height = '30px';
