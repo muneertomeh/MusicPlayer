@@ -7,23 +7,16 @@
         <link rel="stylesheet" href="../styles/dashboard.css">
     </head>
 
-    <body>
+    <body onload='showPlaylists()'>
         <div class="header">
             <h1>Welcome to MusicPlaya</h1>
             <div class="dashboard_menu_type">
                 <p class="song_menu">Songs</p>
-                <p class="playlist_menu">Playlists</p>
+                <p class="playlist_menu" id='p-playlistHeader'>Playlists</p>
             </div> 
-        </div>
-        <div class="btn-newPlaylist">
-            <input type="search" id="playlist_search" placeholder="Search for Playlist">
-            <button onclick="searchPlaylist()">Search</button>
-            <p> or </p>
-            <button onclick="createNewPlaylist()">Create Playlist</button>
         </div>
         <div class="music_search">
             <input type="search" id="search_song" placeholder="Search For Songs..." onkeydown="search()">
-            <!-- <button type="submit" id="search_song_button" onclick="searchForSongs()">Search</button> -->
         </div>
         <div class="music_playlist_results_player">
             <div class="music_playlist_results">

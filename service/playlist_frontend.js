@@ -52,30 +52,34 @@ function addSongToPlaylist(li) {
     displayPlaylist(false);
   }
 
-let currentPlaylistName = null;
-
-let prevPlaylistName = null;
-
 function deletePlaylist() {
     //This is where the playlist is deleted and removed from playlist.json
     //Delete current playlist and redirect back to the dashboard
-    let currentPlaylist = document.getElementById("pTitle").value;
-    fs.readFile(__dirname + '/../data/playlist.json', (err, data) => {
+    let currentPlaylist = document.getElementById("myText").value;
+    fs.readFile(__dirname + '/../data/playlist.json', (err, rawdata) => {
         if(err) console.log(err);
         else{
-            let playlistData = JSON.parse(data);
+            let data = JSON.parse(rawdata);
             let usersPlaylists;
-            data.forEach(element =>{
+            let temp = [];
+            data['UserPlaylists'].forEach(element =>{
                 if(userLoggedIn == element['UserName']){
                     usersPlaylists = element['Playlists'];
                 }
             });
             usersPlaylists.forEach(element => {
-                if(currentPlaylist == element['Title']){
-                    usersPlaylists.remove(currentPlaylist);
+                if(currentPlaylist != element['PlaylistTitle']){
+                    temp.push(element);
                 }
             });
-            let json = JSON.stringify(playlistData);
+            
+            data['UserPlaylists'].forEach(element =>{
+                if(userLoggedIn == element['UserName']){
+                    element['Playlists'] = temp;
+                }
+            });
+
+            let json = JSON.stringify(data);
             fs.writeFile(__dirname + '/../data/playlist.json', json, (err) => {
                 if(err) console.log(err);
                 else{
@@ -135,7 +139,7 @@ function savePlaylist() {
                     if(playlist['PlaylistTitle'] == currentTitle){
                         isValidName = false;
                     } else if(startTitle == playlist['PlaylistTitle']) {
-                        playlist['PlayListTitle'] = currentTitle;
+                        playlist['PlaylistTitle'] = currentTitle;
                         activePlaylist = playlist;
                     }
                 });
@@ -149,6 +153,7 @@ function savePlaylist() {
                     if(err) console.log(err);
                     else{
                         list.innerHTML = '';
+                        localStorage.setItem('existingTitle', '');
                         returnToDash();
                     }
                 });
@@ -163,12 +168,11 @@ function savePlaylist() {
 function displayPlaylist(isFirstDisplay) {
     list = document.getElementById('theList');
     list.innerHTML = '';
-
     if(isFirstDisplay){
+        document.getElementById('myText').value = localStorage.getItem('existingTitle');
         fs.readFile(__dirname + '/../data/playlist.json', (err, rawdata) => {
             if(err) console.log(err);
             else{
-                localStorage.setItem('existingTitle', document.getElementById('myText').value);
                 songsToAdd = [];
                 localStorage.setItem("songsToAdd", JSON.stringify(songsToAdd));
                 let data = JSON.parse(rawdata);
@@ -180,20 +184,24 @@ function displayPlaylist(isFirstDisplay) {
                 });
                 usersPlaylists.forEach(playlist => {
                     if(localStorage.getItem('existingTitle') == playlist['PlaylistTitle']){
+                        localStorage.setItem("songsToAdd", JSON.stringify(playlist['Songs']));
                         songsToAdd = playlist['Songs'];
-                        localStorage.setItem("songsToAdd", JSON.stringify(songsToAdd));
                     }
                 });
             }
+            createElements();
         });
     } else {
         songsToAdd = JSON.parse(localStorage.getItem("songsToAdd") || "[]");
+        createElements();
     }
+}
+
+function createElements() {
     let id = 0;
     let songID = id + 'btn';
 
     songsToAdd.forEach(song => {
-        console.log('Running here');
         var btn = document.createElement('BUTTON');
         var text = document.createTextNode('Remove Song');
         btn.style.height = '30px';
@@ -434,6 +442,7 @@ document.getElementById("pTitle").innerHTML = x;
 
 function returnToDash(){
     let window = remote.getCurrentWindow();
+    localStorage.setItem('existingTitle', '');
     window.loadURL(url.format({
         pathname: path.join(__dirname, '/../view/dashboard.html'),
         protocol: 'file',
