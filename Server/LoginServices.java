@@ -9,33 +9,35 @@ public class LoginServices {
 	private String userFPath;
 	
 	public LoginServices() {
-		userLoggedIn = new User();
-		userFPath = "/../client/data/users.json";
+		userLoggedIn = new Users();
+		userFPath = "/../server/testusers.json";
 	}
 	
-	public List<String> getUsers() {
+	public List<Users> getUsers() {
+		List<Users> userList = new ArrayList<Users>();
 		try {
 			BufferedReader bufReader = new BufferedReader(new FileReader(userFPath));
-			Type jsonListType = new TypeToken<List<String>>() {}.getType();
-            List<String> userList = new Gson().fromJson(bufReader, jsonListType);
+			Type jsonListType = new TypeToken<List<Users>>() {}.getType();
+            userList = new Gson().fromJson(bufReader, jsonListType);
             
             return userList;
 		}catch(FileNotFoundException e) {
-            System.out.println("Error: " + e);
+			e.getStackTrace();
+			return userList;
         }
 	}
 	
-	public boolean Login(String userName, String password) {
+	public boolean Login(String username, String password) {
 		boolean successfulLogin = false;
-		List<String> userList = getUsers();
-		if(userName.equals(null) || password.equals(null) || userName == "" || password == "") {
+		List<Users> userList = getUsers();
+		if(username.equals(null) || password.equals(null) || username == "" || password == "") {
 			return successfulLogin;
 		} else {
 			for(int i = 0; i < userList.size(); i++) {
-				if((userList.get(i).getUsername().equals(userName)) && (userList.get(i).getPassword().equals(password))) {
+				if((userList.get(i).getUsername().equals(username)) && (userList.get(i).getPassword().equals(password))) {
 					successfulLogin = true;
-					userLoggedIn.setUsername(userName);
-					userLoggedIn.setPassword(password);
+					userLoggedIn.username = username;
+					userLoggedIn.password = password;
 					return successfulLogin;
 				}
 			}
@@ -43,11 +45,11 @@ public class LoginServices {
 		return successfulLogin;
 	}
 
-	public void setUserLoggedIn(User user) {
+	public void setUserLoggedIn(Users user) {
 		userLoggedIn = user;
 	}
 
-	public User getUserLoggedIn() {
+	public Users getUserLoggedIn() {
 		return userLoggedIn;
 	}
 	
