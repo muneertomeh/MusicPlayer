@@ -3,25 +3,30 @@ import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.reflect.TypeToken;
 import java.lang.reflect.Type;
+import java.util.ArrayList;
+import java.util.List;
 
 public class RegisterServices{
-    private String userFPath = "/../client/data/users.json";
+    private String userFPath = "/../server/testusers.json";
 
-    public List<User> getUsers(){
+    public List<Users> getUsers(){
+        List<Users> userList = new ArrayList<Users>();
         try{
             BufferedReader bufReader = new BufferedReader(new FileReader(userFPath));
-            Type jsonListType = new TypeToken<List<User>>() {}.getType();
+            Type jsonListType = new TypeToken<ArrayList<Users>>() {}.getType();
 
-            List<User> userList = new Gson().fromJson(bufReader, jsonListType);
+            userList = new Gson().fromJson(bufReader, jsonListType);
             return userList;
         }catch(FileNotFoundException e){
-
+            e.getStackTrace();
+            return userList;
         }
+        
     }
 
-    public boolean isUniqueUser(List<User> userList, String username){
+    public boolean isUniqueUser(List<Users> userList, String username){
         boolean isUnique = true;
-        for(int i = 0; i < userList.length; i++){
+        for(int i = 0; i < userList.size(); i++){
             if(userList.get(i).getUsername().equals(username)){
                 isUnique = false;
             }
@@ -29,35 +34,27 @@ public class RegisterServices{
         return isUnique;
     }
 
-    public boolean RegisterUser(String username, String password, String cpassword){
+    public boolean registerUser(String username, String password){
         boolean successfulRegister = false;
-        List<User> userList = getUsers();
-        if(username.equals('') || password.equals('') || cpassword.equals('') || username.equals(null) ||
-        password.equals(null) || cpassword.equals(null)){
-            successfulRegister = false;
-        }
-        else if(!password.equals(cpassword)){
+        List<Users> userList = getUsers();
+        boolean isUnique = isUniqueUser(userList, username);
+        if(isUnique == false){
             successfulRegister = false;
         }
         else{
-            boolean isUnique = isUniqueUser(userList, username);
-            if(isUnique == false){
+            Users newUser = new Users(username, password);
+            userList.add(newUser);
+
+            try(Writer w = new FileWriter(userFPath)) {
+                Gson gsonWriter = new GsonBuilder().setPrettyPrinting().create();
+                gsonWriter.toJson(userList, w);
+                successfulRegister = true;
+            }
+            catch(IOException e){
+                e.printStackTrace();
                 successfulRegister = false;
             }
-            else{
-                User newUser = new User(username, password);
-                userList.push(newUser);
-
-                try(Writer w = new FileWriter(userFPath)) {
-                    Gson gsonWriter = new GsonBuilder().setPrettyPrinting().create();
-                    gsonWriter.toJson(userList, gsonWriter);
-                    successfulRegister = true;
-                }
-                catch(IOException e){
-    
-                }
-            }
         }
+        return successfulRegister;
     }
-    return successfulRegister;
 }
