@@ -5,11 +5,11 @@ import com.google.gson.reflect.TypeToken;
 
 public class LoginServices {
 	
-	private User user;
+	private User userLoggedIn;
 	private String userFPath;
 	
 	public LoginServices() {
-		user = new User();
+		userLoggedIn = new User();
 		userFPath = "/../client/data/users.json";
 	}
 	
@@ -30,9 +30,25 @@ public class LoginServices {
 		List<String> userList = getUsers();
 		if(userName.equals(null) || password.equals(null) || userName == "" || password == "") {
 			return successfulLogin;
+		} else {
+			for(int i = 0; i < userList.size(); i++) {
+				if((userList.get(i).getUsername().equals(userName)) && (userList.get(i).getPassword().equals(password))) {
+					successfulLogin = true;
+					userLoggedIn.setUsername(userName);
+					userLoggedIn.setPassword(password);
+					return successfulLogin;
+				}
+			}
 		}
-		
 		return successfulLogin;
+	}
+
+	public void setUserLoggedIn(User user) {
+		userLoggedIn = user;
+	}
+
+	public User getUserLoggedIn() {
+		return userLoggedIn;
 	}
 	
 	
