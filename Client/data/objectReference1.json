@@ -1,0 +1,51 @@
+[{
+		"remoteMethod": {
+			"name": "login",
+			"object": "LoginServices",
+			"call-semantics": "at-most-one",
+			"param": {
+				"UserName": "string",
+				"Password": "string"
+			},
+			"return": "String"
+		}
+	},
+	{
+		"remoteMethod": {
+			"name": "registration",
+			"object": "RegistrationServices",
+			"call-semantics": "at-most-one",
+			"param": {
+				"UserName": "string",
+				"Password": "string"
+			},
+			"return": "String"
+		}
+	},
+	{
+		"remoteMethod": {
+			"name": "searchSong",
+			"object": "SearchServices",
+			"call-semantics": "maybe",
+			"param": {
+				"search_song": "string"
+
+			},
+			"return": "String"
+		}
+	},
+	{
+		"remoteMethod": {
+			"name": "getSongContent",
+			"object": "SongServices",
+			"call-semantics": "maybe",
+			"param": {
+				"artist_name": "string",
+				"song_title": "string",
+				"release_id": "long",
+				"artist_hottness": "long"
+			},
+			"return": "String"
+		}
+	}
+]
