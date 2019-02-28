@@ -22,6 +22,9 @@ public class SocketLayer extends Thread{
             DatagramPacket packet = new DatagramPacket(buf, buf.length);
             try{
                 socket.receive(packet);
+
+                //Testing packet data
+                System.out.println(packet);
                 
                 InetAddress address = packet.getAddress();
                 int port = packet.getPort();
