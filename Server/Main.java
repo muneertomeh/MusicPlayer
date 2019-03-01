@@ -1,5 +1,6 @@
 import java.io.IOException;
 import java.io.InputStream;
+import java.net.Socket;
 import java.io.FileReader;
 
 import java.io.FileNotFoundException;
@@ -47,6 +48,9 @@ public class Main {
 
         Main player = new Main();
         player.mp3play(490183L, proxy);
+
+        SocketLayer sl = new SocketLayer();
+        sl.run();
         System.out.println("End of the song");
 
     }

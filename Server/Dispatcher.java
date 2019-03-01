@@ -66,7 +66,7 @@ public class Dispatcher implements DispatcherInterface {
                 jsonReturn.addProperty("error", "Method does not exist");
                 return jsonReturn.toString();
             }
-            // Prepare the  parameters 
+            // Prepare the  parameters
             Class[] types =  method.getParameterTypes();
             Object[] parameter = new Object[types.length];
             String[] strParam = new String[types.length];
