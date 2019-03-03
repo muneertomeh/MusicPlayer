@@ -1,8 +1,8 @@
-let fs = require('fs');
 const electron = require('electron');
 const remote = electron.remote;
 const url = require('url');
 const path = require('path');
+const proxy = require('../web/proxy');
 
 function register() {
     let userName = document.getElementById("UserName").value;
@@ -14,7 +14,8 @@ function register() {
     } else if(password !== cpassword) {
         alert('Passwords must match');
     } else {
-        
+        proxy.synchExecution('registration', [userName, password]);
+        alert('Waiting Server Response');
     }
 
 }
