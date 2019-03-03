@@ -2,7 +2,7 @@
 const { app, BrowserWindow } = require('electron');
 const path = require('path');
 const url = require('url');
-const server = require('./web/socketLayer');
+const {server} = require('./web/socketLayer');
 //If this window object is not created the browser window will be removed automatically by js garbage collector
 let win;
 
@@ -32,7 +32,6 @@ function createWindow() {
 
 //When app is ready run createWindow function asd
 app.on('ready', createWindow);
-server.startServer();
 
 // Quit when all windows are closed unless they are on a MAC(darwin)
 app.on('window-all-closed', () => {

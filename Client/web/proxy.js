@@ -29,7 +29,8 @@ module.exports.synchExecution = function(remoteMethodName, param)
             });
 
             let jsonString = JSON.stringify(jsonRequest);
-            let buf = new Buffer(jsonString);
+            console.log(jsonString);
+            let buf = Buffer.from(jsonString);
 
             server.send(buf, port, 'localhost', (err) => {
                 console.log(err);
