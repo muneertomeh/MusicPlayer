@@ -1,4 +1,3 @@
-let fs = require('fs');
 const electron = require('electron');
 const remote = electron.remote;
 const url = require('url');
@@ -16,6 +15,7 @@ function register() {
         alert('Passwords must match');
     } else {
         proxy.synchExecution('registration', [userName, password]);
+        alert('Waiting Server Response');
     }
 
 }

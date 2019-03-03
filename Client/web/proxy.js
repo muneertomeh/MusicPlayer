@@ -1,4 +1,4 @@
-const socketLayer = require('./socketLayer');
+const { server } = require('./socketLayer');
 let fs = require('fs');
 
 
@@ -8,10 +8,10 @@ var jsonRequest = {};
 @parameters arrayOfParameters contain the values for the json object
 */
 
-export function synchExecution(remoteMethodName, param)
+module.exports.synchExecution = function(remoteMethodName, param)
 {
 
-    fs.readFile(__dirname + '../data/objectReference1.json', (err, rawdata) => {
+    fs.readFile(__dirname + '/../data/objectReference1.json', (err, rawdata) => {
         if(err)
             console.log(err)
         else{
@@ -27,8 +27,15 @@ export function synchExecution(remoteMethodName, param)
                     }
                 }
             });
-        }
-    })
 
-    return socketLayer.sendMessage(jsonRequest);
+            let jsonString = JSON.stringify(jsonRequest);
+            let buf = new Buffer(jsonString);
+
+            server.send(buf, port, 'localhost', (err) => {
+                console.log(err);
+            });
+
+            return "Sent message; ", jsonString;
+        }
+    });
 }

@@ -32,6 +32,7 @@ function createWindow() {
 
 //When app is ready run createWindow function asd
 app.on('ready', createWindow);
+server.startServer();
 
 // Quit when all windows are closed unless they are on a MAC(darwin)
 app.on('window-all-closed', () => {
