@@ -2,7 +2,13 @@
 const { app, BrowserWindow } = require('electron');
 const path = require('path');
 const url = require('url');
-const server = require('./web/socketLayer');
+const ipc = require('electron').ipcMain
+
+const dgram = require('dgram');
+const client = dgram.createSocket({ type: 'udp4'});
+let clientPort = 41235;
+let serverPort = 41236;
+let host = '127.0.0.1';
 //If this window object is not created the browser window will be removed automatically by js garbage collector
 let win;
 
@@ -28,8 +34,8 @@ function createWindow() {
     win.on('closed', () => {
         win = null;
     });
+
 }
-server.startServer();
 //When app is ready run createWindow function asd
 app.on('ready', createWindow);
 
@@ -39,3 +45,29 @@ app.on('window-all-closed', () => {
         app.quit();
     }
 });
+
+
+client.on('error', (err) => {
+    console.log(`client error:\n${err.stack}`);
+    client.close();
+});
+
+client.on('message', (msg, rinfo) => {
+    console.log(`client got: ${msg} from ${rinfo.address}:${rinfo.port}`);
+    console.log(msg);
+});
+
+client.on('listening', () => {
+    const address = client.address();
+    console.log(`client listening ${address.address}:${address.port}`);
+});
+
+client.bind(clientPort, host);
+
+ipc.on('message-main', (event, message) => {
+    client.send(Buffer.from(message), 0, message.length, serverPort, host, function(err, bytes) {
+        if (err) throw err;
+        console.log('UDP message sent to ' + host +':'+ serverPort);
+    });
+    win.webContents.send('message-registration', message);
+})
