@@ -46,7 +46,6 @@ app.on('window-all-closed', () => {
     }
 });
 
-
 client.on('error', (err) => {
     console.log(`client error:\n${err.stack}`);
     client.close();
@@ -54,7 +53,7 @@ client.on('error', (err) => {
 
 client.on('message', (msg, rinfo) => {
     console.log(`client got: ${msg} from ${rinfo.address}:${rinfo.port}`);
-    console.log(msg);
+    win.webContents.send(msg['eventListenerName'], msg['data']);
 });
 
 client.on('listening', () => {
@@ -69,5 +68,4 @@ ipc.on('message-main', (event, message) => {
         if (err) throw err;
         console.log('UDP message sent to ' + host +':'+ serverPort);
     });
-    win.webContents.send('message-registration', message);
-})
+});

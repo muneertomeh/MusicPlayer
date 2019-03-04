@@ -6,7 +6,6 @@ public class SocketLayer extends Thread{
     private boolean running;
     private byte[] buf = new byte[256];
     private int serverPort = 41236;
-    // private InetAddress addr = InetAddress.getByName("127.0.0.1");
 
     
 
