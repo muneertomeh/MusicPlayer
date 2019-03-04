@@ -30,7 +30,7 @@ public class SocketLayer extends Thread{
                 socket.receive(packet);
 
                 //Testing packet data
-                System.out.println(packet);
+                System.out.println(packet.getData());
                 
                 InetAddress address = packet.getAddress();
                 int port = packet.getPort();
