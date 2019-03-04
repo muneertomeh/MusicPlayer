@@ -2,7 +2,7 @@
 const { app, BrowserWindow } = require('electron');
 const path = require('path');
 const url = require('url');
-const {server} = require('./web/socketLayer');
+const server = require('./web/socketLayer');
 //If this window object is not created the browser window will be removed automatically by js garbage collector
 let win;
 
@@ -29,7 +29,7 @@ function createWindow() {
         win = null;
     });
 }
-
+server.startServer();
 //When app is ready run createWindow function asd
 app.on('ready', createWindow);
 

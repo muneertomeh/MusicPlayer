@@ -1,10 +1,11 @@
 const dgram = require('dgram');
-const server = dgram.createSocket({ type: 'udp4', reuseAddr: true });
+const server = dgram.createSocket({ type: 'udp4'});
+const rProxy = require('./reverseProxy');
 
 let port = 41234;
 
 
-// module.exports.startServer = function(){
+module.exports.startServer = function(){
     server.on('error', (err) => {
         console.log(`server error:\n${err.stack}`);
         server.close();
@@ -12,6 +13,7 @@ let port = 41234;
     
     server.on('message', (msg, rinfo) => {
         console.log(`server got: ${msg} from ${rinfo.address}:${rinfo.port}`);
+        rProxy.recieveMessage(msg);
     });
     
     server.on('listening', () => {
@@ -20,8 +22,4 @@ let port = 41234;
     });
     
     server.bind(port);
-// }
-
-module.exports = {
-    Server: server
-};
+}

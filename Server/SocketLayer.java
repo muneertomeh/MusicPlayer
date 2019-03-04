@@ -5,7 +5,7 @@ public class SocketLayer extends Thread{
     private DatagramSocket socket;
     private boolean running;
     private byte[] buf = new byte[256];
-    private int port = 41234;
+    private int port = 41235;
 
     public SocketLayer(){
         try{
@@ -28,7 +28,7 @@ public class SocketLayer extends Thread{
                 
                 InetAddress address = packet.getAddress();
                 int port = packet.getPort();
-                packet = new DatagramPacket(buf, buf.length, address, port);
+                packet = new DatagramPacket(buf, buf.length, address, 41234);
 
                 String received = new String(packet.getData(), 0, packet.getLength());
                 
