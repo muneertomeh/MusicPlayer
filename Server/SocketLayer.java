@@ -5,26 +5,32 @@ public class SocketLayer extends Thread{
     private DatagramSocket socket;
     private boolean running;
     private byte[] buf = new byte[256];
-    private int port = 41234;
+    private int serverPort = 41236;
+    // private InetAddress addr = InetAddress.getByName("127.0.0.1");
+
+    
 
     public SocketLayer(){
         try{
-            socket = new DatagramSocket(port);
+            SocketAddress sockaddr = new InetSocketAddress(InetAddress.getByName("127.0.0.1"), serverPort);
+            socket = new DatagramSocket(sockaddr);
         } catch(SocketException se) {
             System.out.println(se);
+        } catch(UnknownHostException err) {
+            System.out.println(err);
         }
     }
 
     public void run(){
         running = true;
-        System.out.println("Starting up on port; " + port);
+        System.out.println("Starting up on port; " + serverPort);
         while(running){
             DatagramPacket packet = new DatagramPacket(buf, buf.length);
             try{
                 socket.receive(packet);
 
                 //Testing packet data
-                System.out.println(packet);
+                System.out.println(packet.getData());
                 
                 InetAddress address = packet.getAddress();
                 int port = packet.getPort();

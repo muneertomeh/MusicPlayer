@@ -38,20 +38,20 @@ public class Main {
      *  and CECS327InputStream. Proxy is incomplete.
     */
     public static void main(String[] args) {
-        Integer i;
-        Gson gson = new Gson();
-        Dispatcher dispatcher = new Dispatcher();
-        SongDispatcher songDispatcher = new SongDispatcher();
+        // Integer i;
+        // Gson gson = new Gson();
+        // Dispatcher dispatcher = new Dispatcher();
+        // SongDispatcher songDispatcher = new SongDispatcher();
         
-        dispatcher.registerObject(songDispatcher, "SongServices");  
-        ProxyInterface proxy = new Proxy(dispatcher);
+        // dispatcher.registerObject(songDispatcher, "SongServices");  
+        // ProxyInterface proxy = new Proxy(dispatcher);
 
-        Main player = new Main();
-        player.mp3play(490183L, proxy);
+        // Main player = new Main();
+        // player.mp3play(490183L, proxy);
 
         SocketLayer sl = new SocketLayer();
         sl.run();
-        System.out.println("End of the song");
+        // System.out.println("End of the song");
 
     }
  

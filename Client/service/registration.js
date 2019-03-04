@@ -1,8 +1,6 @@
-const electron = require('electron');
-const remote = electron.remote;
+const ipc = require('electron').ipcRenderer;
 const url = require('url');
 const path = require('path');
-const proxy = require('../web/proxy');
 
 function register() {
     let userName = document.getElementById("UserName").value;
@@ -14,8 +12,16 @@ function register() {
     } else if(password !== cpassword) {
         alert('Passwords must match');
     } else {
-        proxy.synchExecution('registration', [userName, password]);
-        alert('Waiting Server Response');
+        ipc.send('message-main', JSON.stringify({
+            'UserName': userName,
+            'Password': password
+        }));
+
+        ipc.once('message-registration', (event, message) => {
+            console.log(message);
+        })
     }
 
+
+    
 }

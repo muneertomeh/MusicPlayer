@@ -1,5 +1,5 @@
-const { server } = require('./socketLayer');
 let fs = require('fs');
+const socketLayerSender = require('../web/socketSend');
 
 
 var jsonRequest = {};
@@ -32,9 +32,7 @@ module.exports.synchExecution = function(remoteMethodName, param)
             console.log(jsonString);
             let buf = Buffer.from(jsonString);
 
-            server.send(buf, port, 'localhost', (err) => {
-                console.log(err);
-            });
+            socketLayerSender.sendMessage(buf);
 
             return "Sent message; ", jsonString;
         }
