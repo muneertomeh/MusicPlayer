@@ -63,6 +63,7 @@ client.on('listening', () => {
 
 client.bind(clientPort, host);
 
+
 ipc.on('message-main', (event, message) => {
     client.send(Buffer.from(message), 0, message.length, serverPort, host, function(err, bytes) {
         if (err) throw err;
