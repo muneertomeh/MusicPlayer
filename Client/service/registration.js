@@ -15,7 +15,7 @@ function register() {
         alert('Passwords must match');
     } else {
         proxy.synchExecution('registration', [userName, password]);
-        alert('Waiting Server Response');
+        //alert('Waiting Server Response');
     }
 
 }

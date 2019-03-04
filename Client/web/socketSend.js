@@ -1,10 +1,10 @@
 const dgram = require('dgram');
-const server = dgram.createSocket({ type: 'udp4'});
-
-let port = 41235;
-
 
 module.exports.sendMessage = function(message){
+    const server = dgram.createSocket({ type: 'udp4'});
+
+    let port = 41235;
+
     server.on('error', (err) => {
         console.log(`server error:\n${err.stack}`);
         server.close();
