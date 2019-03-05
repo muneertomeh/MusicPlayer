@@ -7,7 +7,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class RegisterServices{
-    private String userFPath = "/../server/testusers.json";
+    private String userFPath = "./src/pkg327testing/testusers.json";
+    private String playlistPath = "./src/pkg327testing/testplaylists.json";
 
     public List<Users> getUsers(){
         List<Users> userList = new ArrayList<Users>();
@@ -18,10 +19,24 @@ public class RegisterServices{
             userList = new Gson().fromJson(bufReader, jsonListType);
             return userList;
         }catch(FileNotFoundException e){
-            e.getStackTrace();
+            e.printStackTrace();
             return userList;
         }
         
+    }
+
+    public List<UserPlaylists> getUserPlaylists(){
+        List<UserPlaylists> userPlaylistList = new ArrayList<UserPlaylists>();
+        try{
+            BufferedReader bufReader = new BufferedReader(new FileReader(playlistPath));
+            Type jsonListType = new TypeToken<ArrayList<UserPlaylists>>() {}.getType();
+
+            userPlaylistList = new Gson().fromJson(bufReader, jsonListType);
+            return userPlaylistList;
+        }catch(FileNotFoundException e){
+            e.printStackTrace();
+            return userPlaylistList;
+        }
     }
 
     public boolean isUniqueUser(List<Users> userList, String username){
@@ -32,6 +47,19 @@ public class RegisterServices{
             }
         }
         return isUnique;
+    }
+
+    public void initiateNewUserPlaylist(String username){
+        List<UserPlaylists> userPlaylistList = getUserPlaylists();
+        UserPlaylists newPlaylistList = new UserPlaylists(username);
+        userPlaylistList.add(newPlaylistList);
+        try(Writer w = new FileWriter(playlistPath)) {
+            Gson gsonWriter = new GsonBuilder().setPrettyPrinting().create();
+            gsonWriter.toJson(userPlaylistList, w);
+        }
+        catch(IOException e){
+            e.printStackTrace();
+        }
     }
 
     public boolean registerUser(String username, String password){
@@ -54,6 +82,7 @@ public class RegisterServices{
                 e.printStackTrace();
                 successfulRegister = false;
             }
+            initiateNewUserPlaylist(username);
         }
         return successfulRegister;
     }
