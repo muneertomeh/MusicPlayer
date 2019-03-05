@@ -1,27 +1,32 @@
-const ipc = require('electron').ipcRenderer;
+const electron = require('electron');
+const remote = electron.remote;
 const url = require('url');
 const path = require('path');
+const proxy = require('../web/proxy');
+
 
 function register() {
-    let userName = document.getElementById("UserName").value;
+    let username = document.getElementById("UserName").value;
     let password = document.getElementById("Password").value;
     let cpassword = document.getElementById("CPassword").value;
 
-    if(password == '' || userName == '' || cpassword == '' || password == null || userName == null || cpassword == null) {
+    if(password == '' || username == '' || cpassword == '' || password == null || username == null || cpassword == null) {
         alert('Must fill out all fields to register');
     } else if(password !== cpassword) {
         alert('Passwords must match');
     } else {
-        ipc.send('message-main', JSON.stringify({
-            'UserName': userName,
-            'Password': password
-        }));
+        proxy.synchExecution('registration', [username, password]);
 
         ipc.once('message-registration', (event, message) => {
-            console.log(message);
-        })
+            if(message == true){
+                localStorage.setItem('UserName', username);
+                let win = remote.getCurrentWindow();
+                win.loadURL(url.format({
+                    pathname: path.join(__dirname, '/../view/dashboard.html'),
+                    protocol: 'file',
+                    slashes: true
+                }));
+            }
+        });
     }
-
-
-    
 }

@@ -1,5 +1,6 @@
 let fs = require('fs');
-const socketLayerSender = require('../web/socketSend');
+const ipc = require('electron').ipcRenderer;
+
 
 
 var jsonRequest = {};
@@ -28,13 +29,7 @@ module.exports.synchExecution = function(remoteMethodName, param)
                 }
             });
 
-            let jsonString = JSON.stringify(jsonRequest);
-            console.log(jsonString);
-            let buf = Buffer.from(jsonString);
-
-            socketLayerSender.sendMessage(buf);
-
-            return "Sent message; ", jsonString;
+            ipc.send('message-main', JSON.stringify(jsonRequest));
         }
     });
 }
