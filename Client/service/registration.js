@@ -3,6 +3,7 @@ const remote = electron.remote;
 const url = require('url');
 const path = require('path');
 const proxy = require('../web/proxy');
+const ipc = require('electron').ipcRenderer;
 
 
 function register() {
