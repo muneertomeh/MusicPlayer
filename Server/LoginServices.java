@@ -5,16 +5,16 @@ import com.google.gson.reflect.TypeToken;
 
 public class LoginServices {
 	
-	private User userLoggedIn;
-	private String userFPath;
+	private String eventListenerName;
+	private UserPlaylists data;
 	
 	public LoginServices() {
-		userLoggedIn = new Users();
-		userFPath = "/../server/testusers.json";
+		eventListenerName = "messageLogin";
 	}
 	
 	public List<Users> getUsers() {
 		List<Users> userList = new ArrayList<Users>();
+		String userFPath = "/../server/testusers.json";
 		try {
 			BufferedReader bufReader = new BufferedReader(new FileReader(userFPath));
 			Type jsonListType = new TypeToken<List<Users>>() {}.getType();
@@ -27,32 +27,24 @@ public class LoginServices {
         }
 	}
 	
-	public boolean Login(String username, String password) {
-		boolean successfulLogin = false;
+	public String Login(String username, String password) {
+		LoginServices login = new LoginServices();
 		List<Users> userList = getUsers();
+		Gson g = new Gson();
+		String JSONoutput = new String();
+
 		if(username.equals(null) || password.equals(null) || username == "" || password == "") {
-			return successfulLogin;
+			return JSONoutput;
 		} else {
 			for(int i = 0; i < userList.size(); i++) {
 				if((userList.get(i).getUsername().equals(username)) && (userList.get(i).getPassword().equals(password))) {
-					successfulLogin = true;
-					userLoggedIn.username = username;
-					userLoggedIn.password = password;
-					return successfulLogin;
+					data = new UserPlaylists(username);
+					JSONoutput = g.toJson(this);
+					// JSONoutput = "{\"eventListenerName\":\"" + eventListenerName + "\",\"data\": " + "\"success\":true,\"username\":\"" + username + "\",\"password\":\"" + password + "\",";
+					return JSONoutput;
 				}
 			}
 		}
-		return successfulLogin;
+		return JSONoutput;
 	}
-
-	public void setUserLoggedIn(Users user) {
-		userLoggedIn = user;
-	}
-
-	public Users getUserLoggedIn() {
-		return userLoggedIn;
-	}
-	
-	
-
 }
