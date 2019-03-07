@@ -8,7 +8,7 @@ import java.util.Iterator;
 import java.util.List;
 
 public class PlaylistServices{
-    private String playlistPath = "./src/pkg327testing/testplaylists.json";
+    private String playlistPath = "../Server/Test/testplaylists.json";
     private ArrayList<Songs> songsToAdd = new ArrayList<Songs>();
     private Playlists currentPlaylist;
 

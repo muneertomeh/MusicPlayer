@@ -14,7 +14,7 @@ public class LoginServices {
 	
 	public List<Users> getUsers() {
 		List<Users> userList = new ArrayList<Users>();
-		String userFPath = "/../server/testusers.json";
+		String userFPath = "/../Server/Test/TestUsers.json";
 		try {
 			BufferedReader bufReader = new BufferedReader(new FileReader(userFPath));
 			Type jsonListType = new TypeToken<List<Users>>() {}.getType();
