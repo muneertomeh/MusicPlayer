@@ -1,6 +1,7 @@
 import java.io.*;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
+import com.google.gson.JsonObject;
 import com.google.gson.reflect.TypeToken;
 import java.lang.reflect.Type;
 import java.util.ArrayList;
@@ -62,12 +63,21 @@ public class RegisterServices{
         }
     }
 
-    public boolean registerUser(String username, String password){
+    public String registerUser(String username, String password){
         boolean successfulRegister = false;
         List<Users> userList = getUsers();
         boolean isUnique = isUniqueUser(userList, username);
+        
+        JsonObject responseObject = new JsonObject();
+        responseObject.addProperty("eventListenerName", "message-registration");
+        
+        JsonObject data = new JsonObject();
+        String stringifiedResponse;
         if(isUnique == false){
             successfulRegister = false;
+            data.addProperty("success", successfulRegister);
+            responseObject.add("data", data);
+            stringifiedResponse = responseObject.toString();
         }
         else{
             Users newUser = new Users(username, password);
@@ -77,13 +87,23 @@ public class RegisterServices{
                 Gson gsonWriter = new GsonBuilder().setPrettyPrinting().create();
                 gsonWriter.toJson(userList, w);
                 successfulRegister = true;
+                
+                responseObject.addProperty("eventListenerName", "message-registration");
+                data.addProperty("success", successfulRegister);
+                data.addProperty("UserName", username);
+                data.addProperty("Password", password);
+                responseObject.add("data", data);
+                stringifiedResponse = responseObject.toString();
             }
             catch(IOException e){
                 e.printStackTrace();
                 successfulRegister = false;
+                data.addProperty("success", successfulRegister);
+                responseObject.add("data", data);
+                stringifiedResponse = responseObject.toString();
             }
             initiateNewUserPlaylist(username);
         }
-        return successfulRegister;
+        return stringifiedResponse;
     }
 }
