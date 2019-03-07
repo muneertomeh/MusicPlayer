@@ -2,16 +2,14 @@
     {
         "eventListenerName": "message-registration",
         "data": {
-            "success": true,
-            "user-playlists": {}
+            "success": true
         }
     },
 
     {
         "eventListenerName": "message-login",
         "data": {
-            "success": true,
-            "user-playlists": {}
+            "success": true
         }
     }
 ]
