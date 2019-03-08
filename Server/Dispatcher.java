@@ -28,6 +28,7 @@ public class Dispatcher implements DispatcherInterface {
 
     public Dispatcher()
     {
+    	//TODO Initalize this with all methods and object pairs vi ListOfObjects.registerObject(...);
         ListOfObjects = new HashMap<String, Object>();
     }
     

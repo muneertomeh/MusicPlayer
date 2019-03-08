@@ -6,7 +6,7 @@ public class SocketLayer extends Thread{
     private boolean running;
     private byte[] buf = new byte[256];
     private int serverPort = 41236;
-
+    private Dispatcher dispatcher;
     
 
     public SocketLayer(){
@@ -18,6 +18,7 @@ public class SocketLayer extends Thread{
         } catch(UnknownHostException err) {
             System.out.println(err);
         }
+        dispatcher = new Dispatcher();
     }
 
     public void run(){
@@ -36,6 +37,7 @@ public class SocketLayer extends Thread{
                 packet = new DatagramPacket(buf, buf.length, address, port);
 
                 String received = new String(packet.getData(), 0, packet.getLength());
+                dispatcher.dispatch(received);
                 
                 if (received.equals("end")) {
                     running = false;
