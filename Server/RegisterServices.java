@@ -88,7 +88,6 @@ public class RegisterServices{
                 gsonWriter.toJson(userList, w);
                 successfulRegister = true;
                 
-                responseObject.addProperty("eventListenerName", "message-registration");
                 data.addProperty("success", successfulRegister);
                 data.addProperty("UserName", username);
                 data.addProperty("Password", password);
