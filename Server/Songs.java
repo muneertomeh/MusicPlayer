@@ -1,25 +1,16 @@
 import java.io.*;
 
 public class Songs {
-    private String SongTitle;
-    private String SongArtist;
-    private String MusicFile;
 
-    public Songs(String SongTitle, String SongArtist, String MusicFile){
-        this.SongTitle = SongTitle;
-        this.SongArtist = SongArtist;
-        this.MusicFile = MusicFile;
+    Release release;
+    Artist artist;
+    Song song;
+
+    public Songs() {
+        release = new Release();
+        artist = new Artist();
+        song = new Song();
     }
+     
     
-    public String getSongTitle(){
-        return SongTitle;
-    }
-    
-    public String getSongArtist(){
-        return SongArtist;
-    }
-    
-    public String getMusicFile(){
-        return MusicFile;
-    }
 }
