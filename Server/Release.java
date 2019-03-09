@@ -10,4 +10,8 @@ public class Release {
     }
 
     public Release() {}
+
+    public double getID() {
+        return id;
+    }
 }
