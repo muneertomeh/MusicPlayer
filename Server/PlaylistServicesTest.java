@@ -1,6 +1,6 @@
 import java.util.ArrayList;
 
-public class Main {
+public class PlaylistServicesTest {
 
     public static void main(String[] args) {
         PlaylistServices ps = new PlaylistServices();
