@@ -4,6 +4,9 @@ import java.io.FileReader;
 import java.io.FileInputStream;
 import java.io.File;
 import java.util.Base64;
+
+import com.google.gson.Gson;
+
 import java.io.FileNotFoundException;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
