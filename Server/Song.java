@@ -1,29 +1,29 @@
 import java.io.*;
 
 public class Song {
-    private float key;
-    private double mode_confidence; 
-    private double artist_mbtags_count;
-    private double key_confidence;
-    private double tatums_start;
-    private int year;
-    private double duration;
-    private double hotttnesss;
-    private double beats_start;
-    private double time_signature_confidence;
-    private String title; 
-    private double bars_confidence;
-    private String id;
-    private double bars_start;
-    private String artist_mbtags; 
-    private double start_of_fade_out;
-    private double tempo; 
-    private double end_of_fade_in;
-    private double beats_confidence;
-    private double tatums_confidence;
-    private double mode;
-    private double time_signature;
-    private double loudness;
+    public float key;
+    public double mode_confidence; 
+    public double artist_mbtags_count;
+    public double key_confidence;
+    public double tatums_start;
+    public int year;
+    public double duration;
+    public double hotttnesss;
+    public double beats_start;
+    public double time_signature_confidence;
+    public String title; 
+    public double bars_confidence;
+    public String id;
+    public double bars_start;
+    public String artist_mbtags; 
+    public double start_of_fade_out;
+    public double tempo; 
+    public double end_of_fade_in;
+    public double beats_confidence;
+    public double tatums_confidence;
+    public double mode;
+    public double time_signature;
+    public double loudness;
 
     public Song(float k, double m, double a, double key, double tat, int y, double d, double h,
     double b, double time, String ttl, double bars, String i, double bs, String am, double sf, double tem,
