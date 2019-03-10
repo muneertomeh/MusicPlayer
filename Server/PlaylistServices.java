@@ -1,19 +1,20 @@
 import java.io.*;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
+import com.google.gson.JsonArray;
+import com.google.gson.JsonObject;
 import com.google.gson.reflect.TypeToken;
 import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.Iterator;
-import java.util.List;
 
 public class PlaylistServices{
-    private String playlistPath = "../Server/Test/testplaylists.json";
+    private String playlistPath = "../Server/testplaylists.json";
     private ArrayList<Songs> songsToAdd = new ArrayList<Songs>();
     private Playlists currentPlaylist;
 
     //Internal
-    public List<Songs> getAPlaylistsSongs(Playlists playlistAffected){
+    public ArrayList<Songs> getAPlaylistsSongs(Playlists playlistAffected){
         ArrayList<Songs> playlistsSongs = playlistAffected.getPlaylistsSongs();
         songsToAdd.addAll(playlistsSongs);
 
@@ -31,6 +32,7 @@ public class PlaylistServices{
             }
         }
         currentPlaylist = playlist;
+        songsToAdd = getAPlaylistsSongs(currentPlaylist);
         return currentPlaylist;
     }
     
@@ -369,6 +371,7 @@ public class PlaylistServices{
                 stringifiedResponse = responseObject.toString();
                 
                 songsToAdd.clear();
+                currentPlaylist = null;
             }
             catch(IOException e){
                 e.printStackTrace();
@@ -382,4 +385,6 @@ public class PlaylistServices{
         }
         return stringifiedResponse;
     }
+
+
 }
