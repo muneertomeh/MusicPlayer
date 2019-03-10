@@ -13,7 +13,7 @@
 	{
 		"remoteMethod": {
 			"name": "registerUser",
-			"object": "RegisterServices",
+			"object": "RegistrationServices",
 			"call-semantics": "at-most-one",
 			"param": {
 				"UserName": "string",
