@@ -16,7 +16,7 @@ function register() {
     } else if(password !== cpassword) {
         alert('Passwords must match');
     } else {
-        proxy.synchExecution('registration', [username, password]);
+        proxy.synchExecution('registerUser', [username, password]);
 
         ipc.once('message-registration', (event, message) => {
             if(message == true){

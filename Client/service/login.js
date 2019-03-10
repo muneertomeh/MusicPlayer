@@ -13,7 +13,7 @@ function login() {
     if(username == '' || password == '' || username == null || password == null) {
         alert('Please fill in all required fields');
     } else {
-        proxy.synchExecution('login', [username, password]);
+        proxy.synchExecution('Login', [username, password]);
 
         ipc.once('message-login', (event, message) => {
             if(message == true){

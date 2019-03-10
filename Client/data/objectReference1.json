@@ -1,6 +1,6 @@
 [{
 		"remoteMethod": {
-			"name": "login",
+			"name": "Login",
 			"object": "LoginServices",
 			"call-semantics": "at-most-one",
 			"param": {
@@ -12,8 +12,8 @@
 	},
 	{
 		"remoteMethod": {
-			"name": "registration",
-			"object": "RegistrationServices",
+			"name": "registerUser",
+			"object": "RegisterServices",
 			"call-semantics": "at-most-one",
 			"param": {
 				"UserName": "string",

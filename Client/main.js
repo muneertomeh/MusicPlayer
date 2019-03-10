@@ -53,7 +53,7 @@ client.on('error', (err) => {
 
 client.on('message', (msg, rinfo) => {
     console.log(`client got: ${msg} from ${rinfo.address}:${rinfo.port}`);
-    win.webContents.send(msg['eventListenerName'], msg['data']);
+    // win.webContents.send(msg['eventListenerName'], msg['data']);
 });
 
 client.on('listening', () => {
