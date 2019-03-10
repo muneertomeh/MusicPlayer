@@ -6,24 +6,144 @@
         "PlaylistTitle": "Test Playlist",
         "Songs": [
           {
-            "SongTitle": "As Nice As I Can Be",
-            "SongArtist": "Eagles Of Death Metal",
-            "MusicFile": "../mp3/bensound-sunny.mp3"
+            "release": {
+              "id": 0.0
+            },
+            "artist": {
+              "terms_freq": 0.0,
+              "familiarity": 0.0,
+              "longitude": 0.0,
+              "latitude": 0.0,
+              "hotttnesss": 0.0
+            },
+            "song": {
+              "key": 0.0,
+              "mode_confidence": 0.0,
+              "artist_mbtags_count": 0.0,
+              "key_confidence": 0.0,
+              "tatums_start": 0.0,
+              "year": 0,
+              "duration": 0.0,
+              "hotttnesss": 0.0,
+              "beats_start": 0.0,
+              "time_signature_confidence": 0.0,
+              "bars_confidence": 0.0,
+              "bars_start": 0.0,
+              "start_of_fade_out": 0.0,
+              "tempo": 0.0,
+              "end_of_fade_in": 0.0,
+              "beats_confidence": 0.0,
+              "tatums_confidence": 0.0,
+              "mode": 0.0,
+              "time_signature": 0.0,
+              "loudness": 0.0
+            },
+            "file": ""
           },
           {
-            "SongTitle": "As We Lay",
-            "SongArtist": "Fiona",
-            "MusicFile": "../mp3/bensound-sunny.mp3"
+            "release": {
+              "id": 0.0
+            },
+            "artist": {
+              "terms_freq": 0.0,
+              "familiarity": 0.0,
+              "longitude": 0.0,
+              "latitude": 0.0,
+              "hotttnesss": 0.0
+            },
+            "song": {
+              "key": 0.0,
+              "mode_confidence": 0.0,
+              "artist_mbtags_count": 0.0,
+              "key_confidence": 0.0,
+              "tatums_start": 0.0,
+              "year": 0,
+              "duration": 0.0,
+              "hotttnesss": 0.0,
+              "beats_start": 0.0,
+              "time_signature_confidence": 0.0,
+              "bars_confidence": 0.0,
+              "bars_start": 0.0,
+              "start_of_fade_out": 0.0,
+              "tempo": 0.0,
+              "end_of_fade_in": 0.0,
+              "beats_confidence": 0.0,
+              "tatums_confidence": 0.0,
+              "mode": 0.0,
+              "time_signature": 0.0,
+              "loudness": 0.0
+            },
+            "file": ""
           },
           {
-            "SongTitle": "Wildflower",
-            "SongArtist": "Bon Jovi",
-            "MusicFile": "../mp3/bensound-betterdays.mp3"
+            "release": {
+              "id": 0.0
+            },
+            "artist": {
+              "terms_freq": 0.0,
+              "familiarity": 0.0,
+              "longitude": 0.0,
+              "latitude": 0.0,
+              "hotttnesss": 0.0
+            },
+            "song": {
+              "key": 0.0,
+              "mode_confidence": 0.0,
+              "artist_mbtags_count": 0.0,
+              "key_confidence": 0.0,
+              "tatums_start": 0.0,
+              "year": 0,
+              "duration": 0.0,
+              "hotttnesss": 0.0,
+              "beats_start": 0.0,
+              "time_signature_confidence": 0.0,
+              "bars_confidence": 0.0,
+              "bars_start": 0.0,
+              "start_of_fade_out": 0.0,
+              "tempo": 0.0,
+              "end_of_fade_in": 0.0,
+              "beats_confidence": 0.0,
+              "tatums_confidence": 0.0,
+              "mode": 0.0,
+              "time_signature": 0.0,
+              "loudness": 0.0
+            },
+            "file": ""
           },
           {
-            "SongTitle": "Wildflowers (Album Version)",
-            "SongArtist": "Tom Petty",
-            "MusicFile": "../mp3/bensound-betterdays.mp3"
+            "release": {
+              "id": 0.0
+            },
+            "artist": {
+              "terms_freq": 0.0,
+              "familiarity": 0.0,
+              "longitude": 0.0,
+              "latitude": 0.0,
+              "hotttnesss": 0.0
+            },
+            "song": {
+              "key": 0.0,
+              "mode_confidence": 0.0,
+              "artist_mbtags_count": 0.0,
+              "key_confidence": 0.0,
+              "tatums_start": 0.0,
+              "year": 0,
+              "duration": 0.0,
+              "hotttnesss": 0.0,
+              "beats_start": 0.0,
+              "time_signature_confidence": 0.0,
+              "bars_confidence": 0.0,
+              "bars_start": 0.0,
+              "start_of_fade_out": 0.0,
+              "tempo": 0.0,
+              "end_of_fade_in": 0.0,
+              "beats_confidence": 0.0,
+              "tatums_confidence": 0.0,
+              "mode": 0.0,
+              "time_signature": 0.0,
+              "loudness": 0.0
+            },
+            "file": ""
           }
         ]
       }
@@ -36,19 +156,109 @@
         "PlaylistTitle": "The Bleh",
         "Songs": [
           {
-            "SongTitle": "As My Fire Flies",
-            "SongArtist": "Pat Travers",
-            "MusicFile": "../mp3/bensound-energy.mp3"
+            "release": {
+              "id": 0.0
+            },
+            "artist": {
+              "terms_freq": 0.0,
+              "familiarity": 0.0,
+              "longitude": 0.0,
+              "latitude": 0.0,
+              "hotttnesss": 0.0
+            },
+            "song": {
+              "key": 0.0,
+              "mode_confidence": 0.0,
+              "artist_mbtags_count": 0.0,
+              "key_confidence": 0.0,
+              "tatums_start": 0.0,
+              "year": 0,
+              "duration": 0.0,
+              "hotttnesss": 0.0,
+              "beats_start": 0.0,
+              "time_signature_confidence": 0.0,
+              "bars_confidence": 0.0,
+              "bars_start": 0.0,
+              "start_of_fade_out": 0.0,
+              "tempo": 0.0,
+              "end_of_fade_in": 0.0,
+              "beats_confidence": 0.0,
+              "tatums_confidence": 0.0,
+              "mode": 0.0,
+              "time_signature": 0.0,
+              "loudness": 0.0
+            },
+            "file": ""
           },
           {
-            "SongTitle": "As Mist Lay Silent Beneath",
-            "SongArtist": "Keep Of Kalessin",
-            "MusicFile": "../mp3/bensound-epic.mp3"
+            "release": {
+              "id": 0.0
+            },
+            "artist": {
+              "terms_freq": 0.0,
+              "familiarity": 0.0,
+              "longitude": 0.0,
+              "latitude": 0.0,
+              "hotttnesss": 0.0
+            },
+            "song": {
+              "key": 0.0,
+              "mode_confidence": 0.0,
+              "artist_mbtags_count": 0.0,
+              "key_confidence": 0.0,
+              "tatums_start": 0.0,
+              "year": 0,
+              "duration": 0.0,
+              "hotttnesss": 0.0,
+              "beats_start": 0.0,
+              "time_signature_confidence": 0.0,
+              "bars_confidence": 0.0,
+              "bars_start": 0.0,
+              "start_of_fade_out": 0.0,
+              "tempo": 0.0,
+              "end_of_fade_in": 0.0,
+              "beats_confidence": 0.0,
+              "tatums_confidence": 0.0,
+              "mode": 0.0,
+              "time_signature": 0.0,
+              "loudness": 0.0
+            },
+            "file": ""
           },
           {
-            "SongTitle": "As The Hog Pisseth",
-            "SongArtist": "All Leather",
-            "MusicFile": "../mp3/bensound-energy.mp3"
+            "release": {
+              "id": 0.0
+            },
+            "artist": {
+              "terms_freq": 0.0,
+              "familiarity": 0.0,
+              "longitude": 0.0,
+              "latitude": 0.0,
+              "hotttnesss": 0.0
+            },
+            "song": {
+              "key": 0.0,
+              "mode_confidence": 0.0,
+              "artist_mbtags_count": 0.0,
+              "key_confidence": 0.0,
+              "tatums_start": 0.0,
+              "year": 0,
+              "duration": 0.0,
+              "hotttnesss": 0.0,
+              "beats_start": 0.0,
+              "time_signature_confidence": 0.0,
+              "bars_confidence": 0.0,
+              "bars_start": 0.0,
+              "start_of_fade_out": 0.0,
+              "tempo": 0.0,
+              "end_of_fade_in": 0.0,
+              "beats_confidence": 0.0,
+              "tatums_confidence": 0.0,
+              "mode": 0.0,
+              "time_signature": 0.0,
+              "loudness": 0.0
+            },
+            "file": ""
           }
         ]
       }
@@ -61,24 +271,144 @@
         "PlaylistTitle": "The First Playlist",
         "Songs": [
           {
-            "SongTitle": "La Culpa",
-            "SongArtist": "Andy Andy",
-            "MusicFile": "../mp3/bensound-sunny.mp3"
+            "release": {
+              "id": 0.0
+            },
+            "artist": {
+              "terms_freq": 0.0,
+              "familiarity": 0.0,
+              "longitude": 0.0,
+              "latitude": 0.0,
+              "hotttnesss": 0.0
+            },
+            "song": {
+              "key": 0.0,
+              "mode_confidence": 0.0,
+              "artist_mbtags_count": 0.0,
+              "key_confidence": 0.0,
+              "tatums_start": 0.0,
+              "year": 0,
+              "duration": 0.0,
+              "hotttnesss": 0.0,
+              "beats_start": 0.0,
+              "time_signature_confidence": 0.0,
+              "bars_confidence": 0.0,
+              "bars_start": 0.0,
+              "start_of_fade_out": 0.0,
+              "tempo": 0.0,
+              "end_of_fade_in": 0.0,
+              "beats_confidence": 0.0,
+              "tatums_confidence": 0.0,
+              "mode": 0.0,
+              "time_signature": 0.0,
+              "loudness": 0.0
+            },
+            "file": ""
           },
           {
-            "SongTitle": "Immigrant Song (Album Version)",
-            "SongArtist": "Led Zeppelin",
-            "MusicFile": "../mp3/bensound-betterdays.mp3"
+            "release": {
+              "id": 0.0
+            },
+            "artist": {
+              "terms_freq": 0.0,
+              "familiarity": 0.0,
+              "longitude": 0.0,
+              "latitude": 0.0,
+              "hotttnesss": 0.0
+            },
+            "song": {
+              "key": 0.0,
+              "mode_confidence": 0.0,
+              "artist_mbtags_count": 0.0,
+              "key_confidence": 0.0,
+              "tatums_start": 0.0,
+              "year": 0,
+              "duration": 0.0,
+              "hotttnesss": 0.0,
+              "beats_start": 0.0,
+              "time_signature_confidence": 0.0,
+              "bars_confidence": 0.0,
+              "bars_start": 0.0,
+              "start_of_fade_out": 0.0,
+              "tempo": 0.0,
+              "end_of_fade_in": 0.0,
+              "beats_confidence": 0.0,
+              "tatums_confidence": 0.0,
+              "mode": 0.0,
+              "time_signature": 0.0,
+              "loudness": 0.0
+            },
+            "file": ""
           },
           {
-            "SongTitle": "This Christmas (LP Version)",
-            "SongArtist": "Donny Hathaway",
-            "MusicFile": "../mp3/bensound-energy.mp3"
+            "release": {
+              "id": 0.0
+            },
+            "artist": {
+              "terms_freq": 0.0,
+              "familiarity": 0.0,
+              "longitude": 0.0,
+              "latitude": 0.0,
+              "hotttnesss": 0.0
+            },
+            "song": {
+              "key": 0.0,
+              "mode_confidence": 0.0,
+              "artist_mbtags_count": 0.0,
+              "key_confidence": 0.0,
+              "tatums_start": 0.0,
+              "year": 0,
+              "duration": 0.0,
+              "hotttnesss": 0.0,
+              "beats_start": 0.0,
+              "time_signature_confidence": 0.0,
+              "bars_confidence": 0.0,
+              "bars_start": 0.0,
+              "start_of_fade_out": 0.0,
+              "tempo": 0.0,
+              "end_of_fade_in": 0.0,
+              "beats_confidence": 0.0,
+              "tatums_confidence": 0.0,
+              "mode": 0.0,
+              "time_signature": 0.0,
+              "loudness": 0.0
+            },
+            "file": ""
           },
           {
-            "SongTitle": "Nothin\u0027 On You [feat. Bruno Mars] (Album Version)",
-            "SongArtist": "B.o.B",
-            "MusicFile": "../mp3/bensound-betterdays.mp3"
+            "release": {
+              "id": 0.0
+            },
+            "artist": {
+              "terms_freq": 0.0,
+              "familiarity": 0.0,
+              "longitude": 0.0,
+              "latitude": 0.0,
+              "hotttnesss": 0.0
+            },
+            "song": {
+              "key": 0.0,
+              "mode_confidence": 0.0,
+              "artist_mbtags_count": 0.0,
+              "key_confidence": 0.0,
+              "tatums_start": 0.0,
+              "year": 0,
+              "duration": 0.0,
+              "hotttnesss": 0.0,
+              "beats_start": 0.0,
+              "time_signature_confidence": 0.0,
+              "bars_confidence": 0.0,
+              "bars_start": 0.0,
+              "start_of_fade_out": 0.0,
+              "tempo": 0.0,
+              "end_of_fade_in": 0.0,
+              "beats_confidence": 0.0,
+              "tatums_confidence": 0.0,
+              "mode": 0.0,
+              "time_signature": 0.0,
+              "loudness": 0.0
+            },
+            "file": ""
           }
         ]
       }
@@ -94,6 +424,54 @@
   },
   {
     "UserName": "abc12345678910",
+    "Playlists": []
+  },
+  {
+    "UserName": "blue",
+    "Playlists": []
+  },
+  {
+    "UserName": "t",
+    "Playlists": []
+  },
+  {
+    "UserName": "y",
+    "Playlists": []
+  },
+  {
+    "UserName": "j",
+    "Playlists": []
+  },
+  {
+    "UserName": "x",
+    "Playlists": []
+  },
+  {
+    "UserName": "x",
+    "Playlists": []
+  },
+  {
+    "UserName": "as",
+    "Playlists": []
+  },
+  {
+    "UserName": "qw",
+    "Playlists": []
+  },
+  {
+    "UserName": "re",
+    "Playlists": []
+  },
+  {
+    "UserName": "gh",
+    "Playlists": []
+  },
+  {
+    "UserName": "you",
+    "Playlists": []
+  },
+  {
+    "UserName": "rt",
     "Playlists": []
   }
 ]

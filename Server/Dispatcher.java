@@ -7,6 +7,8 @@
 */
 
 import java.util.*;
+import java.io.Reader;
+import java.io.StringReader;
 import java.lang.reflect.*;
 import java.nio.file.Files;
 import java.nio.file.Paths;
@@ -16,7 +18,8 @@ import com.google.gson.JsonObject;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonParser;
-
+import com.google.gson.stream.JsonReader;
+import com.google.gson.*;
 
 
 
@@ -71,17 +74,32 @@ public class Dispatcher implements DispatcherInterface {
         /*this is gonna convert a string Request
         to json
         */
-        JsonObject jsonRequest = parser.parse(request).getAsJsonObject();
+       
+        //JsonElement jelement = new JsonParser().parse(request.trim());
+        //JsonObject  jsonRequest = jelement.getAsJsonObject();
+        
         /*
-         * To access an value pair within our json object us 
-         * jsonObject.getAsJsonObject("remoteMethod").get(whatever value pair).getAsString()
+         * This handles the error when the user tryies to register
+         * then login. The problem is the addition rn\":\"String\"}}"
+         * at the end of the request. This makes the request an invalid json 
+         * string
          */
-       // System.out.println(jsonRequest.getAsJsonObject("remoteMethod").get("object").getAsString());
+    	if(request.contains("\"return\":\"String\"}}rn\":\"String\"}}"))
+    	{
+    		
+    		request= request.replace("\"return\":\"String\"}}rn\":\"String\"}}","\"return\":\"String\"}}");
+    	}
+    	
+        JsonObject jsonRequest = parser.parse(request.trim()).getAsJsonObject();
+      
         
         
         try {
             // Obtains the value pair object from the json object remoteMethod
-           Object object = ListOfObjects.get(jsonRequest.getAsJsonObject("remoteMethod").get("object").getAsString());
+         
+        	
+        	Object object = ListOfObjects.get(jsonRequest.getAsJsonObject("remoteMethod").get("object").getAsString());
+        
            Method[] methods = object.getClass().getMethods();
            Method method = null;
            
@@ -99,7 +117,7 @@ public class Dispatcher implements DispatcherInterface {
             for (int i=0; i<methods.length; i++)
             {
             	
-                if (methods[i].getName().equals(jsonRequest.getAsJsonObject("remoteMethod").get("name").getAsString()))
+                if (methods[i].getName().contains(jsonRequest.getAsJsonObject("remoteMethod").get("name").getAsString()))
                     method = methods[i];
             }
             if (method == null)

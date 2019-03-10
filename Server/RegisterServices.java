@@ -7,9 +7,11 @@ import com.google.gson.reflect.TypeToken;
 import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.List;
+
 public class RegisterServices{
 	private String userFPath = "D:\\CSULB\\presemt\\327\\MusicPlayer\\Server\\testUsers.json";
 	private String playlistPath = "D:\\CSULB\\presemt\\327\\MusicPlayer\\Server\\testplaylists.json";
+	
     public List<Users> getUsers(){
         List<Users> userList = new ArrayList<Users>();
         try{
@@ -93,7 +95,7 @@ public class RegisterServices{
                 responseObject.add("data", data);
                 stringifiedResponse = responseObject.toString();
             }
-            initiateNewUserPlaylist(username);
+           initiateNewUserPlaylist(username);
         }
         return stringifiedResponse;
     }
