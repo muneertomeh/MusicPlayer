@@ -37,7 +37,10 @@ public class SocketLayer extends Thread{
                 packet = new DatagramPacket(buf, buf.length, address, port);
 
                 String received = new String(packet.getData(), 0, packet.getLength());
-                dispatcher.dispatch(received);
+                System.out.println("Request:\n\n" + received);
+                String response = dispatcher.dispatch(received);
+                
+                System.out.println("Response from dispatcher: \n\n" + response);
                 
                 if (received.equals("end")) {
                     running = false;
