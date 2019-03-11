@@ -2,7 +2,6 @@
 **/node_modules/**
 *.class
 *target*
-*.jar
 *.war
 *.ear
 *.class
