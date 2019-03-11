@@ -177,8 +177,7 @@ public class Dispatcher implements DispatcherInterface {
                 }
             	JsonObject convertToJson = parser.parse(ret.trim()).getAsJsonObject();
             	jsonReturn.add("ret", convertToJson);
-              
-
+                System.out.println(jsonReturn);
         }
         catch (InvocationTargetException | IllegalAccessException e)
         {
