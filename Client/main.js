@@ -52,8 +52,13 @@ client.on('error', (err) => {
 });
 
 client.on('message', (msg, rinfo) => {
-    console.log(`client got: ${msg} from ${rinfo.address}:${rinfo.port}`);
-    // win.webContents.send(msg['eventListenerName'], msg['data']);
+    let response = msg.toString('utf-8').replace(/\\/g, "");
+    console.log("Client got:\n\n",response);
+    let jsonResponse = JSON.parse(response);
+    console.log('\n\n',jsonResponse);
+    if(jsonResponse['remoteMethod'] != null)
+        console.log("working/n", jsonResponse);
+    // win.webContents.send(msg.toString('utf-8')['eventListenerName'], msg['data']);
 });
 
 client.on('listening', () => {
@@ -65,6 +70,7 @@ client.bind(clientPort, host);
 
 
 ipc.on('message-main', (event, message) => {
+    console.log('Message Sent:\n\n', message);
     client.send(Buffer.from(message), 0, message.length, serverPort, host, function(err, bytes) {
         if (err) throw err;
         console.log('UDP message sent to ' + host +':'+ serverPort);

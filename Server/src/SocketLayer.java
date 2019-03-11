@@ -28,25 +28,20 @@ public class SocketLayer extends Thread{
             DatagramPacket packet = new DatagramPacket(buf, buf.length);
             try{
                 socket.receive(packet);
-
-                //Testing packet data
-                System.out.println(packet.getData());
                 
                 InetAddress address = packet.getAddress();
                 int port = packet.getPort();
                 packet = new DatagramPacket(buf, buf.length, address, port);
 
                 String received = new String(packet.getData(), 0, packet.getLength());
-                System.out.println("Request:\n\n" + received);
+                System.out.println("\n\nRequest:\n\n" + received);
                 String response = dispatcher.dispatch(received);
                 
-                System.out.println("Response from dispatcher: \n\n" + response);
+                DatagramPacket responsePacket = new DatagramPacket(response.getBytes(), response.getBytes().length, address, port);
                 
-                if (received.equals("end")) {
-                    running = false;
-                    continue;
-                }
-                socket.send(packet);
+                System.out.println("\n\nResponse from dispatcher: \n\n" + response);
+                
+                socket.send(responsePacket);
 
             } catch(IOException ioe) {
                 System.out.println(ioe);
