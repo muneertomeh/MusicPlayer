@@ -145,8 +145,8 @@ public class PlaylistServices{
             successfulAdd = true;
             
             JsonObject songData = new JsonObject();
-            songData.addProperty("SongTitle", song.getSong());
-            songData.addProperty("SongArtist", song.getArtist());
+            songData.addProperty("SongTitle", song.getSongTitle());
+            songData.addProperty("SongArtist", song.getSongArtist());
             songData.addProperty("MusicFile", song.getMusicFile());
             
             data.addProperty("success", successfulAdd);
@@ -194,8 +194,8 @@ public class PlaylistServices{
                 isSuccessfulAddition = true;
                 
                 JsonObject songData = new JsonObject();
-                songData.addProperty("SongTitle", song.getSong());
-                songData.addProperty("SongArtist", song.getArtist());
+                songData.addProperty("SongTitle", song.getSongTitle());
+                songData.addProperty("SongArtist", song.getSongArtist());
                 songData.addProperty("MusicFile", song.getMusicFile());
 
                 data.addProperty("success", isSuccessfulAddition);
@@ -240,15 +240,15 @@ public class PlaylistServices{
         Iterator itr = songsToAdd.iterator();
         while(itr.hasNext()){
             Songs s = (Songs) itr.next();
-            if(s.getSong().equalsIgnoreCase(song.getSong()) && 
-                    s.getArtist().equalsIgnoreCase(song.getArtist()) &&
+            if(s.getSongTitle().equalsIgnoreCase(song.getSongTitle()) && 
+                    s.getSongArtist().equalsIgnoreCase(song.getSongArtist()) &&
                     s.getMusicFile().equalsIgnoreCase(song.getMusicFile())){
                 itr.remove();
                 isSuccessfulDeletion = true;
                 
                 JsonObject songData = new JsonObject();
-                songData.addProperty("SongTitle", song.getSong());
-                songData.addProperty("SongArtist", song.getArtist());
+                songData.addProperty("SongTitle", song.getSongTitle());
+                songData.addProperty("SongArtist", song.getSongArtist());
                 songData.addProperty("MusicFile", song.getMusicFile());
 
                 data.addProperty("success", isSuccessfulDeletion);
@@ -357,8 +357,8 @@ public class PlaylistServices{
                 JsonArray songsArray = new JsonArray();
                 for(Songs s : songsToAdd){
                     JsonObject songData = new JsonObject();
-                    songData.addProperty("SongTitle", s.getSong());
-                    songData.addProperty("SongArtist", s.getArtist());
+                    songData.addProperty("SongTitle", s.getSongTitle());
+                    songData.addProperty("SongArtist", s.getSongArtist());
                     songData.addProperty("MusicFile", s.getMusicFile());
                     songsArray.add(songData);
                 }
