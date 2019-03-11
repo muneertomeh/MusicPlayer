@@ -175,9 +175,9 @@ public class Dispatcher implements DispatcherInterface {
                         ret = (String)method.invoke(object, parameter).toString();
                         break;
                 }
-            	System.out.println(ret);
-                jsonReturn.addProperty("ret", ret);
-
+            	JsonObject convertToJson = parser.parse(ret.trim()).getAsJsonObject();
+            	jsonReturn.add("ret", convertToJson);
+                System.out.println(jsonReturn);
         }
         catch (InvocationTargetException | IllegalAccessException e)
         {
