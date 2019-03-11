@@ -18,7 +18,7 @@ public class UserPlaylists {
 
     public void getUserPlaylist() {
         List<UserPlaylists> UserPlaylist = new ArrayList<UserPlaylists>();
-        String fPath = "/../server/data/playlist";
+        String fPath = "D:\\CSULB\\presemt\\327\\MusicPlayer\\Server\\testplaylists.json";
         try {
             BufferedReader bufReader = new BufferedReader(new FileReader(fPath));
             Type jsonListType = new TypeToken<List<UserPlaylists>>() {}.getType();

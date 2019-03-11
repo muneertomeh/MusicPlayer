@@ -1,3 +1,4 @@
+
 import java.io.*;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
@@ -8,15 +9,14 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class RegisterServices{
-    private String userFPath = "./src/pkg327testing/testusers.json";
-    private String playlistPath = "./src/pkg327testing/testplaylists.json";
-
+	private String userFPath = "D:\\CSULB\\presemt\\327\\MusicPlayer\\Server\\testUsers.json";
+	private String playlistPath = "D:\\CSULB\\presemt\\327\\MusicPlayer\\Server\\testplaylists.json";
+	
     public List<Users> getUsers(){
         List<Users> userList = new ArrayList<Users>();
         try{
             BufferedReader bufReader = new BufferedReader(new FileReader(userFPath));
             Type jsonListType = new TypeToken<ArrayList<Users>>() {}.getType();
-
             userList = new Gson().fromJson(bufReader, jsonListType);
             return userList;
         }catch(FileNotFoundException e){
@@ -25,13 +25,11 @@ public class RegisterServices{
         }
         
     }
-
     public List<UserPlaylists> getUserPlaylists(){
         List<UserPlaylists> userPlaylistList = new ArrayList<UserPlaylists>();
         try{
             BufferedReader bufReader = new BufferedReader(new FileReader(playlistPath));
             Type jsonListType = new TypeToken<ArrayList<UserPlaylists>>() {}.getType();
-
             userPlaylistList = new Gson().fromJson(bufReader, jsonListType);
             return userPlaylistList;
         }catch(FileNotFoundException e){
@@ -39,7 +37,6 @@ public class RegisterServices{
             return userPlaylistList;
         }
     }
-
     public boolean isUniqueUser(List<Users> userList, String username){
         boolean isUnique = true;
         for(int i = 0; i < userList.size(); i++){
@@ -49,7 +46,6 @@ public class RegisterServices{
         }
         return isUnique;
     }
-
     public void initiateNewUserPlaylist(String username){
         List<UserPlaylists> userPlaylistList = getUserPlaylists();
         UserPlaylists newPlaylistList = new UserPlaylists(username);
@@ -62,7 +58,6 @@ public class RegisterServices{
             e.printStackTrace();
         }
     }
-
     public String registerUser(String username, String password){
         boolean successfulRegister = false;
         List<Users> userList = getUsers();
@@ -82,7 +77,6 @@ public class RegisterServices{
         else{
             Users newUser = new Users(username, password);
             userList.add(newUser);
-
             try(Writer w = new FileWriter(userFPath)) {
                 Gson gsonWriter = new GsonBuilder().setPrettyPrinting().create();
                 gsonWriter.toJson(userList, w);
@@ -101,7 +95,7 @@ public class RegisterServices{
                 responseObject.add("data", data);
                 stringifiedResponse = responseObject.toString();
             }
-            initiateNewUserPlaylist(username);
+           initiateNewUserPlaylist(username);
         }
         return stringifiedResponse;
     }
