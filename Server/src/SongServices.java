@@ -32,7 +32,7 @@ public class SongServices {
         int FRANGMENT_SIZE = 8192;
         SongServices songChunk = new SongServices();
         byte buf[] = new byte[FRANGMENT_SIZE];
-        File songFile = new File("../Server/mp3/bensound-betterdays.mp3");
+        File songFile = new File(pathHolder.mp3Directory+ "bensound-betterdays.mp3");
         FileInputStream inputStream = new FileInputStream(songFile);
         inputStream.skip(fragment * FRANGMENT_SIZE);
         inputStream.read(buf);
@@ -45,7 +45,7 @@ public class SongServices {
     }
 
     public int getFileSize() {
-        File songFile = new File("../Server/mp3/bensound-betterdays.mp3");
+        File songFile = new File(pathHolder.mp3Directory + "bensound-betterdays.mp3");
         Integer total = (int)songFile.length();
 
         return total;

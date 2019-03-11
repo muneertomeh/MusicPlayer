@@ -56,7 +56,7 @@ client.on('message', (msg, rinfo) => {
     console.log("Client got:\n\n",response);
     let jsonResponse = JSON.parse(response);
     jsonResponse = jsonResponse['ret'];
-    win.webContents.send(jsonResponse['eventListenerName'], jsonResponse['data']);
+    win.webContents.send(jsonResponse['eventListenerName'], jsonResponse);
 });
 
 client.on('listening', () => {

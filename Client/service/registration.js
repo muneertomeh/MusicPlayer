@@ -19,7 +19,7 @@ function register() {
         proxy.synchExecution('registerUser', [username, password]);
 
         ipc.once('message-registration', (event, message) => {
-            if(message['success'] == true){
+            if(message['data']['success'] == true){
                 localStorage.setItem('UserName', username);
                 let win = remote.getCurrentWindow();
                 win.loadURL(url.format({

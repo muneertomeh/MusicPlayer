@@ -9,9 +9,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class RegisterServices{
-	String userDir = System.getProperty("user.dir");
-	private String userFPath = userDir + "/src/testUsers.json";
-	private String playlistPath = userDir + "/src/testplaylists.json";
+	private String userFPath = pathHolder.testUsers;
+	private String playlistPath = pathHolder.testPlaylists;
 	
     public List<Users> getUsers(){
         List<Users> userList = new ArrayList<Users>();
@@ -62,6 +61,9 @@ public class RegisterServices{
     public String registerUser(String username, String password){
         boolean successfulRegister = false;
         List<Users> userList = getUsers();
+        for(int i = 0; i < userList.size(); i++) {
+        	System.out.print(userList.get(i) + " ");
+        }
         boolean isUnique = isUniqueUser(userList, username);
         
         JsonObject responseObject = new JsonObject();
