@@ -15,5 +15,6 @@ public static void main(String[] args) {
     String testpw2 = "lol";
     String testres2 = rs.registerUser(testuser2, testpw2);
     System.out.println(testres2);
+    
     }
 }

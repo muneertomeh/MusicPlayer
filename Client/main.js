@@ -55,10 +55,8 @@ client.on('message', (msg, rinfo) => {
     let response = msg.toString('utf-8').replace(/\\/g, "");
     console.log("Client got:\n\n",response);
     let jsonResponse = JSON.parse(response);
-    console.log('\n\n',jsonResponse);
-    if(jsonResponse['remoteMethod'] != null)
-        console.log("working/n", jsonResponse);
-    // win.webContents.send(msg.toString('utf-8')['eventListenerName'], msg['data']);
+    jsonResponse = jsonResponse['ret'];
+    win.webContents.send(jsonResponse['eventListenerName'], jsonResponse['data']);
 });
 
 client.on('listening', () => {

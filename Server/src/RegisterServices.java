@@ -9,8 +9,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class RegisterServices{
-	private String userFPath = "D:\\CSULB\\presemt\\327\\MusicPlayer\\Server\\testUsers.json";
-	private String playlistPath = "D:\\CSULB\\presemt\\327\\MusicPlayer\\Server\\testplaylists.json";
+	String userDir = System.getProperty("user.dir");
+	private String userFPath = userDir + "/src/testUsers.json";
+	private String playlistPath = userDir + "/src/testplaylists.json";
 	
     public List<Users> getUsers(){
         List<Users> userList = new ArrayList<Users>();
