@@ -74,6 +74,7 @@ public class PlaylistServices{
     }
 
     public String getAPlaylistsSongsJSON(String playlistTitle, String userName){
+    	System.out.println("Function getAPlaylistsSongsJSON was called");
         boolean success = true;
         JsonObject responseObject = new JsonObject();
         responseObject.addProperty("eventListenerName", "message-getPlaylistInfo");
@@ -96,6 +97,7 @@ public class PlaylistServices{
         data.add("Songs", songsArray);
         responseObject.add("data", data);
         stringifiedResponse = responseObject.toString();
+        System.out.println("PlaylistJSON Returning\n" + stringifiedResponse);
         return stringifiedResponse;
     }
     

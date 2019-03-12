@@ -188,7 +188,13 @@ function displayPlaylist(isFirstDisplay) {
     list = document.getElementById('theList');
     list.innerHTML = '';
     if(isFirstDisplay){
-        proxy.synchExecution('getAPlaylistsSongsJSON', [playListTitle, userLoggedIn]);
+        if(playListTitle!= ""){
+            proxy.synchExecution('getAPlaylistsSongsJSON', [playListTitle, userLoggedIn]);
+        }
+    }else{
+        songsToAdd = JSON.parse(localStorage.getItem("songsToAdd") || "[]");
+        createElements();
+    }
         // document.getElementById('myText').value = localStorage.getItem('existingTitle');
         // fs.readFile(__dirname + '/../data/playlist.json', (err, rawdata) => {
         //     if(err) console.log(err);
@@ -212,10 +218,10 @@ function displayPlaylist(isFirstDisplay) {
         //     createElements();
         // });
 
-    } else {
-        songsToAdd = JSON.parse(localStorage.getItem("songsToAdd") || "[]");
-        createElements();
-    }
+    // } else {
+    //     songsToAdd = JSON.parse(localStorage.getItem("songsToAdd") || "[]");
+    //     createElements();
+    // }
 }
 
 function createElements() {

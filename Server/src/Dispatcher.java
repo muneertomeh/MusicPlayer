@@ -102,8 +102,8 @@ public class Dispatcher implements DispatcherInterface {
         	
         	Object object = ListOfObjects.get(jsonRequest.getAsJsonObject("remoteMethod").get("object").getAsString());
         
-           Method[] methods = object.getClass().getMethods();
-           Method method = null;
+        	Method[] methods = object.getClass().getMethods();
+        	Method method = null;
            
             // Obtains the method
            
