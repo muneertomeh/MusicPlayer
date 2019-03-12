@@ -3,27 +3,26 @@ const electron = require('electron');
 const remote = electron.remote;
 const url = require('url');
 const path = require('path');
+const proxy = require('../web/proxy');
+const ipc = require('electron').ipcRenderer;
 
 //Fetches user currently logged into the session
 let userLoggedIn = localStorage.getItem("UserName");
+let pHeader = document.getElementById('p-playlistHeader');
 
-function showPlaylists() {
-    let pHeader = document.getElementById('p-playlistHeader');
-    let playlists = []
-    fs.readFile(__dirname + '/../data/playlist.json', (err, rawData) => {
-        let data = JSON.parse(rawData);
-        data['UserPlaylists'].forEach(user => {
-            if(user['UserName'] == userLoggedIn)
-                playlists = user['Playlists'];
-        });
-    
-
-        let i = 0
+ipc.on('message-getPlaylist', (event, message) => {
+    let msg = message['data'];
+    if(!msg['success']){
+        alert('Something went wrong retrieving your playlists');
+    } else if(msg['Playlists'] != ""){
+        let playlists = msg['Playlists'];
+        console.log(playlists)
+        let i = 0;
         playlists.forEach(playlist => {
             let p = document.createElement('p');
             p.id = i + '_playlist';
-            p.value = playlist['PlaylistTitle'];
-            let text = document.createTextNode(playlist['PlaylistTitle']);
+            p.value = playlist;
+            let text = document.createTextNode(playlist);
             p.appendChild(text)
             p.onclick = function(){
                 localStorage.setItem('existingTitle', p.value);
@@ -39,17 +38,21 @@ function showPlaylists() {
             pHeader.appendChild(p);
             i++;
         });
-        let btn = document.createElement('button');
-        let text = document.createTextNode('Create Playlist');
-        btn.style.height = '2em';
-        btn.style.width = '130px'
-        btn.onclick = function() {
-            createNewPlaylist();
-        };
-        btn.style.fontSize = '15px';
-        btn.appendChild(text);
-        pHeader.appendChild(btn);
-    });
+    }
+    let btn = document.createElement('button');
+    let text = document.createTextNode('Create Playlist');
+    btn.style.height = '2em';
+    btn.style.width = '130px'
+    btn.onclick = function() {
+        createNewPlaylist();
+    };
+    btn.style.fontSize = '15px';
+    btn.appendChild(text);
+    pHeader.appendChild(btn);
+})
+
+function showPlaylists() {
+    proxy.synchExecution('getUsersPlaylistsTitles', [userLoggedIn]);
 }
 
 function search()
@@ -250,22 +253,31 @@ function search()
     });
 
 }
-
+//TODO Make IPC Connection for song
 function playSong(li) {
-    let src = li.musicFile;
-    let songTitle = li.songTitle;
-    let artist = li.artist;
+    proxy.synchExecution('getSongChunck', [li.musicFile, 1]);
+    ipc.on('message-SongChunk', (event, message)=> {
+        if(message['success']){
+            if(message['finished']){
+                let currentSong = document.getElementById('song_title');
+                currentSong.innerHTML = li.songTitle;
+                currentSong = document.getElementById('artist_name');
+                currentSong.innerHTML = li.artist;
 
-    let currentSong = document.getElementById('song_title');
-    currentSong.innerHTML = songTitle;
-    currentSong = document.getElementById('artist_name');
-    currentSong.innerHTML = artist;
-
-
-    let musicPlayer = document.getElementById('music');
-    musicPlayer.innerHTML = '';
-    musicPlayer.src = src;
-    musicPlayer.play();
+                let musicPlayer = document.getElementById('music');
+                musicPlayer.innerHTML = '';
+                musicPlayer.src = li.musicFile+'.mp3'
+                musicPlayer.play();
+            }else{
+                fs.appendFile(li.musicFile+'.mp3', message['data'], (err) => {
+                    if(err) console.log(err);
+                    proxy.synchExecution('getSongChunck', message['fragment']);
+                });
+            }
+        }
+    });
+    
+    
 }
 
 

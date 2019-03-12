@@ -42,9 +42,13 @@ public class Dispatcher implements DispatcherInterface {
         ListOfObjects = new HashMap<String, Object>();
         LoginServices loginServices = new LoginServices();
         RegisterServices registerServices = new RegisterServices();
+        PlaylistServices playlistServices = new PlaylistServices();
+        SongServices songServices = new SongServices();
         
         ListOfObjects.put("LoginServices", loginServices);
         ListOfObjects.put("RegistrationServices",registerServices);
+        ListOfObjects.put("PlaylistServices", playlistServices);
+        ListOfObjects.put("SongServices", songServices);
 
     }
 
@@ -100,8 +104,8 @@ public class Dispatcher implements DispatcherInterface {
         	
         	Object object = ListOfObjects.get(jsonRequest.getAsJsonObject("remoteMethod").get("object").getAsString());
         
-           Method[] methods = object.getClass().getMethods();
-           Method method = null;
+        	Method[] methods = object.getClass().getMethods();
+        	Method method = null;
            
             // Obtains the method
            

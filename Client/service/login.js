@@ -16,7 +16,7 @@ function login() {
         proxy.synchExecution('Login', [username, password]);
 
         ipc.once('message-login', (event, message) => {
-            if(message == true){
+            if(message['success'] == true){
                 localStorage.setItem('UserName', username);
                 let win = remote.getCurrentWindow();
                 win.loadURL(url.format({
@@ -24,6 +24,8 @@ function login() {
                     protocol: 'file',
                     slashes: true
                 }));
+            }else{
+                alert('Invalid Credentials');
             }
         });
     }

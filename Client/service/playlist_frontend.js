@@ -4,13 +4,32 @@ const remote = electron.remote;
 const url = require('url');
 const path = require('path');
 let existingTitle = document.getElementById('myText').value;
+const proxy = require('../web/proxy');
+const ipc = require('electron').ipcRenderer;
 
 //Fetches user currently logged into the session
 let userLoggedIn = localStorage.getItem("UserName");
+let playListTitle = localStorage.getItem("existingTitle");
 
 //array to hold songs that will be added into the playlist
 let songsToAdd = [];
 let playlistIndex = 0;
+
+
+    ipc.on('message-getPlaylistInfo', (event, message) => {
+        let data = message['data']
+        if(data['success']){
+            let songs = data['songs'];
+            if(songs != ""){
+                //TODO Loading Existing playlists load songs
+            }else{
+                localStorage.setItem("songsToAdd", JSON.stringify(songsToAdd));
+            }
+        }else{
+            alert('Failed loading playlist');
+        }
+    })
+
 
 function playSongs() {
     let musicPlay = document.getElementById('music');
@@ -169,32 +188,40 @@ function displayPlaylist(isFirstDisplay) {
     list = document.getElementById('theList');
     list.innerHTML = '';
     if(isFirstDisplay){
-        document.getElementById('myText').value = localStorage.getItem('existingTitle');
-        fs.readFile(__dirname + '/../data/playlist.json', (err, rawdata) => {
-            if(err) console.log(err);
-            else{
-                songsToAdd = [];
-                localStorage.setItem("songsToAdd", JSON.stringify(songsToAdd));
-                let data = JSON.parse(rawdata);
-                let usersPlaylists;
-                data['UserPlaylists'].forEach(user => {
-                    if(userLoggedIn == user['UserName']){
-                        usersPlaylists = user['Playlists'];
-                    }
-                });
-                usersPlaylists.forEach(playlist => {
-                    if(localStorage.getItem('existingTitle') == playlist['PlaylistTitle']){
-                        localStorage.setItem("songsToAdd", JSON.stringify(playlist['Songs']));
-                        songsToAdd = playlist['Songs'];
-                    }
-                });
-            }
-            createElements();
-        });
-    } else {
+        if(playListTitle!= ""){
+            proxy.synchExecution('getAPlaylistsSongsJSON', [playListTitle, userLoggedIn]);
+        }
+    }else{
         songsToAdd = JSON.parse(localStorage.getItem("songsToAdd") || "[]");
         createElements();
     }
+        // document.getElementById('myText').value = localStorage.getItem('existingTitle');
+        // fs.readFile(__dirname + '/../data/playlist.json', (err, rawdata) => {
+        //     if(err) console.log(err);
+        //     else{
+        //         songsToAdd = [];
+        //         localStorage.setItem("songsToAdd", JSON.stringify(songsToAdd));
+        //         let data = JSON.parse(rawdata);
+        //         let usersPlaylists;
+        //         data['UserPlaylists'].forEach(user => {
+        //             if(userLoggedIn == user['UserName']){
+        //                 usersPlaylists = user['Playlists'];
+        //             }
+        //         });
+        //         usersPlaylists.forEach(playlist => {
+        //             if(localStorage.getItem('existingTitle') == playlist['PlaylistTitle']){
+        //                 localStorage.setItem("songsToAdd", JSON.stringify(playlist['Songs']));
+        //                 songsToAdd = playlist['Songs'];
+        //             }
+        //         });
+        //     }
+        //     createElements();
+        // });
+
+    // } else {
+    //     songsToAdd = JSON.parse(localStorage.getItem("songsToAdd") || "[]");
+    //     createElements();
+    // }
 }
 
 function createElements() {
