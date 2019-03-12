@@ -70,5 +70,17 @@
 			},
 			"return": "String"
 		}
+	},
+	{
+		"remoteMethod": {
+			"name": "getSongChunck",
+			"object": "SongServices",
+			"call-semantics": "maybe",
+			"param": {
+				"musicFileName": "String",
+				"fragment": 1
+			},
+			"return": "String"
+		}
 	}
 ]

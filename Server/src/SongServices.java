@@ -17,35 +17,43 @@ public class SongServices {
 
     private String eventListenerName;
     private String data;
-
+    private boolean finished;
+    private boolean success;
+    private long fragment;
+    
     public SongServices() {
-        eventListenerName = "messageSongChunk";
+        eventListenerName = "message-SongChunk";
         data = new String();
+        
     }
 
-    public void setData(String d) {
-        data = d;
+    public void setData(String data, boolean finished, boolean success, long fragment) {
+        this.data = data;
+        this.finished = finished;
+        this.success = success;
+        this.fragment = fragment;
     } 
 
-    public String getSongChunck(long songID, long fragment) throws FileNotFoundException, IOException {
-
-        int FRANGMENT_SIZE = 8192;
-        SongServices songChunk = new SongServices();
-        byte buf[] = new byte[FRANGMENT_SIZE];
-        File songFile = new File(pathHolder.mp3Directory+ "bensound-betterdays.mp3");
-        FileInputStream inputStream = new FileInputStream(songFile);
+    public String getSongChunck(String musicFileName, long fragment) throws FileNotFoundException, IOException {
+    	int FRANGMENT_SIZE = 256;
+        Gson g = new Gson();
+    	byte buf[] = new byte[FRANGMENT_SIZE];
+    	File songFile = new File(pathHolder.mp3Directory + musicFileName);
+    	FileInputStream inputStream = new FileInputStream(songFile);
+    	if(fragment * FRANGMENT_SIZE > songFile.length()) {
+    		inputStream.close();
+    		this.setData("Done", true, true, fragment+1);
+    		return g.toJson(this);
+    	}
         inputStream.skip(fragment * FRANGMENT_SIZE);
         inputStream.read(buf);
         inputStream.close();
-        songChunk.setData(Base64.getEncoder().encodeToString(buf));
-
-        Gson g = new Gson();
-
-        return g.toJson(songChunk);
+        this.setData(Base64.getEncoder().encodeToString(buf), false, true, fragment+1);
+        return g.toJson(this);
     }
 
-    public int getFileSize() {
-        File songFile = new File(pathHolder.mp3Directory + "bensound-betterdays.mp3");
+    public int getFileSize(String musicFileName) {
+        File songFile = new File(pathHolder.mp3Directory + musicFileName);
         Integer total = (int)songFile.length();
 
         return total;

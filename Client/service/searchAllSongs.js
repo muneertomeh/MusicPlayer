@@ -253,22 +253,31 @@ function search()
     });
 
 }
-
+//TODO Make IPC Connection for song
 function playSong(li) {
-    let src = li.musicFile;
-    let songTitle = li.songTitle;
-    let artist = li.artist;
+    proxy.synchExecution('getSongChunck', [li.musicFile, 1]);
+    ipc.on('message-SongChunk', (event, message)=> {
+        if(message['success']){
+            if(message['finished']){
+                let currentSong = document.getElementById('song_title');
+                currentSong.innerHTML = li.songTitle;
+                currentSong = document.getElementById('artist_name');
+                currentSong.innerHTML = li.artist;
 
-    let currentSong = document.getElementById('song_title');
-    currentSong.innerHTML = songTitle;
-    currentSong = document.getElementById('artist_name');
-    currentSong.innerHTML = artist;
-
-
-    let musicPlayer = document.getElementById('music');
-    musicPlayer.innerHTML = '';
-    musicPlayer.src = src;
-    musicPlayer.play();
+                let musicPlayer = document.getElementById('music');
+                musicPlayer.innerHTML = '';
+                musicPlayer.src = li.musicFile+'.mp3'
+                musicPlayer.play();
+            }else{
+                fs.appendFile(li.musicFile+'.mp3', message['data'], (err) => {
+                    if(err) console.log(err);
+                    proxy.synchExecution('getSongChunck', message['fragment']);
+                });
+            }
+        }
+    });
+    
+    
 }
 
 
