@@ -9,7 +9,7 @@ import java.util.ArrayList;
 import java.util.Iterator;
 
 public class PlaylistServices{
-    private String playlistPath = "../Server/testplaylists.json";
+    private String playlistPath = pathHolder.testPlaylists;
     private ArrayList<Songs> songsToAdd = new ArrayList<Songs>();
     private Playlists currentPlaylist;
 
@@ -73,6 +73,32 @@ public class PlaylistServices{
         }
     }
 
+    public String getAPlaylistsSongsJSON(String playlistTitle, String userName){
+        boolean success = true;
+        JsonObject responseObject = new JsonObject();
+        responseObject.addProperty("eventListenerName", "message-getPlaylistInfo");
+        
+        JsonObject data = new JsonObject();
+        String stringifiedResponse = "";
+        Playlists playlistAffected = getPlaylist(playlistTitle, userName);
+        ArrayList<Songs> playlistsSongs = playlistAffected.getPlaylistsSongs();
+        songsToAdd = playlistsSongs;
+        
+        JsonArray songsArray = new JsonArray();
+        for(Songs s : songsToAdd){
+            JsonObject songData = new JsonObject();
+            songData.addProperty("SongTitle", s.getSongTitle());
+            songData.addProperty("SongArtist", s.getSongArtist());
+            songData.addProperty("MusicFile", s.getMusicFile());
+            songsArray.add(songData);
+        }
+        data.addProperty("success", success);
+        data.add("Songs", songsArray);
+        responseObject.add("data", data);
+        stringifiedResponse = responseObject.toString();
+        return stringifiedResponse;
+    }
+    
     //Method that returns a JSON String
     public String deletePlaylist(String playlistName, String userName){
         UserPlaylists usersPlaylists = getUsersPlaylists(userName);
@@ -128,6 +154,49 @@ public class PlaylistServices{
             }
         }
         return stringifiedResponse;
+    }
+    
+    public String getUsersPlaylistsTitles(String userName){
+        UserPlaylists usersPlaylists = null;
+        ArrayList<UserPlaylists> userPlaylistList = new ArrayList<UserPlaylists>();
+        ArrayList<Playlists> playlists = new ArrayList<Playlists>();
+        String stringifiedResponse = "";
+        
+        JsonObject responseObject = new JsonObject();
+        responseObject.addProperty("eventListenerName", "message-getPlaylist");
+        JsonObject data = new JsonObject();
+        
+        boolean success = false;
+        
+        try{
+            BufferedReader bufReader = new BufferedReader(new FileReader(playlistPath));
+            Type jsonListType = new TypeToken<ArrayList<UserPlaylists>>() {}.getType();
+
+            userPlaylistList = new Gson().fromJson(bufReader, jsonListType);
+            for (UserPlaylists up : userPlaylistList) {
+                if(up.getUserName().equalsIgnoreCase(userName)){
+                    usersPlaylists = up;
+                    playlists = usersPlaylists.getPlaylists();
+                }
+            }
+            JsonArray jsonArr = new JsonArray();
+            for (Playlists p : playlists){
+                jsonArr.add(p.getPlaylistTitle());
+            }
+            success = true;
+            data.addProperty("success", success);
+            data.add("Playlists", jsonArr);
+            responseObject.add("data", data);
+            stringifiedResponse = responseObject.toString();
+            return stringifiedResponse;
+        }catch(FileNotFoundException e){
+            e.printStackTrace();
+            success = false;
+            data.addProperty("success", success);
+            responseObject.add("data", data);
+            stringifiedResponse = responseObject.toString();
+            return stringifiedResponse;
+        }
     }
 
     //Method that returns a JSON string

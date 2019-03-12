@@ -3,27 +3,26 @@ const electron = require('electron');
 const remote = electron.remote;
 const url = require('url');
 const path = require('path');
+const proxy = require('../web/proxy');
+const ipc = require('electron').ipcRenderer;
 
 //Fetches user currently logged into the session
 let userLoggedIn = localStorage.getItem("UserName");
+let pHeader = document.getElementById('p-playlistHeader');
 
-function showPlaylists() {
-    let pHeader = document.getElementById('p-playlistHeader');
-    let playlists = []
-    fs.readFile(__dirname + '/../data/playlist.json', (err, rawData) => {
-        let data = JSON.parse(rawData);
-        data['UserPlaylists'].forEach(user => {
-            if(user['UserName'] == userLoggedIn)
-                playlists = user['Playlists'];
-        });
-    
-
-        let i = 0
+ipc.on('message-getPlaylist', (event, message) => {
+    let msg = message['data'];
+    if(!msg['success']){
+        alert('Something went wrong retrieving your playlists');
+    } else if(msg['Playlists'] != ""){
+        let playlists = msg['Playlists'];
+        console.log(playlists)
+        let i = 0;
         playlists.forEach(playlist => {
             let p = document.createElement('p');
             p.id = i + '_playlist';
-            p.value = playlist['PlaylistTitle'];
-            let text = document.createTextNode(playlist['PlaylistTitle']);
+            p.value = playlist;
+            let text = document.createTextNode(playlist);
             p.appendChild(text)
             p.onclick = function(){
                 localStorage.setItem('existingTitle', p.value);
@@ -39,17 +38,21 @@ function showPlaylists() {
             pHeader.appendChild(p);
             i++;
         });
-        let btn = document.createElement('button');
-        let text = document.createTextNode('Create Playlist');
-        btn.style.height = '2em';
-        btn.style.width = '130px'
-        btn.onclick = function() {
-            createNewPlaylist();
-        };
-        btn.style.fontSize = '15px';
-        btn.appendChild(text);
-        pHeader.appendChild(btn);
-    });
+    }
+    let btn = document.createElement('button');
+    let text = document.createTextNode('Create Playlist');
+    btn.style.height = '2em';
+    btn.style.width = '130px'
+    btn.onclick = function() {
+        createNewPlaylist();
+    };
+    btn.style.fontSize = '15px';
+    btn.appendChild(text);
+    pHeader.appendChild(btn);
+})
+
+function showPlaylists() {
+    proxy.synchExecution('getUsersPlaylistsTitles', [userLoggedIn]);
 }
 
 function search()

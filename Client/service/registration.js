@@ -5,7 +5,6 @@ const path = require('path');
 const proxy = require('../web/proxy');
 const ipc = require('electron').ipcRenderer;
 
-
 function register() {
     let username = document.getElementById("UserName").value;
     let password = document.getElementById("Password").value;
@@ -17,8 +16,8 @@ function register() {
         alert('Passwords must match');
     } else {
         proxy.synchExecution('registerUser', [username, password]);
-
         ipc.once('message-registration', (event, message) => {
+            console.log("\n\npinged" ,message)
             if(message['data']['success'] == true){
                 localStorage.setItem('UserName', username);
                 let win = remote.getCurrentWindow();

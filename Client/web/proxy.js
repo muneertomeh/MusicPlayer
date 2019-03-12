@@ -28,7 +28,6 @@ module.exports.synchExecution = function(remoteMethodName, param)
                     }
                 }
             });
-
             ipc.send('message-main', JSON.stringify(jsonRequest));
         }
     });

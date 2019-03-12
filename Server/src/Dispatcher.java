@@ -42,9 +42,11 @@ public class Dispatcher implements DispatcherInterface {
         ListOfObjects = new HashMap<String, Object>();
         LoginServices loginServices = new LoginServices();
         RegisterServices registerServices = new RegisterServices();
+        PlaylistServices playlistServices = new PlaylistServices();
         
         ListOfObjects.put("LoginServices", loginServices);
         ListOfObjects.put("RegistrationServices",registerServices);
+        ListOfObjects.put("PlaylistServices", playlistServices);
 
     }
 

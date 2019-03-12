@@ -47,5 +47,28 @@
 			},
 			"return": "String"
 		}
+	},
+	{
+		"remoteMethod": {
+			"name": "getUsersPlaylistsTitles",
+			"object": "PlaylistServices",
+			"call-semantics": "maybe",
+			"param": {
+				"UserName": "string"
+			},
+			"return": "String"
+		}
+	},
+	{
+		"remoteMethod": {
+			"name": "getAPlaylistsSongsJSON",
+			"object": "PlaylistServices",
+			"call-semantics": "maybe",
+			"param": {
+				"PlaylistTitle": "string",
+				"UserName": "string"
+			},
+			"return": "String"
+		}
 	}
 ]

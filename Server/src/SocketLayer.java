@@ -25,6 +25,7 @@ public class SocketLayer extends Thread{
         running = true;
         System.out.println("Starting up on port; " + serverPort);
         while(running){
+        	buf = new byte[256];
             DatagramPacket packet = new DatagramPacket(buf, buf.length);
             try{
                 socket.receive(packet);
@@ -34,7 +35,7 @@ public class SocketLayer extends Thread{
                 packet = new DatagramPacket(buf, buf.length, address, port);
 
                 String received = new String(packet.getData(), 0, packet.getLength());
-                System.out.println("\n\nRequest:\n\n" + received);
+                System.out.println("\n\nRequest:\n\n" + received + "\n\nEnd Request");
                 String response = dispatcher.dispatch(received);
                 
                 DatagramPacket responsePacket = new DatagramPacket(response.getBytes(), response.getBytes().length, address, port);
