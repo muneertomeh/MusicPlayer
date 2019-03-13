@@ -87,6 +87,16 @@
 		}
 	},
 	{
+		"remoteMethod": "deletePlaylist",
+		"object": "PlaylistServices",
+		"call-semantics": "maybe",
+		"param": {
+			"playlistTitle": "string",
+			"userName": "string"
+		},
+		"return": "String"
+	},
+	{
 		"remoteMethod": {
 			"name": "getSongChunck",
 			"object": "SongServices",
