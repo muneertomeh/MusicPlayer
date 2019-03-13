@@ -1,47 +1,103 @@
 import java.io.*;
 import com.google.gson.Gson;
+import com.google.gson.JsonArray;
+import com.google.gson.JsonElement;
 import com.google.gson.GsonBuilder;
+import com.google.gson.JsonObject;
+import com.google.gson.JsonParseException;
+import com.google.gson.JsonParser;
 import com.google.gson.reflect.TypeToken;
 import java.lang.reflect.Type;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Stack;
+import java.util.*;
+import java.math.BigDecimal;
+
 
 public class SearchServices {
-	
+
     private String songsPath;
-    private Stack<Song> firstWordMatch;
-    private Stack<Song> someWordMatch;
-    private Stack<Song> substringMatch;
-    private Stack<Song> notRelevant;
-    private ArrayList<Song> finalResults;
+    private JsonArray firstWordMatch;
+    private JsonArray someWordMatch;
+    private JsonArray substringMatch;
+    private JsonArray notRelevant;
+    JsonArray finalResults;
     private int optionMenu;
+    private JsonArray musicFile;
 
     public SearchServices() {
-        songsPath = "/../server/data/music.json";
-        firstWordMatch = new Stack<Song>();
-        someWordMatch = new Stack<Song>();
-        substringMatch = new Stack<Song>();
-        notRelevant = new Stack<Song>();
-        finalResults = new ArrayList<Song>();
-
+        songsPath = pathHolder.songPath;
+        finalResults = new JsonArray();
+        firstWordMatch = new JsonArray();
+        someWordMatch = new JsonArray();
+        substringMatch = new JsonArray();
+        notRelevant = new JsonArray();
         optionMenu = 0;
     }
+
+
+    public static void getSortedListPractice(JsonArray array)
+    {
+    	for(int i =0; i < array.size();i++)
+    	{
+    		JsonObject jsonObject = array.get(i).getAsJsonObject();
+    		try
+    		{
+    			jsonObject.getAsJsonObject("song").get("hotttnesss").getAsFloat();
+
+
+    		}catch(Exception e)
+    		{
+    			System.out.println("null as value");
+    		}
+    	}
+    }
+
+
+    public static JsonArray getSortedList(JsonArray array){
+        List<JsonObject> list = new ArrayList<JsonObject>();
+        for (int i = 0; i < array.size(); i++) {
+                list.add(array.get(i).getAsJsonObject());
+        }
+
+        try
+        {
+        	Collections.sort(list, new SortBasedOnHotness());
+        }
+        catch(IllegalArgumentException i )
+        {
+
+        }
+        JsonArray resultArray = new JsonArray();
+        for(int x = 0; x < list.size(); x++)
+        {
+        	resultArray.add(list.get(x));
+        }
+
+        return resultArray;
+    }
+
+
 
     public boolean compareInputToSome(String[] values, String userInput) {
         boolean flag = false;
         for(int i = 0; i < values.length; i++) {
-            if(values[i].toLowerCase() == userInput.toLowerCase())
+            if(values[i].equalsIgnoreCase(userInput))
+            {
+
                 flag = true;
+            }
         }
         return flag;
     }
 
-    public void addToFinalList(Stack<Song> CL, int IL) {
-        CL.sort(Songs.hottness);
+    public void addToFinalList(JsonArray expandArray, int IL) {
+    	expandArray = getSortedList(expandArray);
 
-        for(int i = 0; i < IL && CL.size() != 0; i++) {
-            finalResults.add(CL.pop());
+        for(int i = 0; i < IL && expandArray.size() != 0; i++) {
+            finalResults.add(expandArray.get(i));
         }
     }
 
@@ -64,46 +120,64 @@ public class SearchServices {
             optionMenu += 1;
         }
     }
+    //return List<Songs>
+    public void getSongs() {
+    	JsonParser parser = new JsonParser();
+    	JsonArray jsonArray = new JsonArray();
+    	try {
+            String jsonfile = new String(Files.readAllBytes(Paths.get(pathHolder.songPath)));
+            musicFile = parser.parse(jsonfile).getAsJsonArray();
+            //System.out.println(jsonArray);
 
-    public List<Songs> getSongs() {
-        List<Songs> songList = new ArrayList<Songs>();
-        try {
-            BufferedReader bufReader = new BufferedReader(new FileReader(songsPath));
-            Type jsonListType = new TypeToken<List<Songs>>() {}.getType();
-            songList = new Gson().fromJson(bufReader, jsonListType);
-
-            return songList;
-        }catch(FileNotFoundException e) {
-            e.getStackTrace();
-            return songList;
+        } catch (Exception e)
+        {
+            System.out.println(e);
         }
     }
 
-    public ArrayList<Songs> searchSongs(String userInput) {
-        List<Songs> songList = getSongs();
+   // return ArrayList<Songs>
+    public String searchSong(String userInput)
+    {
+        //List<Songs> songList = getSongs();
+    	getSongs();
+    	for(int i = 0; i < finalResults.size(); i++) {
+    		finalResults.remove(0);
+    	}
+//    	finalResults = new JsonArray();
 
-        for(int i = 0; i < songList.size(); i++) {
-            String[] wordsInArtistName = songList.get(i).getSongArtist().split(" ");
-            String[] wordsInSongTitle = songList.get(i).getSongTitle().split(" ");
+        for(int i = 0; i < musicFile.size(); i++) {
+            String[] wordsInArtistName = musicFile.get(i).getAsJsonObject().get("artist").getAsJsonObject().get("name").getAsString().split(" ");
+            String[] wordsInSongTitle = musicFile.get(i).getAsJsonObject().get("song").getAsJsonObject().get("title").getAsString().split(" ");
 
-            if((userInput.length() == 1) && (userInput.toLowerCase() == songList.get(i).getSongArtist().substring(0,1).toLowerCase()) || (userInput.toLowerCase() == songList.get(i).getSongTitle().toLowerCase())) {
-                finalResults.add(songList.get(i));
+            if((userInput.length() == 1) &&
+            		((userInput.equalsIgnoreCase(musicFile.get(i).getAsJsonObject().get("song").getAsJsonObject().get("title").getAsString().substring(0,1)))
+            		|| (userInput.equalsIgnoreCase(musicFile.get(i).getAsJsonObject().get("artist").getAsJsonObject().get("name").getAsString().substring(0,1)))))
+            {
+                finalResults.add(musicFile.get(i).getAsJsonObject());
+
             }
-            else if((userInput.toLowerCase() == songList.get(i).getSongTitle().toLowerCase()) || (userInput.toLowerCase() == songList.get(i).getSongArtist().toLowerCase())) {
-                finalResults.add(songList.get(i));
+            else if( (userInput.equalsIgnoreCase(musicFile.get(i).getAsJsonObject().get("song").getAsJsonObject().get("title").getAsString()) )
+    				|| (userInput.equalsIgnoreCase(musicFile.get(i).getAsJsonObject().get("artist").getAsJsonObject().get("name").getAsString())) )
+            {
+                finalResults.add(musicFile.get(i).getAsJsonObject());
+
             }
-            else if(wordsInArtistName[0].toLowerCase() == userInput.toLowerCase() || wordsInSongTitle[0].toLowerCase() == userInput.toLowerCase()) {
-                firstWordMatch.push(songList.get(i));
+            else if(wordsInSongTitle[0].toLowerCase() == userInput.toLowerCase() || wordsInArtistName[0].toLowerCase() == userInput.toLowerCase()) {
+                firstWordMatch.add(musicFile.get(i).getAsJsonObject());
+
             }
-            else if(compareInputToSome(wordsInArtistName, userInput) || (compareInputToSome(wordsInSongTitle, userInput))) {
-                someWordMatch.push(songList.get(i));
-            }getArtist
+            else if(compareInputToSome(wordsInSongTitle, userInput) || compareInputToSome(wordsInArtistName, userInput))
+            {
+                someWordMatch.add(musicFile.get(i).getAsJsonObject());
+            }
             else {
-                notRelevant.push(songList.get(i));
+                notRelevant.add(musicFile.get(i).getAsJsonObject());
             }
         }
 
-        finalResults.sort(Song.hottness);
+       finalResults = getSortedList(finalResults);
+       // getSortedListPractice(finalResults);
+
         if(finalResults.size() > 5) {
             int cutDown = finalResults.size() - 5;
             for(int i = 0; i < cutDown; i++) {
@@ -114,6 +188,69 @@ public class SearchServices {
         else {
             makeListBigger();
         }
+
+
+
+
+        //create the structure to return the json
+        JsonArray finalizeArray = new JsonArray();
+
+        for(int i = 0;i < finalResults.size();i++)
+        {
+        	JsonObject singleResult = new JsonObject();
+        	singleResult.addProperty("file", finalResults.get(i).getAsJsonObject().get("file").getAsString());
+        	singleResult.addProperty("artist", finalResults.get(i).getAsJsonObject().get("song").getAsJsonObject().get("title").getAsString());
+        	singleResult.addProperty("title", finalResults.get(i).getAsJsonObject().get("artist").getAsJsonObject().get("name").getAsString());
+        	finalizeArray.add(singleResult);
+        }
+        List<Songs> fs = new ArrayList<Songs>();
+        
+        for(int i = 0; i < finalResults.size(); i++) {
+        	Songs s = new Songs(finalResults.get(i).getAsJsonObject().get("song").getAsJsonObject().get("title").getAsString(), 
+        			finalResults.get(i).getAsJsonObject().get("artist").getAsJsonObject().get("name").getAsString(), 
+        			finalResults.get(i).getAsJsonObject().get("file").getAsString());
+        	fs.add(s);
+        }
+        
+        Gson g = new Gson();
+        boolean successfulRegister = true;
+        searchReturn sr = new searchReturn(fs, successfulRegister, "message-searchSongs");
+        String JSONoutput = g.toJson(sr);
+		
+		return JSONoutput;
+        
+//        JsonObject responseObject = new JsonObject();
+//        JsonObject data = new JsonObject();
+//        responseObject.addProperty("eventListenerName", "message-searchSongs");
+//
+//        data.addProperty("success", successfulRegister);
+//       // JsonObject convertToJson = parser.parse(ret.trim()).getAsJsonObject();
+//
+//        data.addProperty("song", finalizeArray.toString());
+//        //System.out.println(data);
+//
+//
+//        responseObject.addProperty("data", data.toString());
+//       // System.out.println(responseObject);
+//        JsonObject jsonReturn = new JsonObject();
+//        String finalResult = responseObject.toString();
+//
+//        String cleanResult = finalResult.replaceAll("\\\\","");
+//        /*NOTE:
+//         * To test the return the code just uncomment the print statement below
+//         *
+//         */
+//        System.out.println(cleanResult);
+//        return cleanResult;
+
+    }
+
+    public static void main(String[] args) {
+        // Instance of the search
+    	SearchServices search = new SearchServices();
+//        search.searchSong("dream");
+        System.out.println(search.searchSong("have"));
+
     }
 
 }
