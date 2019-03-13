@@ -61,6 +61,21 @@
 	},
 	{
 		"remoteMethod": {
+			"name": "savePlaylist",
+			"object": "PlaylistServices",
+			"call-semantics": "maybe",
+			"param": {
+				"userName": "string",
+				"existingTitle": "string",
+				"playlistTitle": "string",
+				"songsAdding": []
+				
+			},
+			"return": "String"
+		}
+	},
+	{
+		"remoteMethod": {
 			"name": "getAPlaylistsSongsJSON",
 			"object": "PlaylistServices",
 			"call-semantics": "maybe",
