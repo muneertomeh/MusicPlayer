@@ -119,10 +119,10 @@ function playSong(li) {
 
                 let musicPlayer = document.getElementById('music');
                 musicPlayer.innerHTML = '';
-                musicPlayer.src = li.musicFile+'.mp3'
+                musicPlayer.src = li.musicFile;
                 musicPlayer.play();
             }else{
-                fs.appendFile(li.musicFile+'.mp3', message['data'], (err) => {
+                fs.appendFile(li.musicFile, message['data'], (err) => {
                     if(err) console.log(err);
                     proxy.synchExecution('getSongChunck', [message['fragment']]);
                 });
