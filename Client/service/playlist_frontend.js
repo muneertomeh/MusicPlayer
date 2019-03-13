@@ -112,11 +112,16 @@ function deletePlaylist() {
 
 function savePlaylist() {
     //This is where a playlist gets saved based regardless if new or existing
-    songsToAdd = JSON.parse(localStorage.getItem("songsToAdd") || "[]");
-    proxy.synchExecution('savePlaylist', [userLoggedIn, localStorage.getItem('existingTitle'), document.getElementById('myText').value,
+    songsToAdd = localStorage.getItem("songsToAdd") || "[]";
+    songsToAdd = JSON.stringify(songsToAdd);
+    console.log(songsToAdd);
+    proxy.synchExecution('savePlaylist', [userLoggedIn, localStorage.getItem('existingTitle'), 
+    document.getElementById('myText').value,
     songsToAdd]);
 
-    ipc.once('')
+    ipc.once('message-savePlaylist', (event, message) => {
+
+    })
     // let usersPlaylists;
     // let playlistsSongs;
     // let activePlaylist = {};

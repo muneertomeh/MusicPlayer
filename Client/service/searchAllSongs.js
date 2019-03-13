@@ -124,7 +124,7 @@ function playSong(li) {
             }else{
                 fs.appendFile(li.musicFile, message['data'], (err) => {
                     if(err) console.log(err);
-                    proxy.synchExecution('getSongChunck', [message['fragment']]);
+                    proxy.synchExecution('getSongChunck', [li.musicFile, message['fragment']]);
                 });
             }
         }

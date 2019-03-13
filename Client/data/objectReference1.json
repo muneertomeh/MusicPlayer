@@ -118,7 +118,7 @@
 			"param": {
 				"UserName": "String",
 				"playlistTite": "String",
-				"songsToAdd": []
+				"songsToAdd": "[]"
 			},
 			"return": "String"
 		}

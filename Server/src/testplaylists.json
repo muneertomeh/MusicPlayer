@@ -132,7 +132,11 @@
   },
   {
     "UserName": "asd",
-    "Playlists": []
+    "Playlists": [
+      {
+        "PlaylistTitle": "asdfa"
+      }
+    ]
   },
   {
     "UserName": "dwa",
