@@ -78,10 +78,25 @@ function search()
                 listItem.textContent = song['SongTitle'] + ' by: ' + song['SongArtist'];
                 listItem.className = 'song_info';
                 listItem.id = id;
-                listItem.innerHTML += '<button type="submit" class="play_song_button" id="play_song_button" onclick="playSong(' + id + ')">Play Song</button>';
+                // listItem.innerHTML += '<button type="submit" class="play_song_button" onclick="playSong(' + id + ')">Play Song</button>';
                 listItem.musicFile = song['MusicFile'];
                 listItem.songTitle = song['SongTitle'];
                 listItem.artist = song['SongArtist'];
+                listItem.style.margin = '3px';
+                var btn = document.createElement('BUTTON');
+                var text = document.createTextNode('Play Song');
+                btn.style.height = '30px';
+                btn.style.width = '80px';
+                btn.style.backgroundColor = 'black';
+                btn.style.color = 'white';
+                btn.style.margin = '8px';
+                btn.appendChild(text);
+
+                btn.onclick = function(){
+                    playSong(listItem);
+                }
+
+                listItem.appendChild(btn);
                 list.appendChild(listItem);
                 i++;
             })
@@ -92,7 +107,8 @@ function search()
 }
 //TODO Make IPC Connection for song
 function playSong(li) {
-    proxy.synchExecution('getSongChunck', [li.musicFile, 1]);
+    console.log(li.musicFile);
+    proxy.synchExecution('getSongChunck', [li.musicFile, "1"]);
     ipc.on('message-SongChunk', (event, message)=> {
         if(message['success']){
             if(message['finished']){
@@ -108,7 +124,7 @@ function playSong(li) {
             }else{
                 fs.appendFile(li.musicFile+'.mp3', message['data'], (err) => {
                     if(err) console.log(err);
-                    proxy.synchExecution('getSongChunck', message['fragment']);
+                    proxy.synchExecution('getSongChunck', [message['fragment']]);
                 });
             }
         }

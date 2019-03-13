@@ -29,6 +29,7 @@ public class SearchServices {
 
     public SearchServices() {
         songsPath = pathHolder.songPath;
+        finalResults = new JsonArray();
         firstWordMatch = new JsonArray();
         someWordMatch = new JsonArray();
         substringMatch = new JsonArray();
@@ -139,7 +140,10 @@ public class SearchServices {
     {
         //List<Songs> songList = getSongs();
     	getSongs();
-    	finalResults = new JsonArray();
+    	for(int i = 0; i < finalResults.size(); i++) {
+    		finalResults.remove(0);
+    	}
+//    	finalResults = new JsonArray();
 
         for(int i = 0; i < musicFile.size(); i++) {
             String[] wordsInArtistName = musicFile.get(i).getAsJsonObject().get("artist").getAsJsonObject().get("name").getAsString().split(" ");
