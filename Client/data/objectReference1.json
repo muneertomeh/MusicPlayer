@@ -82,5 +82,16 @@
 			},
 			"return": "String"
 		}
+	},
+	{
+		"remoteMethod": {
+			"name": "searchSong",
+			"object": "SearchServices",
+			"call-semantics": "maybe",
+			"param": {
+				"userInput": "String"
+			},
+			"return": "String"
+		}
 	}
 ]

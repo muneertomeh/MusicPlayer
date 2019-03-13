@@ -5,4 +5,5 @@ public class pathHolder {
 	public static String testPlaylists = userDir + "/src/testplaylists.json";
 	public static String mp3Directory = userDir + "/src/mp3/";
 	public static String dataDirectory = userDir + "/src/data/";
+	public static String songPath = userDir + "/src/data/musicComplete.json";
 }

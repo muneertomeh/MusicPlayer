@@ -44,12 +44,13 @@ public class Dispatcher implements DispatcherInterface {
         RegisterServices registerServices = new RegisterServices();
         PlaylistServices playlistServices = new PlaylistServices();
         SongServices songServices = new SongServices();
+        SearchServices searchServices = new SearchServices();
         
         ListOfObjects.put("LoginServices", loginServices);
         ListOfObjects.put("RegistrationServices",registerServices);
         ListOfObjects.put("PlaylistServices", playlistServices);
         ListOfObjects.put("SongServices", songServices);
-
+        ListOfObjects.put("SearchServices", searchServices);
     }
 
     /*
