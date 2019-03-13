@@ -63,7 +63,7 @@ function enterListen(event){
 function search()
 {
     let userInput = document.getElementById('search_song').value;
-    proxy.synchExecution('searchSong',[userInput])
+    proxy.synchExecution('searchSong',[userInput, 'message-searchSongs'])
 
 
     ipc.on('message-searchSongs', (event, message)=> {

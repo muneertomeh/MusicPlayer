@@ -89,7 +89,21 @@
 			"object": "SearchServices",
 			"call-semantics": "maybe",
 			"param": {
-				"userInput": "String"
+				"userInput": "String",
+				"remoteMethod": "String"
+			},
+			"return": "String"
+		}
+	},
+	{
+		"remoteMethod": {
+			"name": "savePlaylist",
+			"object": "PlaylistServices",
+			"call-semantics": "maybe",
+			"param": {
+				"UserName": "String",
+				"playlistTite": "String",
+				"songsToAdd": []
 			},
 			"return": "String"
 		}
