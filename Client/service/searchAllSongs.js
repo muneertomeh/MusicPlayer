@@ -108,10 +108,17 @@ function search()
 //TODO Make IPC Connection for song
 function playSong(li) {
     console.log(li.musicFile);
+    var songInput = "";
+    var contentType = "audio.mpeg";
+    var filePath = path.join(__dirname, '/../mp3/mp3Data.mp3');
     proxy.synchExecution('getSongChunck', [li.musicFile, "1"]);
     ipc.on('message-SongChunk', (event, message)=> {
         if(message['success']){
             if(message['finished']){
+
+
+                var buf = new Buffer(songInput, 'base64');
+                fs.writeFileSync(filePath, songInput);
                 let currentSong = document.getElementById('song_title');
                 currentSong.innerHTML = li.songTitle;
                 currentSong = document.getElementById('artist_name');
@@ -119,17 +126,19 @@ function playSong(li) {
 
                 let musicPlayer = document.getElementById('music');
                 musicPlayer.innerHTML = '';
-                musicPlayer.src = li.musicFile;
+                musicPlayer.src = '../mp3/mp3Data.mp3';
                 musicPlayer.play();
             }else{
-                fs.appendFile(li.musicFile, message['data'], (err) => {
-                    if(err) console.log(err);
-                    proxy.synchExecution('getSongChunck', [message['fragment']]);
-                });
-            }
+                // fs.appendFile(li.musicFile, message['data'], (err) => {
+                //     if(err) console.log(err);
+                songInput = songInput.concat(songInput, message.data);
+                console.log(message.data);
+                proxy.synchExecution('getSongChunck', [li.musicFile, message['fragment']]);
+            };
         }
     });
 }
+
 
 
 function createNewPlaylist(){
