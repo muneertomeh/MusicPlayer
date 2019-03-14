@@ -108,17 +108,21 @@ function search()
 //TODO Make IPC Connection for song
 function playSong(li) {
     console.log("FILE NAME: "+li.musicFile);
-    var songInput = "";
+    var songInput = '';
     var contentType = "audio.mpeg";
     var filePath = path.join(__dirname, '/../mp3/mp3Data.mp3');
+    var obj={
+        bytes: []
+    }
     proxy.synchExecution('getSongChunck', [li.musicFile, "1"]);
     ipc.on('message-SongChunk', (event, message)=> {
         if(message['success']){
             if(message['finished']){
-
-
+                console.log("SONG INPUT: "+songInput);
+                console.log("IT IS COMPLETED..");
                 var buf = new Buffer(songInput, 'base64');
-                fs.writeFileSync(filePath, songInput);
+                var json = JSON.stringify(obj.bytes);
+                fs.writeFileSync(filePath, json);
                 let currentSong = document.getElementById('song_title');
                 currentSong.innerHTML = li.songTitle;
                 currentSong = document.getElementById('artist_name');
@@ -131,9 +135,15 @@ function playSong(li) {
             }else{
                 // fs.appendFile(li.musicFile, message['data'], (err) => {
                 //     if(err) console.log(err);
-           	for( var res ='', i=0; i<10000;i++){
-           		res += message.data;
-           	}
+
+
+                obj.bytes.push(message.data);
+
+
+
+            //    fs.writeFileSync(filePath, message.data);
+
+               //NOT SURE HOW TO CREATE AN MP3 FILE AS RESULT 
                 // songInput = songInput.concat(songInput, message.data);
                 console.log("DATA RECEIVED FROM SERVER: "+message.data);
                 proxy.synchExecution('getSongChunck', [li.musicFile, message['fragment']]);
