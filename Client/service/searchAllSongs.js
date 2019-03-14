@@ -16,7 +16,6 @@ ipc.on('message-getPlaylist', (event, message) => {
         alert('Something went wrong retrieving your playlists');
     } else if(msg['Playlists'] != ""){
         let playlists = msg['Playlists'];
-        console.log(playlists)
         let i = 0;
         playlists.forEach(playlist => {
             let p = document.createElement('p');
@@ -63,7 +62,7 @@ function enterListen(event){
 function search()
 {
     let userInput = document.getElementById('search_song').value;
-    proxy.synchExecution('searchSong',[userInput])
+    proxy.synchExecution('searchSong',[userInput, 'message-searchSongs'])
 
 
     ipc.on('message-searchSongs', (event, message)=> {
@@ -129,8 +128,8 @@ function playSong(li) {
                 });
                 var dataString = dataArray.join("");
 
-                
-                
+
+
                 // var encoded = Base64.encodeToString(obj.bytes,0);
                 fs.writeFileSync(filePath, btoa(dataString));
                 let currentSong = document.getElementById('song_title');
@@ -153,7 +152,7 @@ function playSong(li) {
 
             //    fs.writeFileSync(filePath, message.data);
 
-               //NOT SURE HOW TO CREATE AN MP3 FILE AS RESULT 
+               //NOT SURE HOW TO CREATE AN MP3 FILE AS RESULT
                 // songInput = songInput.concat(songInput, message.data);
                 console.log("DATA RECEIVED FROM SERVER: "+message.data);
                 proxy.synchExecution('getSongChunck', [li.musicFile, message['fragment']]);

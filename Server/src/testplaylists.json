@@ -132,7 +132,93 @@
   },
   {
     "UserName": "asd",
-    "Playlists": []
+    "Playlists": [
+      {
+        "PlaylistTitle": "NewTitle",
+        "Songs": [
+          {
+            "SongTitle": "Fire",
+            "SongArtist": "Diamond Rexx",
+            "MusicFile": "../mp3/bensound-energy.mp3"
+          },
+          {
+            "SongTitle": "Fire",
+            "SongArtist": "Jimi Hendrix",
+            "MusicFile": "../mp3/bensound-betterdays.mp3"
+          },
+          {
+            "SongTitle": "Through The Wire",
+            "SongArtist": "Kanye West",
+            "MusicFile": "../mp3/bensound-sunny.mp3"
+          },
+          {
+            "SongTitle": "Fire",
+            "SongArtist": "Jimi Hendrix",
+            "MusicFile": "../mp3/bensound-betterdays.mp3"
+          },
+          {
+            "SongTitle": "Fire",
+            "SongArtist": "Diamond Rexx",
+            "MusicFile": "../mp3/bensound-energy.mp3"
+          },
+          {
+            "SongTitle": "Fire",
+            "SongArtist": "Jimi Hendrix",
+            "MusicFile": "../mp3/bensound-betterdays.mp3"
+          },
+          {
+            "SongTitle": "Fire",
+            "SongArtist": "Jimi Hendrix",
+            "MusicFile": "../mp3/bensound-betterdays.mp3"
+          },
+          {
+            "SongTitle": "Through The Wire",
+            "SongArtist": "Kanye West",
+            "MusicFile": "../mp3/bensound-sunny.mp3"
+          }
+        ]
+      },
+      {
+        "PlaylistTitle": "newGuy",
+        "Songs": [
+          {
+            "SongTitle": "Fire",
+            "SongArtist": "Jimi Hendrix",
+            "MusicFile": "../mp3/bensound-betterdays.mp3"
+          },
+          {
+            "SongTitle": "Fire",
+            "SongArtist": "Jimi Hendrix",
+            "MusicFile": "../mp3/bensound-betterdays.mp3"
+          },
+          {
+            "SongTitle": "Through The Wire",
+            "SongArtist": "Kanye West",
+            "MusicFile": "../mp3/bensound-sunny.mp3"
+          },
+          {
+            "SongTitle": "November Has Come",
+            "SongArtist": "Gorillaz",
+            "MusicFile": "../mp3/bensound-energy.mp3"
+          },
+          {
+            "SongTitle": "Through The Wire",
+            "SongArtist": "Kanye West",
+            "MusicFile": "../mp3/bensound-sunny.mp3"
+          },
+          {
+            "SongTitle": "Fire",
+            "SongArtist": "Jimi Hendrix",
+            "MusicFile": "../mp3/bensound-betterdays.mp3"
+          },
+          {
+            "SongTitle": "Fire",
+            "SongArtist": "Jimi Hendrix",
+            "MusicFile": "../mp3/bensound-betterdays.mp3"
+          }
+        ]
+      }
+    ]
   },
   {
     "UserName": "dwa",

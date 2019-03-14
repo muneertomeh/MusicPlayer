@@ -7,6 +7,7 @@ import com.google.gson.reflect.TypeToken;
 import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.Iterator;
+import java.util.List;
 
 public class PlaylistServices{
     private String playlistPath = pathHolder.testPlaylists;
@@ -16,7 +17,10 @@ public class PlaylistServices{
     //Internal
     public ArrayList<Songs> getAPlaylistsSongs(Playlists playlistAffected){
         ArrayList<Songs> playlistsSongs = playlistAffected.getPlaylistsSongs();
-        songsToAdd.addAll(playlistsSongs);
+        for(int i = 0; i < playlistsSongs.size(); i++) {
+            System.out.println(playlistsSongs);
+        }
+        songsToAdd = (playlistsSongs);
 
         return songsToAdd;
     }
@@ -74,8 +78,8 @@ public class PlaylistServices{
     }
 
     public String getAPlaylistsSongsJSON(String playlistTitle, String userName){
-    	System.out.println("Function getAPlaylistsSongsJSON was called");
         boolean success = true;
+        currentPlaylist = new Playlists(playlistTitle);
         JsonObject responseObject = new JsonObject();
         responseObject.addProperty("eventListenerName", "message-getPlaylistInfo");
         
@@ -93,6 +97,7 @@ public class PlaylistServices{
             songData.addProperty("MusicFile", s.getMusicFile());
             songsArray.add(songData);
         }
+        songsToAdd = new ArrayList<Songs>();
         data.addProperty("success", success);
         data.add("Songs", songsArray);
         responseObject.add("data", data);
@@ -200,46 +205,6 @@ public class PlaylistServices{
             return stringifiedResponse;
         }
     }
-
-    //Method that returns a JSON string
-    public String addSongsToPlaylistEditor(Songs song, String userName){
-        boolean successfulAdd = false;
-        
-        JsonObject responseObject = new JsonObject();
-        responseObject.addProperty("eventListenerName", "message-addSongInPlaylistEditor");
-        
-        JsonObject data = new JsonObject();
-        String stringifiedResponse = "";
-        
-        try{
-            songsToAdd.add(song);
-            successfulAdd = true;
-            
-            JsonObject songData = new JsonObject();
-            songData.addProperty("SongTitle", song.getSongTitle());
-            songData.addProperty("SongArtist", song.getSongArtist());
-            songData.addProperty("MusicFile", song.getMusicFile());
-            
-            data.addProperty("success", successfulAdd);
-            data.addProperty("UserName", userName);
-            data.addProperty("Playlist", currentPlaylist.getPlaylistTitle());
-            data.add("Song", songData);
-            responseObject.add("data", data);
-            stringifiedResponse = responseObject.toString();
-        }catch(Exception e){
-            successfulAdd = false;
-            data.addProperty("success", successfulAdd);
-            responseObject.add("data", data);
-            stringifiedResponse = responseObject.toString();
-        }
-        if(successfulAdd == false){
-            data.addProperty("success", successfulAdd);
-            responseObject.add("data", data);
-            stringifiedResponse = responseObject.toString();
-        }
-        return stringifiedResponse;
-        
-    }
     
     //Method that returns a JSON string
     public String addSongsToPlaylistDashboard(Songs song, String userName, Playlists affectedPlaylist){
@@ -295,52 +260,24 @@ public class PlaylistServices{
         
         return stringifiedResponse;
     }
-
-    //Method that returns a JSON string
-    public String deleteSongsOnPlaylist(Songs song, String playlistTitle, String userName){
-        boolean isSuccessfulDeletion = false;
-        currentPlaylist = getPlaylist(playlistTitle, userName);
-        songsToAdd = currentPlaylist.getPlaylistsSongs();
-        
-        JsonObject responseObject = new JsonObject();
-        responseObject.addProperty("eventListenerName", "message-deleteSongOnPlaylist");
-        
+    
+    public String saveSong(String eventListenerName, String musicFile, String artist, String songTitle) {
+    	Songs s = new Songs(songTitle, artist, musicFile);
+    	songsToAdd.add(s);
         JsonObject data = new JsonObject();
-        String stringifiedResponse = "";
-        
-        Iterator itr = songsToAdd.iterator();
-        while(itr.hasNext()){
-            Songs s = (Songs) itr.next();
-            if(s.getSongTitle().equalsIgnoreCase(song.getSongTitle()) && 
-                    s.getSongArtist().equalsIgnoreCase(song.getSongArtist()) &&
-                    s.getMusicFile().equalsIgnoreCase(song.getMusicFile())){
-                itr.remove();
-                isSuccessfulDeletion = true;
-                
-                JsonObject songData = new JsonObject();
-                songData.addProperty("SongTitle", song.getSongTitle());
-                songData.addProperty("SongArtist", song.getSongArtist());
-                songData.addProperty("MusicFile", song.getMusicFile());
-
-                data.addProperty("success", isSuccessfulDeletion);
-                data.addProperty("UserName", userName);
-                data.addProperty("Playlist", currentPlaylist.getPlaylistTitle());
-                data.add("Song", songData);
-                responseObject.add("data", data);
-                stringifiedResponse = responseObject.toString();
-            }
-        }
-        
-        if(isSuccessfulDeletion == false){
-            data.addProperty("success", isSuccessfulDeletion);
-            responseObject.add("data", data);
-            stringifiedResponse = responseObject.toString();
-        }
+        JsonObject responseObject = new JsonObject();
+        responseObject.addProperty("eventListenerName", eventListenerName);
+        data.addProperty("success", true);
+        responseObject.add("data", data);
+        String stringifiedResponse = responseObject.toString();
         return stringifiedResponse;
     }
 
     //Method that returns a JSON string
-    public String savePlaylist(String playlistTitle, String existingTitle, String userName){
+    public String savePlaylist(String userName, String existingTitle, String playlistTitle){
+    	for(int i = 0; i < songsToAdd.size(); i++) {
+    		System.out.println(i);
+    	}
         boolean isSuccessfulCreation = false;
         boolean successfulTitle = false;
         UserPlaylists usersPlaylists = getUsersPlaylists(userName);
@@ -354,9 +291,8 @@ public class PlaylistServices{
         String stringifiedResponse = "";
         
         if(playlistTitle.equals("") || playlistTitle == null){
-            isSuccessfulCreation = false;
             successfulTitle = false;
-            data.addProperty("success", isSuccessfulCreation);
+            data.addProperty("success", true);
             data.addProperty("titlesuccess", successfulTitle);
             responseObject.add("data", data);
             stringifiedResponse = responseObject.toString();
@@ -364,19 +300,19 @@ public class PlaylistServices{
         else if(existingTitle.equals("") || existingTitle == null){
             for (Playlists p : usersListOfPlaylists){
                 if(p.getPlaylistTitle().equalsIgnoreCase(playlistTitle)){
-                    isSuccessfulCreation = false;
                     successfulTitle = false;
-                    data.addProperty("success", isSuccessfulCreation);
+                    data.addProperty("success", true);
                     data.addProperty("titlesuccess", successfulTitle);
                     responseObject.add("data", data);
                     stringifiedResponse = responseObject.toString();
-                    
+                    songsToAdd = new ArrayList<Songs>();
                     return stringifiedResponse;
                 }
             }
             currentPlaylist = new Playlists(playlistTitle);
             currentPlaylist.setPlaylistsSongs(songsToAdd);
             usersListOfPlaylists.add(currentPlaylist);
+            songsToAdd = new ArrayList<Songs>();
             usersPlaylists.setPlaylists(usersListOfPlaylists);
             for(int i = 0; i < userPlaylistArrList.size(); i++){
                 if(userPlaylistArrList.get(i).getUserName().equalsIgnoreCase(userName)){
@@ -390,6 +326,7 @@ public class PlaylistServices{
             for (Playlists p : usersListOfPlaylists) {
                 if(p.getPlaylistTitle().equalsIgnoreCase(playlistTitle)){
                     p.setPlaylistsSongs(songsToAdd);
+                    songsToAdd = new ArrayList<Songs>();
                     usersPlaylists.setPlaylists(usersListOfPlaylists);
                     for(int i = 0; i < userPlaylistArrList.size(); i++){
                         if(userPlaylistArrList.get(i).getUserName().equalsIgnoreCase(userName)){
@@ -404,12 +341,12 @@ public class PlaylistServices{
         else{
             for (Playlists p : usersListOfPlaylists) {
                 if(p.getPlaylistTitle().equalsIgnoreCase(playlistTitle)){
-                    isSuccessfulCreation = false;
                     successfulTitle = false;
-                    data.addProperty("success", isSuccessfulCreation);
+                    data.addProperty("success", true);
                     data.addProperty("titlesuccess", successfulTitle);
                     responseObject.add("data", data);
                     stringifiedResponse = responseObject.toString();
+                    songsToAdd = new ArrayList<Songs>();
                     return stringifiedResponse;
                 }
                 else if(p.getPlaylistTitle().equalsIgnoreCase(existingTitle)){
@@ -441,7 +378,9 @@ public class PlaylistServices{
                     songData.addProperty("MusicFile", s.getMusicFile());
                     songsArray.add(songData);
                 }
-
+                for(int i = 0; i< songsArray.size(); i++) {
+                    System.out.println(songsArray.get(i));
+                }
                 data.addProperty("success", isSuccessfulCreation);
                 data.addProperty("titlesuccess", successfulTitle);
                 data.addProperty("UserName", userName);
@@ -450,7 +389,6 @@ public class PlaylistServices{
                 responseObject.add("data", data);
                 stringifiedResponse = responseObject.toString();
                 
-                songsToAdd.clear();
                 currentPlaylist = null;
             }
             catch(IOException e){
@@ -463,6 +401,7 @@ public class PlaylistServices{
             }
         
         }
+        songsToAdd = new ArrayList<Songs>();
         return stringifiedResponse;
     }
 
