@@ -187,11 +187,6 @@
             "MusicFile": "../mp3/bensound-betterdays.mp3"
           },
           {
-            "SongTitle": "Through The Wire",
-            "SongArtist": "Kanye West",
-            "MusicFile": "../mp3/bensound-sunny.mp3"
-          },
-          {
             "SongTitle": "Fire",
             "SongArtist": "Jimi Hendrix",
             "MusicFile": "../mp3/bensound-betterdays.mp3"
@@ -207,155 +202,15 @@
             "MusicFile": "../mp3/bensound-energy.mp3"
           },
           {
-            "SongTitle": "Fire",
-            "SongArtist": "Jimi Hendrix",
-            "MusicFile": "../mp3/bensound-betterdays.mp3"
-          },
-          {
-            "SongTitle": "Fire",
-            "SongArtist": "Jimi Hendrix",
-            "MusicFile": "../mp3/bensound-betterdays.mp3"
-          }
-        ]
-      },
-      {
-        "PlaylistTitle": "test1",
-        "Songs": [
-          {
-            "SongTitle": "Fire",
-            "SongArtist": "Jimi Hendrix",
-            "MusicFile": "../mp3/bensound-betterdays.mp3"
+            "SongTitle": "Through The Wire",
+            "SongArtist": "Kanye West",
+            "MusicFile": "../mp3/bensound-sunny.mp3"
           },
           {
             "SongTitle": "Fire",
             "SongArtist": "Jimi Hendrix",
             "MusicFile": "../mp3/bensound-betterdays.mp3"
           },
-          {
-            "SongTitle": "Fire",
-            "SongArtist": "Jimi Hendrix",
-            "MusicFile": "../mp3/bensound-betterdays.mp3"
-          },
-          {
-            "SongTitle": "Fire",
-            "SongArtist": "Jimi Hendrix",
-            "MusicFile": "../mp3/bensound-betterdays.mp3"
-          },
-          {
-            "SongTitle": "Fire",
-            "SongArtist": "Jimi Hendrix",
-            "MusicFile": "../mp3/bensound-betterdays.mp3"
-          },
-          {
-            "SongTitle": "Fire",
-            "SongArtist": "Jimi Hendrix",
-            "MusicFile": "../mp3/bensound-betterdays.mp3"
-          },
-          {
-            "SongTitle": "Fire",
-            "SongArtist": "Jimi Hendrix",
-            "MusicFile": "../mp3/bensound-betterdays.mp3"
-          },
-          {
-            "SongTitle": "Fire",
-            "SongArtist": "Jimi Hendrix",
-            "MusicFile": "../mp3/bensound-betterdays.mp3"
-          },
-          {
-            "SongTitle": "Fire",
-            "SongArtist": "Jimi Hendrix",
-            "MusicFile": "../mp3/bensound-betterdays.mp3"
-          },
-          {
-            "SongTitle": "Fire",
-            "SongArtist": "Jimi Hendrix",
-            "MusicFile": "../mp3/bensound-betterdays.mp3"
-          },
-          {
-            "SongTitle": "Fire",
-            "SongArtist": "Jimi Hendrix",
-            "MusicFile": "../mp3/bensound-betterdays.mp3"
-          },
-          {
-            "SongTitle": "Fire",
-            "SongArtist": "Jimi Hendrix",
-            "MusicFile": "../mp3/bensound-betterdays.mp3"
-          },
-          {
-            "SongTitle": "Fire",
-            "SongArtist": "Jimi Hendrix",
-            "MusicFile": "../mp3/bensound-betterdays.mp3"
-          },
-          {
-            "SongTitle": "Fire",
-            "SongArtist": "Jimi Hendrix",
-            "MusicFile": "../mp3/bensound-betterdays.mp3"
-          },
-          {
-            "SongTitle": "Fire",
-            "SongArtist": "Jimi Hendrix",
-            "MusicFile": "../mp3/bensound-betterdays.mp3"
-          },
-          {
-            "SongTitle": "Fire",
-            "SongArtist": "Jimi Hendrix",
-            "MusicFile": "../mp3/bensound-betterdays.mp3"
-          },
-          {
-            "SongTitle": "Fire",
-            "SongArtist": "Jimi Hendrix",
-            "MusicFile": "../mp3/bensound-betterdays.mp3"
-          },
-          {
-            "SongTitle": "Fire",
-            "SongArtist": "Jimi Hendrix",
-            "MusicFile": "../mp3/bensound-betterdays.mp3"
-          },
-          {
-            "SongTitle": "Fire",
-            "SongArtist": "Jimi Hendrix",
-            "MusicFile": "../mp3/bensound-betterdays.mp3"
-          },
-          {
-            "SongTitle": "Fire",
-            "SongArtist": "Jimi Hendrix",
-            "MusicFile": "../mp3/bensound-betterdays.mp3"
-          },
-          {
-            "SongTitle": "Fire",
-            "SongArtist": "Jimi Hendrix",
-            "MusicFile": "../mp3/bensound-betterdays.mp3"
-          },
-          {
-            "SongTitle": "Fire",
-            "SongArtist": "Jimi Hendrix",
-            "MusicFile": "../mp3/bensound-betterdays.mp3"
-          },
-          {
-            "SongTitle": "Fire",
-            "SongArtist": "Jimi Hendrix",
-            "MusicFile": "../mp3/bensound-betterdays.mp3"
-          },
-          {
-            "SongTitle": "Fire",
-            "SongArtist": "Jimi Hendrix",
-            "MusicFile": "../mp3/bensound-betterdays.mp3"
-          },
-          {
-            "SongTitle": "Fire",
-            "SongArtist": "Jimi Hendrix",
-            "MusicFile": "../mp3/bensound-betterdays.mp3"
-          },
-          {
-            "SongTitle": "Fire",
-            "SongArtist": "Jimi Hendrix",
-            "MusicFile": "../mp3/bensound-betterdays.mp3"
-          }
-        ]
-      },
-      {
-        "PlaylistTitle": "newasd",
-        "Songs": [
           {
             "SongTitle": "Fire",
             "SongArtist": "Jimi Hendrix",
