@@ -127,8 +127,23 @@
 			"call-semantics": "maybe",
 			"param": {
 				"UserName": "String",
-				"playlistTite": "String",
-				"songsToAdd": "[]"
+				"existingTitle": "String",
+				"currentTitle": "String",
+				"songsToAdd": []
+			},
+			"return": "String"
+		}
+	},
+	{
+		"remoteMethod": {
+			"name": "saveSong",
+			"object": "PlaylistServices",
+			"call-semantics": "maybe",
+			"param": {
+				"eventListenerName": "String",
+				"musicFile": "String",
+				"artist": "String",
+				"songTitle": "String"
 			},
 			"return": "String"
 		}

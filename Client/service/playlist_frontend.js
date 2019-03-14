@@ -111,87 +111,28 @@ function deletePlaylist() {
 }
 
 function savePlaylist() {
-    //This is where a playlist gets saved based regardless if new or existing
-    songsToAdd = localStorage.getItem("songsToAdd") || "[]";
-    songsToAdd = JSON.stringify(songsToAdd);
+    songsToAdd = JSON.parse(localStorage.getItem("songsToAdd") || "[]");
+    songsToAdd.forEach(song => {
+        proxy.synchExecution('saveSong', ['message-songAdd', song.MusicFile, song.SongArtist, song.SongTitle]);
+    })
+    
     console.log(songsToAdd);
     proxy.synchExecution('savePlaylist', [userLoggedIn, localStorage.getItem('existingTitle'), 
-    document.getElementById('myText').value,
-    songsToAdd]);
+    document.getElementById('myText').value]);
 
     ipc.once('message-savePlaylist', (event, message) => {
-
-    })
-    // let usersPlaylists;
-    // let playlistsSongs;
-    // let activePlaylist = {};
-    // fs.readFile(__dirname + '/../data/playlist.json', (err, rawdata) => {
-    //     if(err) console.log(err);
-    //     else{
-    //         let data = JSON.parse(rawdata);
-    //         let startTitle = localStorage.getItem('existingTitle');
-    //         let currentTitle = document.getElementById('myText').value;
-    //         let isValidName = true;
-    //         let isNewPlaylist = true;
-
-    //         data['UserPlaylists'].forEach(element => {
-    //             if(userLoggedIn == element['UserName']){
-    //                 usersPlaylists = element['Playlists'];
-    //             }
-    //         });
-
-
-    //         if(currentTitle == '')
-    //             isValidName = false;
-    //         else if(startTitle == '') {
-    //             usersPlaylists.forEach(element => {
-    //                 if(element['PlaylistTitle'] == currentTitle){
-    //                     isValidName = false;
-    //                 }
-    //             });
-
-    //             usersPlaylists.push({
-    //                 'PlaylistTitle': currentTitle,
-    //                 'Songs': songsToAdd
-    //             });
-    //         }
-    //         else if(currentTitle == startTitle) {
-    //             usersPlaylists.forEach(playlist => {
-    //                 if(playlist['PlaylistTitle'] == currentTitle)
-    //                     activePlaylist = playlist;
-
-    //             });
-    //             activePlaylist['Songs'] = songsToAdd;
-
-    //         } else{
-    //             usersPlaylists.forEach(playlist => {
-    //                 if(playlist['PlaylistTitle'] == currentTitle){
-    //                     isValidName = false;
-    //                 } else if(startTitle == playlist['PlaylistTitle']) {
-    //                     playlist['PlaylistTitle'] = currentTitle;
-    //                     activePlaylist = playlist;
-    //                 }
-    //             });
-
-    //             activePlaylist['Songs'] = songsToAdd;
-    //         }
-
-    //         if(isValidName) {
-    //             fs.writeFile(__dirname + '/../data/playlist.json', JSON.stringify(data), (err) => {
-    //                 list.innerHTML = ''
-    //                 if(err) console.log(err);
-    //                 else{
-    //                     list.innerHTML = '';
-    //                     localStorage.setItem('existingTitle', '');
-    //                     returnToDash();
-    //                 }
-    //             });
-    //         } else {
-    //             document.getElementById('myText').style.borderColor = 'red';
-    //             alert('Please enter a valid and not existing name');
-    //         }
-    //     }
-    // });
+        let data = message['data'];
+        if(data['success']){
+            if(data['titlesuccess']){
+                returnToDash();
+            }else{
+                alert('Cannot set blank or preexisting title');
+                document.getElementById('myText').style.borderColor = 'red';
+            }
+        }else{
+            alert('Something went wrong');
+        }
+    });
 }
 
 function displayPlaylist(isFirstDisplay) {

@@ -7,6 +7,7 @@ import com.google.gson.reflect.TypeToken;
 import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.Iterator;
+import java.util.List;
 
 public class PlaylistServices{
     private String playlistPath = pathHolder.testPlaylists;
@@ -255,9 +256,21 @@ public class PlaylistServices{
         
         return stringifiedResponse;
     }
+    
+    public String saveSong(String eventListenerName, String musicFile, String artist, String songTitle) {
+    	Songs s = new Songs(songTitle, artist, musicFile);
+    	songsToAdd.add(s);
+        JsonObject data = new JsonObject();
+        JsonObject responseObject = new JsonObject();
+        responseObject.addProperty("eventListenerName", eventListenerName);
+        data.addProperty("success", true);
+        responseObject.add("data", data);
+        String stringifiedResponse = responseObject.toString();
+        return stringifiedResponse;
+    }
 
     //Method that returns a JSON string
-    public String savePlaylist(String userName, String existingTitle, String playlistTitle, ArrayList<Songs> songsAdding){
+    public String savePlaylist(String userName, String existingTitle, String playlistTitle){
         boolean isSuccessfulCreation = false;
         boolean successfulTitle = false;
         UserPlaylists usersPlaylists = getUsersPlaylists(userName);
@@ -287,12 +300,12 @@ public class PlaylistServices{
                     data.addProperty("titlesuccess", successfulTitle);
                     responseObject.add("data", data);
                     stringifiedResponse = responseObject.toString();
-                    
+                    songsToAdd = new ArrayList<Songs>();
                     return stringifiedResponse;
                 }
             }
             currentPlaylist = new Playlists(playlistTitle);
-            currentPlaylist.setPlaylistsSongs(songsAdding);
+            currentPlaylist.setPlaylistsSongs(songsToAdd);
             usersListOfPlaylists.add(currentPlaylist);
             usersPlaylists.setPlaylists(usersListOfPlaylists);
             for(int i = 0; i < userPlaylistArrList.size(); i++){
@@ -306,7 +319,7 @@ public class PlaylistServices{
         else if(existingTitle.equalsIgnoreCase(playlistTitle)){
             for (Playlists p : usersListOfPlaylists) {
                 if(p.getPlaylistTitle().equalsIgnoreCase(playlistTitle)){
-                    p.setPlaylistsSongs(songsAdding);
+                    p.setPlaylistsSongs(songsToAdd);
                     usersPlaylists.setPlaylists(usersListOfPlaylists);
                     for(int i = 0; i < userPlaylistArrList.size(); i++){
                         if(userPlaylistArrList.get(i).getUserName().equalsIgnoreCase(userName)){
@@ -327,12 +340,13 @@ public class PlaylistServices{
                     data.addProperty("titlesuccess", successfulTitle);
                     responseObject.add("data", data);
                     stringifiedResponse = responseObject.toString();
+                    songsToAdd = new ArrayList<Songs>();
                     return stringifiedResponse;
                 }
                 else if(p.getPlaylistTitle().equalsIgnoreCase(existingTitle)){
                     p.setPlaylistTitle(playlistTitle);
                     currentPlaylist = p;
-                    currentPlaylist.setPlaylistsSongs(songsAdding);
+                    currentPlaylist.setPlaylistsSongs(songsToAdd);
                     usersPlaylists.setPlaylists(usersListOfPlaylists);
                     for(int i = 0; i < userPlaylistArrList.size(); i++){
                         if(userPlaylistArrList.get(i).getUserName().equalsIgnoreCase(userName)){
@@ -351,7 +365,7 @@ public class PlaylistServices{
                 gsonWriter.toJson(userPlaylistArrList, w);
                 
                 JsonArray songsArray = new JsonArray();
-                for(Songs s : songsAdding){
+                for(Songs s : songsToAdd){
                     JsonObject songData = new JsonObject();
                     songData.addProperty("SongTitle", s.getSongTitle());
                     songData.addProperty("SongArtist", s.getSongArtist());
@@ -379,6 +393,7 @@ public class PlaylistServices{
             }
         
         }
+        songsToAdd = new ArrayList<Songs>();
         return stringifiedResponse;
     }
 
