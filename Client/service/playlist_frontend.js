@@ -72,53 +72,33 @@ function addSongToPlaylist(file, title, artist) {
   }
 
 function deletePlaylist() {
-    //This is where the playlist is deleted and removed from playlist.json
-    //Delete current playlist and redirect back to the dashboard
+    console.log("Attempting to delete playlist");
     let currentPlaylist = document.getElementById("myText").value;
-    fs.readFile(__dirname + '/../data/playlist.json', (err, rawdata) => {
-        if(err) console.log(err);
-        else{
-            let data = JSON.parse(rawdata);
-            let usersPlaylists;
-            let temp = [];
-            data['UserPlaylists'].forEach(element =>{
-                if(userLoggedIn == element['UserName']){
-                    usersPlaylists = element['Playlists'];
-                }
-            });
-            usersPlaylists.forEach(element => {
-                if(currentPlaylist != element['PlaylistTitle']){
-                    temp.push(element);
-                }
-            });
-            
-            data['UserPlaylists'].forEach(element =>{
-                if(userLoggedIn == element['UserName']){
-                    element['Playlists'] = temp;
-                }
-            });
+    proxy.synchExecution('deletePlaylist', [currentPlaylist, userLoggedIn]);
 
-            let json = JSON.stringify(data);
-            fs.writeFile(__dirname + '/../data/playlist.json', json, (err) => {
-                if(err) console.log(err);
-                else{
-                    alert("Playlist deleted");
-                    returnToDash();
-                }
-            });
+    ipc.once('message-deletePlaylist', (event, message) => {
+        let data = message['data'];
+        if(data['success']){
+            returnToDash();
+        }else{
+            alert('Something went wrong deleting playlist ', data['DeletedPlaylist']);
         }
     });
 }
 
 function savePlaylist() {
     songsToAdd = JSON.parse(localStorage.getItem("songsToAdd") || "[]");
-    songsToAdd.forEach(song => {
-        proxy.synchExecution('saveSong', ['message-songAdd', song.MusicFile, song.SongArtist, song.SongTitle]);
-    })
-    
-    console.log(songsToAdd);
-    proxy.synchExecution('savePlaylist', [userLoggedIn, localStorage.getItem('existingTitle'), 
-    document.getElementById('myText').value]);
+    let promise = new Promise((resolve, reject) => {
+        songsToAdd.forEach(song => {
+            proxy.synchExecution('saveSong', ['message-songAdd', song.MusicFile, song.SongArtist, song.SongTitle]);
+        })
+        resolve('songs sent');
+    });
+    promise.then((val) => {
+        console.log(songsToAdd);
+        proxy.synchExecution('savePlaylist', [userLoggedIn, localStorage.getItem('existingTitle'), 
+        document.getElementById('myText').value]);
+    });    
 
     ipc.once('message-savePlaylist', (event, message) => {
         let data = message['data'];
@@ -139,7 +119,9 @@ function displayPlaylist(isFirstDisplay) {
     list = document.getElementById('theList');
     list.innerHTML = '';
     if(isFirstDisplay){
+        console.log("First Time logged in");
         if(playListTitle!= ""){
+            document.getElementById("myText").value = playListTitle;
             proxy.synchExecution('getAPlaylistsSongsJSON', [playListTitle, userLoggedIn]);
 
             ipc.on('message-getPlaylistInfo', (event, message) => {

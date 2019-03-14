@@ -87,14 +87,16 @@
 		}
 	},
 	{
-		"remoteMethod": "deletePlaylist",
-		"object": "PlaylistServices",
-		"call-semantics": "maybe",
-		"param": {
-			"playlistTitle": "string",
-			"userName": "string"
-		},
-		"return": "String"
+		"remoteMethod": {
+			"name": "deletePlaylist",
+			"object": "PlaylistServices",
+			"call-semantics": "maybe",
+			"param": {
+				"musicFileName": "String",
+				"fragment": 1
+			},
+			"return": "String"
+		}
 	},
 	{
 		"remoteMethod": {

@@ -17,7 +17,10 @@ public class PlaylistServices{
     //Internal
     public ArrayList<Songs> getAPlaylistsSongs(Playlists playlistAffected){
         ArrayList<Songs> playlistsSongs = playlistAffected.getPlaylistsSongs();
-        songsToAdd.addAll(playlistsSongs);
+        for(int i = 0; i < playlistsSongs.size(); i++) {
+            System.out.println(playlistsSongs);
+        }
+        songsToAdd = (playlistsSongs);
 
         return songsToAdd;
     }
@@ -75,8 +78,8 @@ public class PlaylistServices{
     }
 
     public String getAPlaylistsSongsJSON(String playlistTitle, String userName){
-    	System.out.println("Function getAPlaylistsSongsJSON was called");
         boolean success = true;
+        currentPlaylist = new Playlists(playlistTitle);
         JsonObject responseObject = new JsonObject();
         responseObject.addProperty("eventListenerName", "message-getPlaylistInfo");
         
@@ -94,6 +97,7 @@ public class PlaylistServices{
             songData.addProperty("MusicFile", s.getMusicFile());
             songsArray.add(songData);
         }
+        songsToAdd = new ArrayList<Songs>();
         data.addProperty("success", success);
         data.add("Songs", songsArray);
         responseObject.add("data", data);
@@ -271,6 +275,9 @@ public class PlaylistServices{
 
     //Method that returns a JSON string
     public String savePlaylist(String userName, String existingTitle, String playlistTitle){
+    	for(int i = 0; i < songsToAdd.size(); i++) {
+    		System.out.println(i);
+    	}
         boolean isSuccessfulCreation = false;
         boolean successfulTitle = false;
         UserPlaylists usersPlaylists = getUsersPlaylists(userName);
@@ -305,6 +312,7 @@ public class PlaylistServices{
             currentPlaylist = new Playlists(playlistTitle);
             currentPlaylist.setPlaylistsSongs(songsToAdd);
             usersListOfPlaylists.add(currentPlaylist);
+            songsToAdd = new ArrayList<Songs>();
             usersPlaylists.setPlaylists(usersListOfPlaylists);
             for(int i = 0; i < userPlaylistArrList.size(); i++){
                 if(userPlaylistArrList.get(i).getUserName().equalsIgnoreCase(userName)){
@@ -318,6 +326,7 @@ public class PlaylistServices{
             for (Playlists p : usersListOfPlaylists) {
                 if(p.getPlaylistTitle().equalsIgnoreCase(playlistTitle)){
                     p.setPlaylistsSongs(songsToAdd);
+                    songsToAdd = new ArrayList<Songs>();
                     usersPlaylists.setPlaylists(usersListOfPlaylists);
                     for(int i = 0; i < userPlaylistArrList.size(); i++){
                         if(userPlaylistArrList.get(i).getUserName().equalsIgnoreCase(userName)){
@@ -369,7 +378,9 @@ public class PlaylistServices{
                     songData.addProperty("MusicFile", s.getMusicFile());
                     songsArray.add(songData);
                 }
-
+                for(int i = 0; i< songsArray.size(); i++) {
+                    System.out.println(songsArray.get(i));
+                }
                 data.addProperty("success", isSuccessfulCreation);
                 data.addProperty("titlesuccess", successfulTitle);
                 data.addProperty("UserName", userName);
