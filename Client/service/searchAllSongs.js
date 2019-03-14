@@ -120,9 +120,19 @@ function playSong(li) {
             if(message['finished']){
                 console.log("SONG INPUT: "+songInput);
                 console.log("IT IS COMPLETED..");
-                var buf = new Buffer(songInput, 'base64');
                 var json = JSON.stringify(obj.bytes);
-                fs.writeFileSync(filePath, json);
+                var buf = new Buffer(json, 'base64');
+                var dataArray = obj.bytes.map(function(e){
+                    var x = JSON.stringify(e);
+                    x= x.substring(1, x.length-1);
+                    return x;
+                });
+                var dataString = dataArray.join("");
+
+                
+                
+                // var encoded = Base64.encodeToString(obj.bytes,0);
+                fs.writeFileSync(filePath, btoa(dataString));
                 let currentSong = document.getElementById('song_title');
                 currentSong.innerHTML = li.songTitle;
                 currentSong = document.getElementById('artist_name');
