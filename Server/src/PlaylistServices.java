@@ -284,9 +284,8 @@ public class PlaylistServices{
         String stringifiedResponse = "";
         
         if(playlistTitle.equals("") || playlistTitle == null){
-            isSuccessfulCreation = false;
             successfulTitle = false;
-            data.addProperty("success", isSuccessfulCreation);
+            data.addProperty("success", true);
             data.addProperty("titlesuccess", successfulTitle);
             responseObject.add("data", data);
             stringifiedResponse = responseObject.toString();
@@ -294,9 +293,8 @@ public class PlaylistServices{
         else if(existingTitle.equals("") || existingTitle == null){
             for (Playlists p : usersListOfPlaylists){
                 if(p.getPlaylistTitle().equalsIgnoreCase(playlistTitle)){
-                    isSuccessfulCreation = false;
                     successfulTitle = false;
-                    data.addProperty("success", isSuccessfulCreation);
+                    data.addProperty("success", true);
                     data.addProperty("titlesuccess", successfulTitle);
                     responseObject.add("data", data);
                     stringifiedResponse = responseObject.toString();
@@ -334,9 +332,8 @@ public class PlaylistServices{
         else{
             for (Playlists p : usersListOfPlaylists) {
                 if(p.getPlaylistTitle().equalsIgnoreCase(playlistTitle)){
-                    isSuccessfulCreation = false;
                     successfulTitle = false;
-                    data.addProperty("success", isSuccessfulCreation);
+                    data.addProperty("success", true);
                     data.addProperty("titlesuccess", successfulTitle);
                     responseObject.add("data", data);
                     stringifiedResponse = responseObject.toString();

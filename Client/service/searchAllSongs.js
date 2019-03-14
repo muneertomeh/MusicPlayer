@@ -16,7 +16,6 @@ ipc.on('message-getPlaylist', (event, message) => {
         alert('Something went wrong retrieving your playlists');
     } else if(msg['Playlists'] != ""){
         let playlists = msg['Playlists'];
-        console.log(playlists)
         let i = 0;
         playlists.forEach(playlist => {
             let p = document.createElement('p');
@@ -107,7 +106,6 @@ function search()
 }
 //TODO Make IPC Connection for song
 function playSong(li) {
-    console.log(li.musicFile);
     proxy.synchExecution('getSongChunck', [li.musicFile, "1"]);
     ipc.on('message-SongChunk', (event, message)=> {
         if(message['success']){

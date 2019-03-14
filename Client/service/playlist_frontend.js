@@ -141,6 +141,17 @@ function displayPlaylist(isFirstDisplay) {
     if(isFirstDisplay){
         if(playListTitle!= ""){
             proxy.synchExecution('getAPlaylistsSongsJSON', [playListTitle, userLoggedIn]);
+
+            ipc.on('message-getPlaylistInfo', (event, message) => {
+                let data = message['data'];
+                if(data['success']){
+                    localStorage.setItem("songsToAdd", JSON.stringify(data['Songs']));
+                    songsToAdd = JSON.parse(localStorage.getItem("songsToAdd") || "[]");
+                    createElements();
+                }else{
+                    alert('Something went wrong retirieving playlist info');
+                }
+            })
         }
     }else{
         songsToAdd = JSON.parse(localStorage.getItem("songsToAdd") || "[]");
