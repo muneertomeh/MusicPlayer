@@ -27,3 +27,4 @@ local.properties
 *.launch
 
 /Server/SearchCode/
+/bin/

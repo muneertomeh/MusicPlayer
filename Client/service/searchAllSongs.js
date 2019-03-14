@@ -107,7 +107,7 @@ function search()
 }
 //TODO Make IPC Connection for song
 function playSong(li) {
-    console.log(li.musicFile);
+    console.log("FILE NAME: "+li.musicFile);
     var songInput = "";
     var contentType = "audio.mpeg";
     var filePath = path.join(__dirname, '/../mp3/mp3Data.mp3');
@@ -131,8 +131,11 @@ function playSong(li) {
             }else{
                 // fs.appendFile(li.musicFile, message['data'], (err) => {
                 //     if(err) console.log(err);
-                songInput = songInput.concat(songInput, message.data);
-                console.log(message.data);
+           	for( var res ='', i=0; i<10000;i++){
+           		res += message.data;
+           	}
+                // songInput = songInput.concat(songInput, message.data);
+                console.log("DATA RECEIVED FROM SERVER: "+message.data);
                 proxy.synchExecution('getSongChunck', [li.musicFile, message['fragment']]);
             };
         }
