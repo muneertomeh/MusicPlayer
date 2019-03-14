@@ -29,12 +29,6 @@ public class SearchServices {
 
     public SearchServices() {
         songsPath = pathHolder.songPath;
-        finalResults = new JsonArray();
-        firstWordMatch = new JsonArray();
-        someWordMatch = new JsonArray();
-        substringMatch = new JsonArray();
-        notRelevant = new JsonArray();
-        optionMenu = 0;
     }
 
 
@@ -138,6 +132,12 @@ public class SearchServices {
    // return ArrayList<Songs>
     public String searchSong(String userInput, String remoteMethod)
     {
+    	finalResults = new JsonArray();
+        firstWordMatch = new JsonArray();
+        someWordMatch = new JsonArray();
+        substringMatch = new JsonArray();
+        notRelevant = new JsonArray();
+        optionMenu = 0;
         //List<Songs> songList = getSongs();
     	getSongs();
     	for(int i = 0; i < finalResults.size(); i++) {

@@ -4,7 +4,7 @@ import java.net.*;
 public class SocketLayer extends Thread{
     private DatagramSocket socket;
     private boolean running;
-    private byte[] buf = new byte[256];
+    private byte[] buf = new byte[8292];
     private int serverPort = 41236;
     private Dispatcher dispatcher;
     
