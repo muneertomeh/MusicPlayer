@@ -177,7 +177,6 @@ public class Dispatcher implements DispatcherInterface {
                         ret = method.invoke(object, parameter).toString();
                         break;
                     case "java.lang.String":
-                    	System.out.println("Parameters: " + parameter);
                         ret = (String)method.invoke(object, parameter).toString();
                         break;
                 }

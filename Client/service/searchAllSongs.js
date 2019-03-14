@@ -16,7 +16,6 @@ ipc.on('message-getPlaylist', (event, message) => {
         alert('Something went wrong retrieving your playlists');
     } else if(msg['Playlists'] != ""){
         let playlists = msg['Playlists'];
-        console.log(playlists)
         let i = 0;
         playlists.forEach(playlist => {
             let p = document.createElement('p');
@@ -63,7 +62,7 @@ function enterListen(event){
 function search()
 {
     let userInput = document.getElementById('search_song').value;
-    proxy.synchExecution('searchSong',[userInput])
+    proxy.synchExecution('searchSong',[userInput, 'message-searchSongs'])
 
 
     ipc.on('message-searchSongs', (event, message)=> {
@@ -107,7 +106,6 @@ function search()
 }
 //TODO Make IPC Connection for song
 function playSong(li) {
-    console.log(li.musicFile);
     proxy.synchExecution('getSongChunck', [li.musicFile, "1"]);
     ipc.on('message-SongChunk', (event, message)=> {
         if(message['success']){
@@ -124,7 +122,7 @@ function playSong(li) {
             }else{
                 fs.appendFile(li.musicFile, message['data'], (err) => {
                     if(err) console.log(err);
-                    proxy.synchExecution('getSongChunck', [message['fragment']]);
+                    proxy.synchExecution('getSongChunck', [li.musicFile, message['fragment']]);
                 });
             }
         }

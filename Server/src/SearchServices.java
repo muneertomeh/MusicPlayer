@@ -136,7 +136,7 @@ public class SearchServices {
     }
 
    // return ArrayList<Songs>
-    public String searchSong(String userInput)
+    public String searchSong(String userInput, String remoteMethod)
     {
         //List<Songs> songList = getSongs();
     	getSongs();
@@ -214,34 +214,10 @@ public class SearchServices {
         
         Gson g = new Gson();
         boolean successfulRegister = true;
-        searchReturn sr = new searchReturn(fs, successfulRegister, "message-searchSongs");
+        searchReturn sr = new searchReturn(fs, successfulRegister, remoteMethod);
         String JSONoutput = g.toJson(sr);
 		
 		return JSONoutput;
-        
-//        JsonObject responseObject = new JsonObject();
-//        JsonObject data = new JsonObject();
-//        responseObject.addProperty("eventListenerName", "message-searchSongs");
-//
-//        data.addProperty("success", successfulRegister);
-//       // JsonObject convertToJson = parser.parse(ret.trim()).getAsJsonObject();
-//
-//        data.addProperty("song", finalizeArray.toString());
-//        //System.out.println(data);
-//
-//
-//        responseObject.addProperty("data", data.toString());
-//       // System.out.println(responseObject);
-//        JsonObject jsonReturn = new JsonObject();
-//        String finalResult = responseObject.toString();
-//
-//        String cleanResult = finalResult.replaceAll("\\\\","");
-//        /*NOTE:
-//         * To test the return the code just uncomment the print statement below
-//         *
-//         */
-//        System.out.println(cleanResult);
-//        return cleanResult;
 
     }
 
@@ -249,7 +225,7 @@ public class SearchServices {
         // Instance of the search
     	SearchServices search = new SearchServices();
 //        search.searchSong("dream");
-        System.out.println(search.searchSong("have"));
+        System.out.println(search.searchSong("have", "remote"));
 
     }
 
