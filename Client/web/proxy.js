@@ -20,7 +20,6 @@ module.exports.synchExecution = function(remoteMethodName, param)
             data.forEach(element => {
                 if(element.remoteMethod.name == remoteMethodName)
                 {
-                    console.log('I never found a match')
                     jsonRequest.remoteMethod = element.remoteMethod;
                     let i = 0;
                     for(let key in jsonRequest.remoteMethod.param) {

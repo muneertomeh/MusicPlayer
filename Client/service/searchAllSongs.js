@@ -125,11 +125,11 @@ function playSong(li) {
 
                 let musicPlayer = document.getElementById('music');
                 musicPlayer.innerHTML = '';
-                // musicPlayer.src = __dirname + '../mp3/490183';
-                // musicPlayer.play();
+                musicPlayer.src = __dirname + '/../mp3/music.mp3';
+                musicPlayer.play();
             }else{
                 let pr = new Promise((resolve, reject) => {
-                    fs.appendFile(__dirname + '/../mp3/music.txt', message['data'], (err) => {
+                    fs.appendFile(__dirname + '/../mp3/music.mp3', message['data'], (err) => {
                         if(err) reject(err);
                         resolve(true);
                     });
