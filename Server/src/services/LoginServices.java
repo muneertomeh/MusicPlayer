@@ -1,8 +1,13 @@
+package services;
 import java.io.*;
 import java.util.ArrayList;
 import java.util.List;
 import com.google.gson.*;
 import com.google.gson.reflect.TypeToken;
+
+import gson.UserPlaylists;
+import gson.Users;
+
 import java.lang.reflect.Type;
 
 public class LoginServices {

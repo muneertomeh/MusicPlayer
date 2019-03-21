@@ -1,4 +1,10 @@
+package unitTests;
 import java.util.ArrayList;
+
+import gson.Playlists;
+import gson.Songs;
+import gson.UserPlaylists;
+import services.PlaylistServices;
 
 public class PlaylistServicesTest {
 
