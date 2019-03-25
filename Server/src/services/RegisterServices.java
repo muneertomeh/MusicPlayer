@@ -1,9 +1,14 @@
+package services;
 
 import java.io.*;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.JsonObject;
 import com.google.gson.reflect.TypeToken;
+
+import gson.UserPlaylists;
+import gson.Users;
+
 import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.List;

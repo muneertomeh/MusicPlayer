@@ -1,3 +1,9 @@
+package clientComm;
+import data.*;
+import gson.*;
+import services.*;
+import unitTests.*;
+
 /**
 * The Dispatcher implements DispatcherInterface.
 *
@@ -19,6 +25,13 @@ import com.google.gson.JsonElement;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonParser;
 import com.google.gson.stream.JsonReader;
+
+import services.LoginServices;
+import services.PlaylistServices;
+import services.RegisterServices;
+import services.SearchServices;
+import services.SongServices;
+
 import com.google.gson.*;
 
 
@@ -207,28 +220,4 @@ public class Dispatcher implements DispatcherInterface {
         ListOfObjects.put(objectName, remoteMethod);
     }
 
-
-    public static void main(String[] args) {
-        // Instance of the Dispatcher
-        Dispatcher dispatcher = new Dispatcher();
-        // Instance of the services that te dispatcher can handle
-        SongDispatcher songDispatcher = new SongDispatcher();
-
-        dispatcher.registerObject(songDispatcher, "SongServices");
-        
-        // Testing  the dispatcher function
-        // First we read the request. In the final implementation the jsonRequest
-        // is obtained from the communication module
-        try {
-            String jsonRequest = new String(Files.readAllBytes(Paths.get("D:\\CSULB\\presemt\\327\\MusicPlayer\\Server\\dispatcherTest.json")));
-            String ret = dispatcher.dispatch(jsonRequest);
-            System.out.println(ret);
-
-            //System.out.println(jsonRequest);
-        } catch (Exception e)
-        {
-            System.out.println(e);
-        }
-
-    }
 }
