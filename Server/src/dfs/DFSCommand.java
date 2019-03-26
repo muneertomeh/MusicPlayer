@@ -35,8 +35,8 @@ public class DFSCommand
             }
             if (result[0].equals("append"))
             {
-            	//CHANGE THIS FILE PATH TO SOMETHING IN YOUR COMPUTER
-            	RemoteInputFileStream input = new RemoteInputFileStream("D:\\CSULB\\music0.json");
+            
+            	RemoteInputFileStream input = new RemoteInputFileStream(result[2]);
                 dfs.append(result[1], input);
 
             }
