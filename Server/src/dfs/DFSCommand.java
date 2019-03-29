@@ -32,12 +32,14 @@ public class DFSCommand
             if (result[0].equals("create"))
             {
             	dfs.create(result[1]);
+                System.out.println("File created");
             }
             if (result[0].equals("append"))
             {
             
             	RemoteInputFileStream input = new RemoteInputFileStream(result[2]);
                 dfs.append(result[1], input);
+                System.out.println("page added");
 
             }
             if (result[0].equals("leave"))
