@@ -7,7 +7,7 @@ import java.nio.file.*;
 import java.math.BigInteger;
 import java.security.*;
 import com.google.gson.Gson;
-import java.io.InputStream;
+
 import java.util.*;
 
 
@@ -397,7 +397,7 @@ public class DFS
     	fileJson.setName(fileName);
     	filesJson.setFile(fileJson);
     	writeMetaData(filesJson);
-
+    	
     	 //writeMetaData();
 
     	//writeMetaData(FilesJson filesJson) throws Exception
@@ -410,6 +410,7 @@ public class DFS
 
 
     }
+    
 
 /**
  * delete file
@@ -419,7 +420,16 @@ public class DFS
     public void delete(String fileName) throws Exception
     {
 
+    	 for(int i = 0; i < filesJson.getSize();i++)
+         {
 
+         	if(filesJson.getFileJson(i).getName().equalsIgnoreCase(fileName))
+         	{
+         		//remove JSONFile from files
+         		filesJson.file.remove(filesJson.getFileJson(i));
+         		
+         	}
+         }
     }
 
 /**
@@ -467,15 +477,44 @@ public class DFS
 
     }
 
-    /*
-     * practice run
+    
+     // practice run
 
-    public static void main(String args[]) throws Exception
-    {
-
-        DFS dfs = new DFS(5);
-        dfs.create("myFile");
-
-     }
-    */
+//    public static void main(String args[]) throws Exception
+//    {
+//
+//        DFS dfs = new DFS(33);
+//        String nameFile = " ";
+//        String method = " ";
+//        Scanner sc = new Scanner(System.in);
+//        Boolean x = true;
+//        while(x) {
+//        System.out.println(dfs.filesJson.getSize());
+//     
+//        System.out.println("enter a file name");
+//        nameFile= sc.next();
+//        System.out.println("enter a method you wanna use, ");
+//         method = sc.next();
+//    
+//        String totalName = nameFile;
+//        if(method.equals("create"))
+//        {
+//        	dfs.create(totalName);
+//        	System.out.println("there u go");
+//        }
+//        if(method.equals("delete"))
+//        {
+//        	dfs.delete(totalName);
+//        	System.out.println("there u go delete");
+//
+//        
+//        
+//        }
+//        if(method.equals("exit")) {
+//        	x=false;
+//        }
+// 
+//        }
+//    }
 }
+

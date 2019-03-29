@@ -29,6 +29,10 @@ public class DFSCommand
             {
                 dfs.print();
             }
+            if (result[0].equals("delete"))
+            {
+            	dfs.delete(result[1]);
+            }
             if (result[0].equals("create"))
             {
             	dfs.create(result[1]);
