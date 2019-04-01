@@ -1,4 +1,3 @@
-package dfs;
 
 import java.rmi.*;
 import java.net.*;
@@ -460,8 +459,9 @@ public class DFS
         		//create the page metadata information
         		String objectName = filename + LocalDateTime.now();
         		Long guid = md5(objectName);
+
         		ChordMessageInterface peer = chord.locateSuccessor(guid);
-                        peer.put(guid, data);
+                peer.put(guid, data);
         		//chord locate successor , then put 
         		
         		//filesJson.getFileJson(i).addPageInfo(guid, size, creationTS, readTS, writeTs, referenceCount);
