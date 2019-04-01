@@ -1,4 +1,5 @@
 package dfs;
+
 /**
 * Chord implements Chord P2P
 *
@@ -13,7 +14,7 @@ import java.rmi.server.*;
 import java.net.*;
 import java.util.*;
 import java.io.*;
-
+import com.google.gson.Gson;
 /**
  * Chord extends from UnicastRemoteObject to support RMI.
  * It implements the ChordMessageInterface
@@ -116,10 +117,17 @@ public class Chord extends java.rmi.server.UnicastRemoteObject implements ChordM
         stream.connect();
         try {
           String fileName = prefix + guidObject;
+          
           FileOutputStream output = new FileOutputStream(fileName);
+        
           while (stream.available() > 0)
+          {
               output.write(stream.read());
+        
+          }
+        
           output.close();
+         
       }
       catch (IOException e) {
           System.out.println(e);
