@@ -60,6 +60,29 @@ public class DFSCommand
                 System.out.println("page read");
                 
             }
+            if (result[0].equals("head")) 
+            {
+            	RemoteInputFileStream head = dfs.read(result[1], 1);
+            	head.connect();
+            	int i;
+            	while((i = head.read()) != -1) {
+            		System.out.print((char)i);
+            	}
+            	System.out.println();
+            	System.out.println("read head");
+            }
+            
+            if (result[0].equals("tail"))
+            {
+            	RemoteInputFileStream tail = dfs.tail(result[1]);
+            	tail.connect();
+            	int i;
+            	while((i = tail.read()) != -1) {
+            		System.out.print((char)i);
+            	}
+            	System.out.println();
+            	System.out.println("read tail");
+            }
             if (result[0].equals("leave"))
             {
                 dfs.leave();
