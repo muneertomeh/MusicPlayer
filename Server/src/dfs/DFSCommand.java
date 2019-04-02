@@ -34,13 +34,31 @@ public class DFSCommand
             	dfs.create(result[1]);
                 System.out.println("File created");
             }
+            if (result[0].equals("create"))
+            {
+            	dfs.create(result[1]); 
+            	System.out.println("File created");
+            }
             if (result[0].equals("append"))
             {
             
             	RemoteInputFileStream input = new RemoteInputFileStream(result[2]);
-                dfs.append(result[1], input);
+                dfs.append(result[1], input); 
                 System.out.println("page added");
-
+               
+            }
+            if (result[0].equals("read"))
+            {
+                int pageNumber = Integer.parseInt(result[2]);
+                int i;
+                RemoteInputFileStream r = dfs.read(result[1], pageNumber);
+                r.connect();
+                while((i = r.read()) != -1){
+                    System.out.print((char) i);
+                }
+                System.out.println();
+                System.out.println("page read");
+                
             }
             if (result[0].equals("leave"))
             {
@@ -51,7 +69,7 @@ public class DFSCommand
             // User interface:
             // join, ls, touch, delete, read, tail, head, append, move
     }
-
+    
     static public void main(String arg[]) throws Exception
     {
     	System.out.println("Enter port: ");

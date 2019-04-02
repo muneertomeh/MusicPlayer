@@ -64,6 +64,10 @@ public class DFS
         	return this.guid;
         }
       
+        public String getCreationTS(){
+            return this.creationTS;
+        }
+        
         public int getReferenceCount()
         {
         	return this.referenceCount;
@@ -146,6 +150,13 @@ public class DFS
         	return this.size;
         }
     
+        public ArrayList<PagesJson> getPages(){
+            return pages;
+        }
+        
+        public String getCreationTS(){
+            return creationTS;
+        }
         
         public String getName()
         {
@@ -398,7 +409,27 @@ public class DFS
  */
     public RemoteInputFileStream read(String fileName, int pageNumber) throws Exception
     {
-        return null;
+        //List of pages starts at 0 so decrement it
+        pageNumber--;
+        RemoteInputFileStream rifs = null;
+        for(int i = 0; i < filesJson.getSize(); i++){
+            if(filesJson.getFileJson(i).getName().equalsIgnoreCase(fileName)){
+                ArrayList<PagesJson> pagesList = filesJson.getFileJson(i).getPages();
+                for(int k = 0; k < pagesList.size(); k++){
+                    if(k == pageNumber){
+                        PagesJson pageToRead = pagesList.get(k);
+                        String timeOfRead = LocalDateTime.now().toString();
+                        pageToRead.setReadTS(timeOfRead);
+                        filesJson.getFileJson(i).setReadTS(timeOfRead);
+                        Long pageGUID = md5(fileName + pageToRead.getCreationTS());
+                        ChordMessageInterface peer = chord.locateSuccessor(pageGUID);
+                        rifs = peer.get(pageGUID);
+                    }
+                }
+                writeMetaData(filesJson);
+            }
+        }
+        return rifs;
     }
     
  /**
