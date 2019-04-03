@@ -9,7 +9,7 @@ import java.security.*;
 import com.google.gson.Gson;
 
 import java.util.*;
-
+import java.time.LocalDateTime;
 
 /* JSON Format
 
@@ -40,13 +40,13 @@ public class DFS
     {
         Long guid;
         Long size;
-        Long creationTS;
-        Long readTS;
-        Long writeTS;
+        String creationTS;
+        String readTS;
+        String writeTS;
         int referenceCount;
-        public PagesJson(Long guid, Long size, Long creationTS, Long readTS, Long writeTs,int referenceCount)
+        public PagesJson(Long guid, Long size, String creationTS, String readTS, String writeTS,int referenceCount)
         {
-        	this.creationTS = new Long(date.getTime());
+
         	this.guid = guid;
             this.size = size;
             this.creationTS = creationTS;
@@ -63,18 +63,11 @@ public class DFS
         {
         	return this.guid;
         }
-        public Long getCreationTS()
-        {
-        	return this.creationTS;
+
+        public String getCreationTS(){
+            return this.creationTS;
         }
-        public Long getReadTS()
-        {
-        	return this.readTS;
-        }
-        public Long getWriteTS()
-        {
-        	return this.writeTS;
-        }
+
         public int getReferenceCount()
         {
         	return this.referenceCount;
@@ -88,17 +81,17 @@ public class DFS
         {
         	this.guid = guid;
         }
-        public void setCreationTS(Long creationTS)
+        public void setCreationTS(String creationTS)
         {
         	this.creationTS = creationTS;
         }
 
-        public void setReadTS(Long readTS)
+        public void setReadTS(String readTS)
         {
         	this.readTS = readTS;
         }
 
-        public void setWriteTS(Long writeTS)
+        public void setWriteTS(String writeTS)
         {
         	this.writeTS = writeTS;
         }
@@ -112,9 +105,9 @@ public class DFS
     {
         String name;
         Long   size;
-        Long creationTS;
-        Long readTS;
-        Long writeTS;
+        String creationTS;
+        String readTS;
+        String writeTS;
         int referenceCount;
         int numOfPages;
         int maxPageSize;
@@ -124,17 +117,18 @@ public class DFS
             this.size = new Long(0);
             this.numOfPages = 0;
             this.referenceCount = 0;
-            this.creationTS = new Long(date.getTime());
-            this.readTS = new Long(0);
-            this.writeTS = new Long(0);
+            //this.creationTS = new Long(date.getTime());
+            this.creationTS = LocalDateTime.now().toString();
+            this.readTS = "0";
+            this.writeTS = "0";
             this.maxPageSize = 0;
             this.pages = new ArrayList<PagesJson>();
         }
         //dealing with pages
 
-        public void addPageInfo(Long guid, Long size, Long creationTS, Long readTS, Long writeTs,int referenceCount)
+        public void addPageInfo(Long guid, Long size, String creationTS, String readTS, String writeTS,int referenceCount)
         {
-        	PagesJson page = new PagesJson(guid, size,creationTS,readTS, writeTs,referenceCount);
+        	PagesJson page = new PagesJson(guid, size,creationTS,readTS, writeTS,referenceCount);
         	pages.add(page);
         }
 
@@ -155,17 +149,13 @@ public class DFS
         {
         	return this.size;
         }
-        public Long getCreationTS()
-        {
-        	return this.creationTS;
+
+        public ArrayList<PagesJson> getPages(){
+            return pages;
         }
-        public Long getReadTS()
-        {
-        	return this.readTS;
-        }
-        public Long getWriteTS()
-        {
-        	return this.writeTS;
+
+        public String getCreationTS(){
+            return creationTS;
         }
 
         public String getName()
@@ -204,19 +194,19 @@ public class DFS
         {
         	this.numOfPages += numOfPages;
         }
-        public void setCreationTS(Long creationTS)
+        public void setCreationTS(String time)
         {
-        	this.creationTS = creationTS;
+        	this.creationTS = time;
         }
 
-        public void setReadTS(Long readTS)
+        public void setReadTS(String time)
         {
-        	this.readTS = readTS;
+        	this.readTS = time;
         }
 
-        public void setWriteTS(Long writeTS)
+        public void setWriteTS(String time)
         {
-        	this.writeTS = writeTS;
+        	this.writeTS = time;
         }
 
     };
@@ -242,7 +232,7 @@ public class DFS
         	 return file.size();
          }
         // setters
-     	public void setFile(FileJson fileJson)
+     	public void addFile(FileJson fileJson)
      	{
      		file.add(fileJson);
 
@@ -252,8 +242,7 @@ public class DFS
 
     int port;
     Chord  chord;
-    Date date = new Date();
-    FilesJson filesJson = new FilesJson();
+    FilesJson filesJson;
 
     private long md5(String objectName)
     {
@@ -281,6 +270,7 @@ public class DFS
 
         this.port = port;
         long guid = md5("" + port);
+        this.filesJson = new FilesJson();
         chord = new Chord(port, guid);
         Files.createDirectories(Paths.get(guid+"/repository"));
         Files.createDirectories(Paths.get(guid+"/tmp"));
@@ -353,6 +343,7 @@ public class DFS
  */
     public void writeMetaData(FilesJson filesJson) throws Exception
     {
+
         long guid = md5("Metadata");
         ChordMessageInterface peer = chord.locateSuccessor(guid);
 
@@ -370,7 +361,7 @@ public class DFS
         // Write Metadata
     }
 
-
+  
 /**
  * List the files in the system
   *
@@ -392,25 +383,12 @@ public class DFS
     {
           // TODO: Create the file fileName by adding a new entry to the Metadata
          // Write Metadata
-
     	FileJson fileJson = new FileJson();
     	fileJson.setName(fileName);
-    	filesJson.setFile(fileJson);
+    	filesJson.addFile(fileJson);
     	writeMetaData(filesJson);
-    	
-    	 //writeMetaData();
-
-    	//writeMetaData(FilesJson filesJson) throws Exception
-
-    	/*
-    	 * to create I need to writeMetaData,
-    	 * to call on writeMetaData I need to pass
-    	 * a FilesJson
-    	 */
-
 
     }
-    
 
 /**
  * delete file
@@ -433,9 +411,9 @@ public class DFS
         		filesJson.getFileJson(i).setNumOfPages(0);
          		filesJson.file.remove(filesJson.getFileJson(i));
 
-        		
 
-         		
+
+
          	}
          }
      	writeMetaData(filesJson);
@@ -450,7 +428,27 @@ public class DFS
  */
     public RemoteInputFileStream read(String fileName, int pageNumber) throws Exception
     {
-        return null;
+        //List of pages starts at 0 so decrement it
+        pageNumber--;
+        RemoteInputFileStream rifs = null;
+        for(int i = 0; i < filesJson.getSize(); i++){
+            if(filesJson.getFileJson(i).getName().equalsIgnoreCase(fileName)){
+                ArrayList<PagesJson> pagesList = filesJson.getFileJson(i).getPages();
+                for(int k = 0; k < pagesList.size(); k++){
+                    if(k == pageNumber){
+                        PagesJson pageToRead = pagesList.get(k);
+                        String timeOfRead = LocalDateTime.now().toString();
+                        pageToRead.setReadTS(timeOfRead);
+                        filesJson.getFileJson(i).setReadTS(timeOfRead);
+                        Long pageGUID = md5(fileName + pageToRead.getCreationTS());
+                        ChordMessageInterface peer = chord.locateSuccessor(pageGUID);
+                        rifs = peer.get(pageGUID);
+                    }
+                }
+                writeMetaData(filesJson);
+            }
+        }
+        return rifs;
     }
 
  /**
@@ -462,69 +460,40 @@ public class DFS
     public void append(String filename, RemoteInputFileStream data) throws Exception
     {
 
-        data.connect();
-        Long sizeOfFile = new Long(data.read());
         for(int i = 0; i < filesJson.getSize();i++)
         {
-
+        	//append the page to the file specified by the user
         	if(filesJson.getFileJson(i).getName().equalsIgnoreCase(filename))
         	{
-        		//update file info
-        		filesJson.getFileJson(i).setWriteTS(date.getTime());
+
+        		//update information in the file we are going to append
+        	    //data.connect();
+                //This is used to get the size of the file
+                Long sizeOfFile = new Long(data.available());
+                String timeOfAppend = LocalDateTime.now().toString();
+        		filesJson.getFileJson(i).setWriteTS(timeOfAppend);
         		filesJson.getFileJson(i).addNumOfPages(1);
         		filesJson.getFileJson(i).addSize(sizeOfFile);
-        		//update write
-        		String objectName = filename + date.getTime();
+
+        		//create the page metadata information
+        		String objectName = filename + LocalDateTime.now();
         		Long guid = md5(objectName);
+
+        		ChordMessageInterface peer = chord.locateSuccessor(guid);
+                peer.put(guid, data);
+        		//chord locate successor , then put
+
         		//filesJson.getFileJson(i).addPageInfo(guid, size, creationTS, readTS, writeTs, referenceCount);
         		Long defaultZero = new Long(0);
-        		filesJson.getFileJson(i).addPageInfo(guid, sizeOfFile,date.getTime(), defaultZero, defaultZero,0);
+        		filesJson.getFileJson(i).addPageInfo(guid,sizeOfFile,timeOfAppend,"0","0",0);
 
         	}
+
         }
         writeMetaData(filesJson);
 
 
     }
 
-    
-     // practice run
 
-//    public static void main(String args[]) throws Exception
-//    {
-//
-//        DFS dfs = new DFS(33);
-//        String nameFile = " ";
-//        String method = " ";
-//        Scanner sc = new Scanner(System.in);
-//        Boolean x = true;
-//        while(x) {
-//        System.out.println(dfs.filesJson.getSize());
-//     
-//        System.out.println("enter a file name");
-//        nameFile= sc.next();
-//        System.out.println("enter a method you wanna use, ");
-//         method = sc.next();
-//    
-//        String totalName = nameFile;
-//        if(method.equals("create"))
-//        {
-//        	dfs.create(totalName);
-//        	System.out.println("there u go");
-//        }
-//        if(method.equals("delete"))
-//        {
-//        	dfs.delete(totalName);
-//        	System.out.println("there u go delete");
-//
-//        
-//        
-//        }
-//        if(method.equals("exit")) {
-//        	x=false;
-//        }
-// 
-//        }
-//    }
 }
-
