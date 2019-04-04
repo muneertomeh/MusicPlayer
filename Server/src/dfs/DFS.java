@@ -403,12 +403,7 @@ public class DFS
 
          	if(filesJson.getFileJson(i).getName().equalsIgnoreCase(fileName))
          	{
-         		System.out.println(filesJson.getFileJson(i).getName());
          		//remove JSONFile from files
-        		filesJson.getFileJson(i).setName("Junk");;
-        		filesJson.getFileJson(i).setMaxPageSize(0);;
-        		filesJson.getFileJson(i).setSize(new Long(0));
-        		filesJson.getFileJson(i).setNumOfPages(0);
          		filesJson.file.remove(filesJson.getFileJson(i));
 
 

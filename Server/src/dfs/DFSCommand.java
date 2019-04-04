@@ -32,16 +32,12 @@ public class DFSCommand
             if (result[0].equals("delete"))
             {
             	dfs.delete(result[1]);
+            	System.out.println("Deleted "+result[1]+" from the page");
             }
             if (result[0].equals("create"))
             {
             	dfs.create(result[1]);
                 System.out.println("File created");
-            }
-            if (result[0].equals("create"))
-            {
-            	dfs.create(result[1]); 
-            	System.out.println("File created");
             }
             if (result[0].equals("append"))
             {
