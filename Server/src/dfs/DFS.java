@@ -403,12 +403,29 @@ public class DFS
 
          	if(filesJson.getFileJson(i).getName().equalsIgnoreCase(fileName))
          	{
-         		//remove JSONFile from files
+         	
+         		//get metadata information
+        		String objectName = fileName + LocalDateTime.now();
+        		Long guid = md5(objectName);
+         		long guidPort = md5("" + port);  
+                ArrayList<PagesJson> pagesList = filesJson.getFileJson(i).getPages();
+                PagesJson pagesRead = pagesList.get(i);
+                long pageGuid = pagesRead.getGuid();
+                
+                //remove appended file in directory
+                String userDir = System.getProperty("user.dir");
+                File file = new File(userDir+"/"+guidPort+"/repository/"+pageGuid);
+                file.delete();
+                
+            	//remove JSONFile from files
          		filesJson.file.remove(filesJson.getFileJson(i));
+         		
+         		//remove from chord
+            	ChordMessageInterface peer = chord.locateSuccessor(guid);
+                peer.delete(guid);
+             
 
-
-
-
+                
          	}
          }
      	writeMetaData(filesJson);
