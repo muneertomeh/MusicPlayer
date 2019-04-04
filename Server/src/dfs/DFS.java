@@ -412,6 +412,10 @@ public class DFS
                 PagesJson pagesRead = pagesList.get(i);
                 long pageGuid = pagesRead.getGuid();
                 
+                //remove from chord
+            	ChordMessageInterface peer = chord.locateSuccessor(pageGuid);
+                peer.delete(pageGuid);
+                
                 //remove appended file in directory
                 String userDir = System.getProperty("user.dir");
                 File file = new File(userDir+"/"+guidPort+"/repository/"+pageGuid);
@@ -420,9 +424,7 @@ public class DFS
             	//remove JSONFile from files
          		filesJson.file.remove(filesJson.getFileJson(i));
          		
-         		//remove from chord
-            	ChordMessageInterface peer = chord.locateSuccessor(guid);
-                peer.delete(guid);
+         		
              
 
                 
