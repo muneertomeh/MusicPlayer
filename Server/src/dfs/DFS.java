@@ -432,6 +432,25 @@ public class DFS
         return rifs;
     }
     
+    public RemoteInputFileStream tail(String fileName) {
+    	RemoteInputFileStream tail = null;
+    	for(int i = 0; i < filesJson.getSize(); i++) {
+    		if(filesJson.getFileJson(i).getName().equalsIgnoreCase(fileName)) {
+    			ArrayList<PagesJson> pagesList = filesJson.getFileJson(i).getPages();
+    			int last = pagesList.size() - 1;
+    			PagesJson pageToRead = pagesList.get(last);
+    			String timeOfRead = LocalDateTime.now().toString();
+    			pageToRead.setReadTS(timeOfRead);
+    			filesJson.getFileJson(i).setReadTS(timeOfRead);
+    			Long pageGUID = md5(fileName + pageToRead.getCreationTS());
+    			ChordMessageInterface peer = chord.locateSuccessor(pageGUID);
+    			tail = peer.get(pageGUID);
+    			writeMetaData(filesJson);
+    		}
+    	}
+    	return tail;
+    }
+    
  /**
  * Add a page to the file                
   *
