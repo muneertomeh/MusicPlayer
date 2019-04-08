@@ -34,19 +34,30 @@ public class DFSCommand
             	dfs.create(result[1]);
                 System.out.println("File created");
             }
+            if (result[0].equals("delete"))
+            {
+            dfs.delete(result[1]);
+            System.out.println("Deleted "+result[1]+" from the page");
+            }
             if (result[0].equals("create"))
             {
-            	dfs.create(result[1]); 
+            	dfs.create(result[1]);
             	System.out.println("File created");
             }
             if (result[0].equals("append"))
             {
-            
+
             	RemoteInputFileStream input = new RemoteInputFileStream(result[2]);
-                dfs.append(result[1], input); 
+                dfs.append(result[1], input);
                 System.out.println("page added");
-               
+
             }
+            if (result[0].equals("delete"))
+            {
+              dfs.delete(result[1]);
+              System.out.println("Deleted "+result[1]+" from the page");
+            }
+
             if (result[0].equals("read"))
             {
                 int pageNumber = Integer.parseInt(result[2]);
@@ -58,9 +69,9 @@ public class DFSCommand
                 }
                 System.out.println();
                 System.out.println("page read");
-                
+
             }
-            if (result[0].equals("head")) 
+            if (result[0].equals("head"))
             {
             	RemoteInputFileStream head = dfs.read(result[1], 1);
             	head.connect();
@@ -71,7 +82,7 @@ public class DFSCommand
             	System.out.println();
             	System.out.println("read head");
             }
-            
+
             if (result[0].equals("tail"))
             {
             	RemoteInputFileStream tail = dfs.tail(result[1]);
@@ -92,7 +103,7 @@ public class DFSCommand
             // User interface:
             // join, ls, touch, delete, read, tail, head, append, move
     }
-    
+
     static public void main(String arg[]) throws Exception
     {
     	System.out.println("Enter port: ");
